@@ -25,5 +25,5 @@
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "cSpell.words": ["Flashlist", "Lato"],
-  "conventionalCommits.scopes": ["github"]
+  "conventionalCommits.scopes": ["github", "packages"]
 }

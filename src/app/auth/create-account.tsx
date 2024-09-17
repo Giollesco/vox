@@ -1,18 +1,11 @@
-import * as React from 'react';
-
-import { account } from '@/api';
-import { signIn, useAuth } from '@/core';
-import { saveUserToDB } from '@/core/auth/utils';
-import { useSoftKeyboardEffect } from '@/core/keyboard';
-import { useOnboarding } from '@/stores';
-import { Account } from '@/types';
-import { Button, colors, ControlledInput, Image, Text, View } from '@/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ID } from 'appwrite';
 import { useAssets } from 'expo-asset';
 import { useRouter } from 'expo-router';
 import { MotiView, useAnimationState } from 'moti';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import * as React from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   ActivityIndicator,
   ScrollView,
@@ -23,9 +16,18 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { runOnJS, SharedValue, withTiming } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
+import { runOnJS, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { z } from 'zod';
+
+import { account } from '@/api';
+import { signIn, useAuth } from '@/core';
+import { saveUserToDB } from '@/core/auth/utils';
+import { useSoftKeyboardEffect } from '@/core/keyboard';
+import { useOnboarding } from '@/stores';
+import type { Account } from '@/types';
+import { Button, colors, ControlledInput, Image, Text, View } from '@/ui';
 
 type Props = {
   y: SharedValue<number>;
@@ -170,7 +172,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
 
   return (
     <View
-      className="flex w-full h-full justify-end items-end"
+      className="flex h-full w-full items-end justify-end"
       style={{ height }}
     >
       <ScrollView
@@ -181,7 +183,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
         {/* Previous Step */}
         <GestureDetector gesture={previousStepGesture}>
           <View
-            className="w-full h-[80] justify-center"
+            className="h-[80] w-full justify-center"
             style={{
               height: 220,
               alignItems: 'center',
@@ -204,7 +206,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
           }}
         >
           <MotiView state={onboardingAnimationState} delay={0}>
-            <Text className="text-5xl text-center" weight="medium">
+            <Text className="text-center text-5xl" weight="medium">
               Stvorite račun
             </Text>
           </MotiView>
@@ -215,7 +217,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
                 testID="email-input"
                 control={control}
                 name="email"
-                className="rounded-4xl px-4 w-min text-black"
+                className="w-min rounded-4xl px-4 text-black"
                 style={{ height: 64, backgroundColor: '#b8b8b8' }}
                 placeholder="Unesite email adresu"
                 placeholderTextColor={colors.neutral['500']}
@@ -228,7 +230,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
                 testID="password-input"
                 control={control}
                 name="password"
-                className="rounded-4xl px-4 w-min text-black"
+                className="w-min rounded-4xl px-4 text-black"
                 style={{ height: 64, backgroundColor: '#b8b8b8' }}
                 placeholder="Unesite lozinku"
                 placeholderTextColor={colors.neutral['500']}
@@ -239,7 +241,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
               <Button
                 testID="login-button"
                 variant="secondary"
-                className="bg-primary-500 rounded-4xl px-4 w-min text-white"
+                className="w-min rounded-4xl bg-primary-500 px-4 text-white"
                 style={{ height: 64, marginTop: 10 }}
                 onPress={handleSignup}
                 disabled={loading}

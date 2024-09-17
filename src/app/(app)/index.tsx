@@ -1,4 +1,9 @@
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
+import { MotiView } from 'moti';
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAudioExercises } from '@/api/audio';
 import ExerciseCard from '@/components/audio/gallery-card';
@@ -13,11 +18,6 @@ import {
   View,
 } from '@/ui';
 import { APP_DUMMY_EXERCISE } from '@/utils/data';
-import { MotiView } from 'moti';
-import { useWindowDimensions } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 
 export default function Feed() {
   // Hooks
@@ -55,7 +55,7 @@ export default function Feed() {
           }}
         >
           <View
-            className="flex-row items-center w-full"
+            className="w-full flex-row items-center"
             style={{ opacity: 0.35 }}
           >
             <SimpleLineIcons name="logout" size={18} color="black" />
@@ -67,13 +67,13 @@ export default function Feed() {
           >
             <Text
               weight="light"
-              className="text-3xl text-left w-full"
+              className="w-full text-left text-3xl"
               style={{ width: CONTAINER_WIDTH, opacity: 0.5 }}
             >
               Dobrodošli natrag,
             </Text>
             <Text
-              className="text-3xl text-left w-full"
+              className="w-full text-left text-3xl"
               style={{ width: CONTAINER_WIDTH }}
               weight="semiBold"
             >
@@ -97,7 +97,7 @@ export default function Feed() {
 
         {/* CTA-s */}
         <View
-          className="flex-row items-center justify-between w-full"
+          className="w-full flex-row items-center justify-between"
           style={{ height: FOOTER_HEIGHT }}
         >
           <MotiView
@@ -124,14 +124,14 @@ export default function Feed() {
 
           {/* Bottom left */}
           <View
-            className="items-center justify-between w-full"
+            className="w-full items-center justify-between"
             style={{
               height: FOOTER_HEIGHT,
               width: CONTAINER_WIDTH / 2 - SPACE / 4,
             }}
           >
             <View
-              className="flex-row items-center justify-between w-full"
+              className="w-full flex-row items-center justify-between"
               style={{
                 height: CONTAINER_WIDTH / 4 - SPACE / 3,
                 width: '100%',
@@ -141,7 +141,7 @@ export default function Feed() {
                 from={{ opacity: 0, bottom: -10 }}
                 animate={{ opacity: 1, bottom: 0 }}
                 delay={350}
-                className="flex-row items-center justify-between w-full rounded-4xl"
+                className="w-full flex-row items-center justify-between rounded-4xl"
                 style={{
                   backgroundColor: colors.grey.light,
                   height: '100%',
@@ -156,7 +156,7 @@ export default function Feed() {
                 from={{ opacity: 0, bottom: -10 }}
                 animate={{ opacity: 1, bottom: 0 }}
                 delay={400}
-                className="flex-row items-center justify-between w-full rounded-4xl"
+                className="w-full flex-row items-center justify-between rounded-4xl"
                 style={{
                   backgroundColor: colors.grey.light,
                   height: '100%',
@@ -173,7 +173,7 @@ export default function Feed() {
               from={{ opacity: 0, bottom: -10 }}
               animate={{ opacity: 1, bottom: 0 }}
               delay={450}
-              className="flex-row items-center justify-between w-full rounded-4xl"
+              className="w-full flex-row items-center justify-between rounded-4xl"
               style={{
                 height:
                   FOOTER_HEIGHT - (CONTAINER_WIDTH / 4 - SPACE / 3) - SPACE / 2,

@@ -1,5 +1,3 @@
-import { View } from '@/ui';
-import { SPRING_CONFIG } from '@/utils/config';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import * as Haptics from 'expo-haptics';
 import * as React from 'react';
@@ -10,6 +8,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+
+import { View } from '@/ui';
+import { SPRING_CONFIG } from '@/utils/config';
 
 type Props = {
   disabled: boolean;
@@ -53,7 +54,7 @@ export const OnboardingButton = ({ disabled, icon, onPress }: Props) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={animatedStyle}>
         <Animated.View style={{ opacity: disabled ? 0.25 : 1 }}>
-          <View className="rounded-full border border-gray-500 h-[72] w-[72] justify-center ">
+          <View className="h-[72] w-[72] justify-center rounded-full border border-gray-500 ">
             <AntDesign
               name={icon as any}
               size={26}

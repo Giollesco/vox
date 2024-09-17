@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-import { colors, View } from '@/ui';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -8,6 +6,8 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
+
+import { colors, View } from '@/ui';
 
 type Props = {
   progress: number;
@@ -50,9 +50,7 @@ export const LineGraph = ({ progress }: Props) => {
 
   return (
     <View style={[styles.container]}>
-      <Animated.View
-        style={[styles.completedBar, completedAnimatedStyle]}
-      ></Animated.View>
+      <Animated.View style={[styles.completedBar, completedAnimatedStyle]} />
       <Animated.View style={[styles.baseBar, baseBarAnimatedStyles]}>
         <View style={[styles.stripContainer, { width }]}>
           {Array.from({ length: 28 }).map((_, index) => (

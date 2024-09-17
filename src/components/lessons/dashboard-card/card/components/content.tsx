@@ -1,7 +1,8 @@
-import { colors, Text, View } from '@/ui';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Animated from 'react-native-reanimated';
+import type Animated from 'react-native-reanimated';
+
+import { colors, Text, View } from '@/ui';
 
 interface IProps {
   height: number;

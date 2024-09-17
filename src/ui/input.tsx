@@ -11,9 +11,10 @@ import { I18nManager, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
 import { tv } from 'tailwind-variants';
 
+import type { FontWeight } from '@/types';
+
 import colors from './colors';
 import { Text } from './text';
-import { FontWeight } from '@/types';
 
 const inputTv = tv({
   slots: {

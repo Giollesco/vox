@@ -1,7 +1,8 @@
 // import { View as EImage } from 'react-native'; // Temporarily use View for testing
+import type { ImageProps } from 'expo-image';
+import { Image as EImage } from 'expo-image';
 import { cssInterop } from 'nativewind';
 import * as React from 'react';
-import { ImageProps, Image as EImage } from 'expo-image';
 
 export type ImgProps = ImageProps & {
   className?: string;

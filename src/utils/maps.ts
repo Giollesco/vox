@@ -1,4 +1,4 @@
-import { Gender } from '@/types';
+import type { Gender } from '@/types';
 
 export const genderToCro: { [gender in Gender]: string } = {
   Male: 'Muško',

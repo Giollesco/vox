@@ -1,7 +1,5 @@
-import * as React from 'react';
-
-import { colors, Text } from '@/ui';
 import * as Haptics from 'expo-haptics';
+import * as React from 'react';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolateColor,
@@ -10,6 +8,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import { colors, Text } from '@/ui';
 
 type Props = {
   text: string;

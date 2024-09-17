@@ -1,7 +1,9 @@
-import { OnboardingRequestForm } from '@/types';
 import { ID } from 'appwrite';
 import type { AxiosError } from 'axios';
 import { createMutation } from 'react-query-kit';
+
+import type { OnboardingRequestForm } from '@/types';
+
 import { Collection, Database, database } from '../common';
 
 export const useAddAccount = createMutation<

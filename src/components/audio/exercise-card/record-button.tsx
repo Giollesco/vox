@@ -1,21 +1,18 @@
-import * as React from 'react';
-
-import { colors } from '@/ui';
-import { SPRING_CONFIG } from '@/utils/config';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as Haptics from 'expo-haptics';
+import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import type { SharedValue } from 'react-native-reanimated';
 import Animated, {
-  interpolateColor,
   runOnJS,
-  SharedValue,
   useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
+
+import { SPRING_CONFIG } from '@/utils/config';
 
 type Props = {
   isWordCorrect: boolean;

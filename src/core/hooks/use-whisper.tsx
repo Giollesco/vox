@@ -9,7 +9,8 @@ import { FFmpegKit } from 'ffmpeg-kit-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import RNFS from 'react-native-fs';
-import { initWhisper, WhisperContext } from 'whisper.rn';
+import type { WhisperContext } from 'whisper.rn';
+import { initWhisper } from 'whisper.rn';
 
 export default function useWhisper() {
   // Refs

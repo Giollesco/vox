@@ -1,12 +1,10 @@
+import type { SharedValue } from 'react-native-reanimated';
 import {
   interpolate,
   interpolateColor,
-  SharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-
-import { colors } from '@/ui';
 
 type Props = {
   animatedValue: SharedValue<number>;

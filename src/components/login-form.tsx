@@ -1,15 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
-import type { SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
-import { Button, colors, ControlledInput, Image, Text, View } from '@/ui';
 import { useAssets } from 'expo-asset';
 import { Link } from 'expo-router';
 import { MotiView } from 'moti';
+import React from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ActivityIndicator, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as z from 'zod';
+
+import { Button, colors, ControlledInput, Image, Text, View } from '@/ui';
 
 const schema = z.object({
   email: z
@@ -42,7 +42,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
   const [assets] = useAssets([require('assets/icons/language-sign-black.png')]);
 
   return (
-    <View className="flex w-full h-full justify-end items-end">
+    <View className="flex h-full w-full items-end justify-end">
       <View
         style={{
           paddingHorizontal: 10,
@@ -58,7 +58,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
           animate={{ opacity: 1, bottom: 0 }}
           delay={0}
         >
-          <Text className="text-5xl text-center" weight="medium">
+          <Text className="text-center text-5xl" weight="medium">
             Prijavite se
           </Text>
         </MotiView>
@@ -73,7 +73,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
               testID="email-input"
               control={control}
               name="email"
-              className="rounded-4xl px-4 w-min text-black"
+              className="w-min rounded-4xl px-4 text-black"
               style={{ height: 64, backgroundColor: '#b8b8b8' }}
               placeholder="Unesite email adresu"
               placeholderTextColor={colors.neutral['500']}
@@ -90,7 +90,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
               testID="password-input"
               control={control}
               name="password"
-              className="rounded-4xl px-4 w-min text-black"
+              className="w-min rounded-4xl px-4 text-black"
               style={{ height: 64, backgroundColor: '#b8b8b8' }}
               placeholder="Unesite lozinku"
               placeholderTextColor={colors.neutral['500']}
@@ -105,7 +105,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
             <Button
               testID="login-button"
               variant="secondary"
-              className="bg-primary-500 rounded-4xl px-4 w-min text-white"
+              className="w-min rounded-4xl bg-primary-500 px-4 text-white"
               style={{ height: 64, marginTop: 10 }}
               onPress={handleSubmit(onSubmit)}
               disabled={loading}

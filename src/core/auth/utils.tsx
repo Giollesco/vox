@@ -1,6 +1,6 @@
 import { createAccount } from '@/api/accounts/use-create-account';
 import { getItem, removeItem, setItem } from '@/core/storage';
-import { Account } from '@/types';
+import type { Account } from '@/types';
 
 const TOKEN = 'user-token';
 

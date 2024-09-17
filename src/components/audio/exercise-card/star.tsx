@@ -1,8 +1,8 @@
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as React from 'react';
 
-import { WordDifficulty } from '@/types';
+import type { WordDifficulty } from '@/types';
 import { colors, View } from '@/ui';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 type Props = {
   difficulty: WordDifficulty;

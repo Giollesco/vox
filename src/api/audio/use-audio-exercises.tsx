@@ -2,7 +2,8 @@ import type { AxiosError } from 'axios';
 import { createQuery } from 'react-query-kit';
 
 import { setAudioExercises } from '@/stores';
-import { AudioExercise } from '@/types';
+import type { AudioExercise } from '@/types';
+
 import { Collection, Database, database } from '../common';
 
 type Response = AudioExercise[];

@@ -1,5 +1,6 @@
-import { Models } from 'appwrite';
-import { Onboarding } from './onboarding';
+import type { Models } from 'appwrite';
+
+import type { Onboarding } from './onboarding';
 
 export type Account = Omit<Onboarding, 'steps'> & {
   id: string;

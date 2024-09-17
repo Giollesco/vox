@@ -1,5 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 
 import { account } from '@/api';
 import type { LoginFormProps } from '@/components/login-form';
@@ -7,7 +8,6 @@ import { LoginForm } from '@/components/login-form';
 import { useAuth } from '@/core';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { FocusAwareStatusBar, ScrollView, View } from '@/ui';
-import { KeyboardAvoidingView } from 'react-native';
 
 export default function Login() {
   // Hooks
@@ -40,7 +40,7 @@ export default function Login() {
   };
   return (
     <View
-      className="flex w-full h-full justify-end items-end"
+      className="flex h-full w-full items-end justify-end"
       style={{ backgroundColor: '#A8A6AA' }}
     >
       <ScrollView
@@ -48,7 +48,7 @@ export default function Login() {
         contentContainerStyle={{ flex: 1, justifyContent: 'flex-end' }}
         scrollEnabled={false}
       >
-        <KeyboardAvoidingView className="flex-1 pt-[40] gap-2">
+        <KeyboardAvoidingView className="flex-1 gap-2 pt-[40]">
           <Stack.Screen options={{ headerShown: false }} />
           <FocusAwareStatusBar />
           <LoginForm onSubmit={onSubmit} loading={loading} />

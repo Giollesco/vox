@@ -1,12 +1,13 @@
+import { create } from 'zustand';
+
 import { createSelectors } from '@/core';
-import {
+import type {
   Language,
   Level,
   Onboarding,
   OnboardingRequestForm,
   Steps,
 } from '@/types';
-import { create } from 'zustand';
 
 type OnboardingState = Onboarding & {
   setOnboarding: (onboarding: Onboarding) => void;

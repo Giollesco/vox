@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-import { FocusAwareStatusBar, View } from '@/ui';
 import {
   Canvas,
   Group,
@@ -18,9 +17,10 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import {
   useDerivedValue,
   useSharedValue,
-  withDecay,
   withTiming,
 } from 'react-native-reanimated';
+
+import { FocusAwareStatusBar, View } from '@/ui';
 
 export default function Settings() {
   // Hooks

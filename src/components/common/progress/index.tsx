@@ -15,7 +15,7 @@ export const Progress = ({
   accentColor = colors.primary['500'],
 }: Props) => {
   return (
-    <View className="h-4 w-full flex-row align-middle justify-between gap-1 relative">
+    <View className="relative h-4 w-full flex-row justify-between gap-1 align-middle">
       {Array.from({ length: steps }).map((_, index) => (
         <View
           key={index}

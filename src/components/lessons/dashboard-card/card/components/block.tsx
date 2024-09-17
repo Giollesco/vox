@@ -1,3 +1,6 @@
+// Animated
+import { BlurView } from 'expo-blur';
+import { MotiView } from 'moti';
 import React from 'react';
 import {
   Dimensions,
@@ -6,13 +9,10 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-
-// Animated
-import { BlurView } from 'expo-blur';
 import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
+import type { WithSpringConfig } from 'react-native-reanimated';
 import Animated, {
   Extrapolate,
-  FadeIn,
   interpolate,
   measure,
   runOnJS,
@@ -25,14 +25,16 @@ import Animated, {
   useSharedValue,
   withDelay,
   withSpring,
-  WithSpringConfig,
   withTiming,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useAuth } from '@/core';
 // Components
 import { colors, Text } from '@/ui';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Lesson } from '../data';
+import { STARTING_POINTS } from '@/utils/data';
+
+import type { Lesson } from '../data';
 import {
   _Android_thumbanailImageStyles,
   _panGestureHandlerProps,
@@ -49,9 +51,6 @@ import {
 import CloseButton from './close-button';
 import Content from './content';
 import { LineGraph } from './line-graph';
-import { MotiView } from 'moti';
-import { useAuth } from '@/core';
-import { STARTING_POINTS } from '@/utils/data';
 
 // Constants
 export const THUMBNAIL_SCALE_FACTOR = 1.2;
@@ -297,7 +296,7 @@ const Block = ({
                     >
                       {/* Top row */}
                       <View
-                        className="w-full flex-row align-middle justify-between"
+                        className="w-full flex-row justify-between align-middle"
                         style={{ alignItems: 'center' }}
                       >
                         <MotiView

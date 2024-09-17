@@ -227,6 +227,7 @@ export const SwitchIcon = ({ checked = false }: IconProps) => {
         animate={{
           translateX: -translateX,
         }}
+        // @ts-ignore
         transition={{ overshootClamping: true }}
       />
     </View>

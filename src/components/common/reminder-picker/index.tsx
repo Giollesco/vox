@@ -1,13 +1,13 @@
-import * as React from 'react';
-
-import { colors, Text, View } from '@/ui';
-import { REMINDERS } from '@/utils/data';
 import { Feather } from '@expo/vector-icons';
+import * as React from 'react';
 import { useWindowDimensions } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+
+import { colors, Text, View } from '@/ui';
+import { REMINDERS } from '@/utils/data';
 
 type Props = {
   value: string;
@@ -45,7 +45,7 @@ export const ReminderPicker = ({ value, onSelect, size = 'large' }: Props) => {
       }}
     >
       <View
-        className="flex-1 w-full items-center justify-center overflow-hidden"
+        className="w-full flex-1 items-center justify-center overflow-hidden"
         style={{
           height: CONTAINER_HEIGHT,
           alignItems: 'center',

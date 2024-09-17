@@ -1,19 +1,20 @@
-import { useAuth } from '@/core';
-import { AudioExercise } from '@/types';
-import { Text, View } from '@/ui';
 import { FontAwesome } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 import { Link, router } from 'expo-router';
 import React from 'react';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import type { SharedValue } from 'react-native-reanimated';
 import Animated, {
   FadeInDown,
   runOnJS,
-  SharedValue,
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+
+import { useAuth } from '@/core';
+import type { AudioExercise } from '@/types';
+import { Text, View } from '@/ui';
 
 interface ExerciseCardProps {
   exercise: AudioExercise;
@@ -183,7 +184,7 @@ export default function ExerciseCard({
               }}
             >
               <View
-                className="w-full h-full"
+                className="h-full w-full"
                 style={{
                   transform: [{ rotate: '-15deg' }],
                   top: -40,

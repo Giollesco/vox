@@ -8,8 +8,7 @@
 #         uses: ./.github/actions/setup-node-pnpm-install
 
 name: 'Setup  Node + PNPM + Install Dependencies'
-description: 'Setup Node + PNPM + Install Dependencies'
-
+description: 'Setup  Node + PNPM + Install Dependencies'
 runs:
   using: 'composite'
   steps:
@@ -21,12 +20,6 @@ runs:
         node-version: 18
         cache: 'pnpm'
 
-    - name: 📦 Install Project Dependencies (with fallback)
-      run: |
-        if [ -f pnpm-lock.yaml ]; then
-          pnpm install --frozen-lockfile
-        else
-          echo "⚠️ pnpm-lock.yaml not found, using --no-frozen-lockfile"
-          pnpm install --no-frozen-lockfile
-        fi
+    - name: 📦 Install Project Dependencies
+      run: pnpm install
       shell: bash

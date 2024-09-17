@@ -1,0 +1,31 @@
+appId: ${APP_ID}
+env:
+  Name: 'Test User'
+  EMAIL: 'user@test.com'
+  PASSWORD: 'password'
+---
+- launchApp
+# - runFlow:
+#     when:
+#       visible: 'Prijavite se'
+#     file: ../utils/onboarding.yaml
+- assertVisible: 'Prijavite se'
+- assertVisible:
+    id: 'login-button'
+- tapOn:
+    id: 'login-button'
+- assertVisible: 'Email adresa je obavezna'
+- assertVisible: 'Lozinka je obavezna'
+- tapOn:
+    id: 'email-input'
+- inputText: 'email'
+- assertVisible: 'Unesite ispravnu email adresu'
+- inputText: ${EMAIL}
+- runFlow: ../utils/hide-keyboard.yaml
+- tapOn:
+    id: 'password-input'
+- inputText: ${PASSWORD}
+- runFlow: ../utils/hide-keyboard.yaml
+- tapOn:
+    id: 'login-button'
+- assertVisible: 'Dobrodošli'

@@ -100,10 +100,6 @@ export default function AudioList() {
           ...account.completedAudioExercises,
           id,
         ];
-        console.log(
-          'DEV-LOG ~ setTimeout ~ completedAudioExercises:',
-          completedAudioExercises
-        );
         finishExercise(
           { accountId: account.$id, completedAudioExercises },
           {

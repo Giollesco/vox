@@ -17,7 +17,6 @@ export const useAccount = createQuery<Response, Variables, AxiosError>({
       variables.$id,
       [] // queries (optional)
     );
-    console.log('DEV-LOG ~ fetcher: ~ account:', response);
     let account: Account = response as unknown as Account;
     return account;
   },

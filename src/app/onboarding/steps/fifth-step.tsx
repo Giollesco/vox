@@ -28,7 +28,6 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
   const { steps, setSteps, interests, updateFifthStep, getOnboarding } =
     useOnboarding();
   const { height } = useWindowDimensions();
-  console.log('DEV-LOG ~ FifthStep ~ height:', height);
   const { top } = useSafeAreaInsets();
   const { data: audioExercises } = useAudioExercises();
 

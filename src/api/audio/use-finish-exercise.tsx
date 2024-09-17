@@ -14,7 +14,6 @@ export const useFinishExercise = createMutation<
   AxiosError
 >({
   mutationFn: async (variables) => {
-    console.log('DEV-LOG ~ mutationFn: ~ variables:', variables);
     const response = await database.updateDocument(
       Database.English, // databaseId
       Collection.Accounts, // collectionId

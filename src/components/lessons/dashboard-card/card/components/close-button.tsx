@@ -1,11 +1,11 @@
+import { AntDesign } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '@/ui';
-import { AntDesign } from '@expo/vector-icons';
-import { BlurView } from 'expo-blur';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 

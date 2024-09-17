@@ -1,9 +1,9 @@
 import React from 'react';
 import type { TextProps, TextStyle } from 'react-native';
-import { I18nManager, Text as NNText, StyleSheet } from 'react-native';
+import { I18nManager, StyleSheet, Text as NNText } from 'react-native';
 import { twMerge } from 'tailwind-merge';
 
-import { FontWeight } from '@/types';
+import type { FontWeight } from '@/types';
 
 interface Props extends TextProps {
   className?: string;

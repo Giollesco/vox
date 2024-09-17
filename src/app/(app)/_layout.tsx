@@ -1,11 +1,9 @@
-/* eslint-disable react/no-unstable-nested-components */
+import { useIsMutating } from '@tanstack/react-query';
 import { Redirect, SplashScreen, Stack } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { useAuth, useIsFirstTime } from '@/core';
-import { useAudioExercises } from '@/api/audio';
-import { useIsMutating } from '@tanstack/react-query';
 import { PageLoading } from '@/components/page-loading';
+import { useAuth, useIsFirstTime } from '@/core';
 
 export default function TabLayout() {
   // Hooks

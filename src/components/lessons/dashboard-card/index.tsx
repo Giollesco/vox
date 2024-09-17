@@ -1,8 +1,9 @@
+import { MotiView } from 'moti';
 import React from 'react';
-import Animated, { FadeIn, useSharedValue } from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
+
 import Block from './card/components/block';
 import { lessons } from './card/data';
-import { MotiView } from 'moti';
 
 type IProps = {
   height: number;

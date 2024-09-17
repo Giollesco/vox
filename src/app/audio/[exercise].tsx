@@ -1,13 +1,3 @@
-import { useFinishExercise } from '@/api/audio';
-import AudioExerciseCard from '@/components/audio/exercise-card';
-import { RecordButton } from '@/components/audio/exercise-card/record-button';
-import { useAuth } from '@/core';
-import useWhisper from '@/core/hooks/use-whisper';
-import { useAudioExercises } from '@/stores';
-import { AudioExercise } from '@/types';
-import { Button, colors, FocusAwareStatusBar, Text, View } from '@/ui';
-import { SPRING_CONFIG } from '@/utils/config';
-import { getContrastColor } from '@/utils/functions';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
@@ -29,6 +19,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useFinishExercise } from '@/api/audio';
+import AudioExerciseCard from '@/components/audio/exercise-card';
+import { RecordButton } from '@/components/audio/exercise-card/record-button';
+import { useAuth } from '@/core';
+import useWhisper from '@/core/hooks/use-whisper';
+import { useAudioExercises } from '@/stores';
+import type { AudioExercise } from '@/types';
+import { Button, colors, FocusAwareStatusBar, Text, View } from '@/ui';
+import { SPRING_CONFIG } from '@/utils/config';
+import { getContrastColor } from '@/utils/functions';
 
 interface AudioListProps {
   exerciseName: string;

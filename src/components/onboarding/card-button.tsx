@@ -1,4 +1,3 @@
-import { Text, View } from '@/ui';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
@@ -9,6 +8,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import { Text, View } from '@/ui';
 
 type CardButtonProps = {
   icon: string;
@@ -57,7 +58,7 @@ const CardButton: React.FC<CardButtonProps> = ({
     <GestureDetector gesture={gesture}>
       <Animated.View style={animatedStyle}>
         <View
-          className={`flex-1 flex-col gap-4 border p-6 rounded-6xl ${
+          className={`flex-1 flex-col gap-4 rounded-6xl border p-6 ${
             active ? 'border-primary-500' : 'border-zinc-800'
           }`}
         >
@@ -65,7 +66,7 @@ const CardButton: React.FC<CardButtonProps> = ({
             <Ionicons name={icon as any} size={24} color="white" />
             <Text
               weight="medium"
-              className="text-white text-2xl"
+              className="text-2xl text-white"
               style={{ marginTop: -4 }}
             >
               {title}

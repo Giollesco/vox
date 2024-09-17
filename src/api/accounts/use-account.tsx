@@ -1,7 +1,8 @@
 import type { AxiosError } from 'axios';
 import { createQuery } from 'react-query-kit';
 
-import { Account } from '@/types';
+import type { Account } from '@/types';
+
 import { Collection, Database, database } from '../common';
 
 type Response = Account;

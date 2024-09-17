@@ -1,16 +1,15 @@
+import type { SkRuntimeEffect, Uniforms } from '@shopify/react-native-skia';
 import {
   Canvas,
   Fill,
   ImageShader,
   Shader,
   Skia,
-  SkRuntimeEffect,
-  Uniforms,
   useClock,
   useImage,
 } from '@shopify/react-native-skia';
 import React, { useMemo } from 'react';
-import { View, useWindowDimensions } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import {
   useDerivedValue,

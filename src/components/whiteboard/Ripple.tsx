@@ -1,6 +1,11 @@
+import type {
+  DataSourceParam,
+  SkPoint,
+  SkRect,
+  Uniforms,
+} from '@shopify/react-native-skia';
 import {
   Canvas,
-  DataSourceParam,
   dist,
   ImageShader,
   rect,
@@ -8,14 +13,11 @@ import {
   rrect,
   Shader,
   Skia,
-  SkPoint,
-  SkRect,
-  Uniforms,
   useImage,
   vec,
 } from '@shopify/react-native-skia';
 import { useMemo } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import {
   useDerivedValue,

@@ -1,6 +1,3 @@
-import { Word } from '@/types';
-import { colors, Text, View } from '@/ui';
-import { getRandomBetween } from '@/utils/functions';
 import {
   Canvas,
   Fill,
@@ -15,13 +12,18 @@ import {
   FlingGestureHandler,
   State,
 } from 'react-native-gesture-handler';
+import type { SharedValue } from 'react-native-reanimated';
 import Animated, {
   FadeIn,
   FadeOut,
-  SharedValue,
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import type { Word } from '@/types';
+import { colors, Text, View } from '@/ui';
+import { getRandomBetween } from '@/utils/functions';
+
 import { useExerciseCardAnimatedStyles } from './animated-styles';
 import { activeWaveShader } from './shaders';
 import { ExerciseCardStar } from './star';
@@ -136,13 +138,13 @@ const AudioExerciseCard = ({
                 }}
               >
                 {/* Header */}
-                <View className="flex-row w-full items-center justify-between">
+                <View className="w-full flex-row items-center justify-between">
                   <Text className="text-lg">{item.partOfSpeech}</Text>
                   <ExerciseCardStar difficulty={item.difficulty} />
                 </View>
 
                 {/* Word */}
-                <View className="flex-row w-full items-end justify-between">
+                <View className="w-full flex-row items-end justify-between">
                   <View
                     className="flex-col items-start"
                     style={{ width: width - 100 - 16 }}

@@ -1,20 +1,21 @@
-import * as React from 'react';
-
-import SwipeButton from '@/components/onboarding/swipe-button';
-import { useOnboarding } from '@/stores';
-import { Text, View } from '@/ui';
 import { useAssets } from 'expo-asset';
 import { Image } from 'expo-image';
+import { Link } from 'expo-router';
 import { MotiView, useAnimationState } from 'moti';
+import * as React from 'react';
 import { useWindowDimensions } from 'react-native';
 import {
   Directions,
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { runOnJS, SharedValue, withTiming } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
+import { runOnJS, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+
+import SwipeButton from '@/components/onboarding/swipe-button';
+import { useOnboarding } from '@/stores';
+import { Text, View } from '@/ui';
 
 type Props = {
   y: SharedValue<number>;
@@ -58,10 +59,10 @@ export const Welcome = ({ y, index, isAnimationRunning }: Props) => {
     });
 
   return (
-    <View className="flex w-full h-full" style={{ height }}>
+    <View className="flex h-full w-full" style={{ height }}>
       {/* Header */}
       <View
-        className="w-full align-middle justify-between flex-row"
+        className="w-full flex-row justify-between align-middle"
         style={{
           paddingHorizontal: 20,
           paddingTop: top + 12,
@@ -101,7 +102,7 @@ export const Welcome = ({ y, index, isAnimationRunning }: Props) => {
       {/* Next Step */}
       <GestureDetector gesture={nextStepGesture}>
         <View
-          className="w-full h-[80] justify-center"
+          className="h-[80] w-full justify-center"
           style={{
             height: 240,
             alignItems: 'center',

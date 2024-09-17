@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import * as Haptics from 'expo-haptics';
+import { useRef } from 'react';
 
 type Props = {
   velocityTreshold: number;

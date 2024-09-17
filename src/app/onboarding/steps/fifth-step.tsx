@@ -1,10 +1,3 @@
-import { useAudioExercises } from '@/api/audio';
-import { Progress } from '@/components/common/progress';
-import { IntersetOption } from '@/components/onboarding/interests-option';
-import SwipeButton from '@/components/onboarding/swipe-button';
-import { isNextStepEnabled, useOnboarding } from '@/stores';
-import { colors, Text, View } from '@/ui';
-import { INTERESTS } from '@/utils/data';
 import { MotiView, useAnimationState } from 'moti';
 import React, { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
@@ -13,8 +6,16 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { runOnJS, SharedValue, withTiming } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
+import { runOnJS, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { useAudioExercises } from '@/api/audio';
+import { Progress } from '@/components/common/progress';
+import { IntersetOption } from '@/components/onboarding/interests-option';
+import SwipeButton from '@/components/onboarding/swipe-button';
+import { isNextStepEnabled, useOnboarding } from '@/stores';
+import { colors, Text, View } from '@/ui';
 
 type Props = {
   y: SharedValue<number>;
@@ -70,10 +71,10 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
     });
 
   return (
-    <View className="flex w-full h-full" style={{ height }}>
+    <View className="flex h-full w-full" style={{ height }}>
       {/* Header */}
       <View
-        className="w-full items-center justify-between flex-column gap-2"
+        className="flex-column w-full items-center justify-between gap-2"
         style={{ paddingHorizontal: 20, paddingTop: top + 12 + 20 }}
       >
         <MotiView state={onboardingAnimationState} delay={0}>
@@ -82,7 +83,7 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
           </Text>
         </MotiView>
         <MotiView state={onboardingAnimationState} delay={100}>
-          <Text className="text-5xl text-center" weight="medium">
+          <Text className="text-center text-5xl" weight="medium">
             Odaberite teme koje vas zanimaju
           </Text>
         </MotiView>
@@ -146,7 +147,7 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
       {/* Previous Step */}
       <GestureDetector gesture={previousStepGesture}>
         <View
-          className="w-full h-[80] justify-center"
+          className="h-[80] w-full justify-center"
           style={{
             height: 220,
             alignItems: 'center',
@@ -161,7 +162,7 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
       {/* Next Step */}
       <GestureDetector gesture={nextStepGesture}>
         <View
-          className="w-full h-[80] justify-center"
+          className="h-[80] w-full justify-center"
           style={{
             height: 240,
             alignItems: 'center',

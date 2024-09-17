@@ -1,2 +1,2 @@
-export * from './onboarding';
 export * from './audio';
+export * from './onboarding';

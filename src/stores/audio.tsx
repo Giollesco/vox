@@ -1,6 +1,7 @@
-import { createSelectors } from '@/core';
-import { AudioExercise } from '@/types';
 import { create } from 'zustand';
+
+import { createSelectors } from '@/core';
+import type { AudioExercise } from '@/types';
 
 type OnboardingState = {
   audioExercises: {

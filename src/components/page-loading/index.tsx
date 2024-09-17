@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { useWindowDimensions } from 'react-native';
 
 import { ActivityIndicator, colors, Text, View } from '@/ui';
-import { useWindowDimensions } from 'react-native';
 
 type Props = { loading: boolean; backgroundColor?: string };
 

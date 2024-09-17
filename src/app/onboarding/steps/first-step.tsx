@@ -1,8 +1,3 @@
-import { Progress } from '@/components/common/progress';
-import { OnboardingCard } from '@/components/onboarding/card';
-import SwipeButton from '@/components/onboarding/swipe-button';
-import { useOnboarding } from '@/stores';
-import { colors, Input, Text, View } from '@/ui';
 import { MotiView, useAnimationState } from 'moti';
 import React, { useEffect, useState } from 'react';
 import { useWindowDimensions } from 'react-native';
@@ -11,8 +6,15 @@ import {
   Gesture,
   GestureDetector,
 } from 'react-native-gesture-handler';
-import { runOnJS, SharedValue, withTiming } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
+import { runOnJS, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Progress } from '@/components/common/progress';
+import { OnboardingCard } from '@/components/onboarding/card';
+import SwipeButton from '@/components/onboarding/swipe-button';
+import { useOnboarding } from '@/stores';
+import { colors, Input, Text, View } from '@/ui';
 
 type Props = {
   y: SharedValue<number>;
@@ -98,10 +100,10 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
     });
 
   return (
-    <View className="flex w-full h-full" style={{ height }}>
+    <View className="flex h-full w-full" style={{ height }}>
       {/* Header */}
       <View
-        className="w-full items-center justify-between flex-column gap-2"
+        className="flex-column w-full items-center justify-between gap-2"
         style={{
           paddingHorizontal: 20,
           paddingTop: top + 12 + 20,
@@ -113,7 +115,7 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
           </Text>
         </MotiView>
         <MotiView state={onboardingAnimationState} delay={100}>
-          <Text className="text-5xl text-center" weight="medium">
+          <Text className="text-center text-5xl" weight="medium">
             Za početak, unesite svoje ime
           </Text>
         </MotiView>
@@ -132,7 +134,7 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
             onChangeText={(text) =>
               setUserInformations({ ...userInformations, firstName: text })
             }
-            className="rounded-4xl px-4 w-min text-black"
+            className="w-min rounded-4xl px-4 text-black"
             style={{ height: 64, backgroundColor: '#ffffff30' }}
             placeholder="Unesite svoje ime"
             placeholderTextColor={colors.neutral['500']}
@@ -146,7 +148,7 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
             onChangeText={(text) =>
               setUserInformations({ ...userInformations, lastName: text })
             }
-            className="rounded-4xl px-4 w-min text-black mb-4"
+            className="mb-4 w-min rounded-4xl px-4 text-black"
             style={{ height: 64, backgroundColor: '#ffffff30' }}
             placeholder="Unesite svoje prezime"
             placeholderTextColor={colors.neutral['500']}
@@ -205,7 +207,7 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
       {/* Previous Step */}
       <GestureDetector gesture={previousStepGesture}>
         <View
-          className="w-full h-[80] justify-center"
+          className="h-[80] w-full justify-center"
           style={{
             height: 220,
             alignItems: 'center',
@@ -220,7 +222,7 @@ const FirstStep = ({ y, index, isAnimationRunning }: Props) => {
       {/* Next Step */}
       <GestureDetector gesture={nextStepGesture}>
         <View
-          className="w-full h-[80] justify-center"
+          className="h-[80] w-full justify-center"
           style={{
             height: 240,
             alignItems: 'center',

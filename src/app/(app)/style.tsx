@@ -1,6 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-import { FocusAwareStatusBar, View } from '@/ui';
 import {
   Canvas,
   Group,
@@ -22,6 +21,8 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import { FocusAwareStatusBar, View } from '@/ui';
 
 export default function Style() {
   // Hooks

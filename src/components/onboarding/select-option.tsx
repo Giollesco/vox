@@ -1,7 +1,6 @@
-import * as React from 'react';
-
-import { colors, Text } from '@/ui';
+import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import * as React from 'react';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
@@ -11,7 +10,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { Feather } from '@expo/vector-icons';
+
+import { colors, Text } from '@/ui';
 
 type Props = {
   text: string;

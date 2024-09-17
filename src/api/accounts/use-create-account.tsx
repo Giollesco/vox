@@ -1,4 +1,5 @@
-import { Account } from '@/types';
+import type { Account } from '@/types';
+
 import { Collection, Database, database } from '../common';
 
 export const createAccount = async (account: Partial<Account>) => {

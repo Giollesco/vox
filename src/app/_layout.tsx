@@ -1,15 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { ThemeProvider } from '@react-navigation/native';
-import { SplashScreen, Stack, useNavigationContainerRef } from 'expo-router';
-import { StyleSheet } from 'react-native';
-import FlashMessage from 'react-native-flash-message';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-
-import { APIProvider } from '@/api';
-import { hydrateAuth, loadSelectedTheme } from '@/core';
-import { useThemeConfig } from '@/core/use-theme-config';
 import {
   Urbanist_100Thin,
   Urbanist_100Thin_Italic,
@@ -30,6 +20,16 @@ import {
   Urbanist_900Black_Italic,
   useFonts,
 } from '@expo-google-fonts/urbanist';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { ThemeProvider } from '@react-navigation/native';
+import { SplashScreen, Stack, useNavigationContainerRef } from 'expo-router';
+import { StyleSheet } from 'react-native';
+import FlashMessage from 'react-native-flash-message';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import { APIProvider } from '@/api';
+import { hydrateAuth, loadSelectedTheme } from '@/core';
+import { useThemeConfig } from '@/core/use-theme-config';
 
 export { ErrorBoundary } from 'expo-router';
 

@@ -1,4 +1,5 @@
-import { AudioExercise, Level } from '@/types';
+import type { AudioExercise } from '@/types';
+import { Level } from '@/types';
 
 export const INTERESTS = [
   'Putovanja',

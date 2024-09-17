@@ -1,9 +1,3 @@
-import ExerciseCard from '@/components/audio/gallery-card';
-import { useAudioExercises } from '@/stores';
-import { AudioExercise } from '@/types';
-import { colors, FocusAwareStatusBar, Text, View } from '@/ui';
-import { SPRING_CONFIG } from '@/utils/config';
-import { DUMMY_EXERCISE } from '@/utils/data';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { router, Stack } from 'expo-router';
@@ -21,6 +15,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import ExerciseCard from '@/components/audio/gallery-card';
+import { useAudioExercises } from '@/stores';
+import type { AudioExercise } from '@/types';
+import { colors, FocusAwareStatusBar, Text, View } from '@/ui';
+import { SPRING_CONFIG } from '@/utils/config';
+import { DUMMY_EXERCISE } from '@/utils/data';
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 export default function AudioList() {

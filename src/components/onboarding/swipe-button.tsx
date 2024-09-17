@@ -1,13 +1,13 @@
-import { colors } from '@/ui';
 import { Entypo } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+
+import { colors } from '@/ui';
 
 type Props = {
   color?: string;

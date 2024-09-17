@@ -1,12 +1,12 @@
+import type { Models } from 'appwrite';
 import { create } from 'zustand';
 
 import { account, Collection, Database, database } from '@/api';
-import { Account } from '@/types';
-import { Models } from 'appwrite';
+import type { Account } from '@/types';
+
 import { createSelectors } from '../utils';
 import type { TokenType } from './utils';
 import { getToken, removeToken, setToken } from './utils';
-import { useAccount } from '@/api/accounts';
 
 interface AuthState {
   user: Models.User<Models.Preferences> | null;

@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import Animated, {
@@ -6,14 +5,14 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+
+import { CreateAccount } from '../auth/create-account';
+import FifthStep from './steps/fifth-step';
 import FirstStep from './steps/first-step';
-import { Welcome } from './welcome';
+import FourthStep from './steps/fourth-step';
 import SecondStep from './steps/second-step';
 import ThirdStep from './steps/third-step';
-import FourthStep from './steps/fourth-step';
-import FifthStep from './steps/fifth-step';
-import SixthStep from './steps/sixth-step';
-import { CreateAccount } from '../auth/create-account';
+import { Welcome } from './welcome';
 
 const OnBoarding = () => {
   // Hooks

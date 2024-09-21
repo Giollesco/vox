@@ -33,17 +33,18 @@ module.exports = {
     900: '#171717',
   },
   primary: {
-    50: '#F1F9D5',
-    100: '#E8F6B0',
-    200: '#DFF38B',
-    300: '#D6F066',
-    400: '#CDFD41',
-    500: '#DEF358',
-    600: '#C9E94F',
-    700: '#B4E045',
-    800: '#9ED73C',
-    900: '#89CE32',
+    50: '#F3F9E2', // Lighter, closer to primary.500
+    100: '#EAF6C9', // Slightly darker
+    200: '#E2F3B0', // More yellow-green, blending with primary.500
+    300: '#D9F198', // Shift towards the hue of primary.500
+    400: '#D1EE7F', // Closer to primary.500, lighter
+    500: '#DEF358', // Keep this as is
+    600: '#C8E14F', // Darker but maintaining the yellow-green tone
+    700: '#B3CF45', // Slightly darker than 600
+    800: '#9EBD3C', // Approaching darker green tones
+    900: '#89AC32', // Darker, muted version of primary.500
   },
+
   success: {
     50: '#F0FDF4',
     100: '#DCFCE7',

@@ -34,7 +34,6 @@ import { useAuth } from '@/core';
 import { colors, Text } from '@/ui';
 import { STARTING_POINTS } from '@/utils/data';
 
-import type { Lesson } from '../data';
 import {
   _Android_thumbanailImageStyles,
   _panGestureHandlerProps,
@@ -71,7 +70,6 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 // Props
 interface IProps {
-  lesson: Lesson;
   height: number;
   width: number;
   isShowingDetails: Animated.SharedValue<boolean>;
@@ -79,7 +77,6 @@ interface IProps {
 }
 
 const Block = ({
-  lesson,
   height,
   width,
   isShowingDetails,
@@ -381,7 +378,7 @@ const Block = ({
                           paddingBottom: 16,
                         }}
                       >
-                        <LineGraph progress={lesson.progress} />
+                        <LineGraph progress={0.5} />
                       </View>
                     </Animated.View>
                   </Animated.View>

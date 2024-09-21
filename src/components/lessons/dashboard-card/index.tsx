@@ -3,7 +3,6 @@ import React from 'react';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
 import Block from './card/components/block';
-import { lessons } from './card/data';
 
 type IProps = {
   height: number;
@@ -30,7 +29,6 @@ const LessonDashboardCard = ({ height, width }: IProps) => {
       <Animated.View style={[{ zIndex: 300, width }]}>
         {/* Cards */}
         <Block
-          lesson={lessons}
           isShowingDetails={isShowingDetails}
           showingStateChanged={onShowingStateChanged}
           height={height}

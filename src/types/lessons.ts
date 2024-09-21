@@ -2,8 +2,12 @@ export enum GameType {
   SelectMissingWord = 'SelectMissingWord',
   DescribeImage = 'DescribeImage',
 }
-
-export type GameState = 'idle' | 'playing' | 'correct' | 'incorrect';
+export enum GameState {
+  Idle = 0,
+  Playing = 1,
+  Incorrect = 2,
+  Correct = 3,
+}
 
 export type GameOption = {
   value: string;

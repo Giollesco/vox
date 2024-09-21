@@ -54,9 +54,14 @@ export default function MainScreen() {
             zIndex: 10,
             height: HEADER_HEIGHT,
             paddingTop: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          <View className="items-end">
+          <View
+            className="items-end"
+            style={{ position: 'absolute', top: 20, right: 0 }}
+          >
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={auth.signOut}

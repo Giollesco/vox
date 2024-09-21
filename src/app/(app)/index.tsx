@@ -1,7 +1,7 @@
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { MotiView } from 'moti';
 import React from 'react';
-import { Platform, useWindowDimensions } from 'react-native';
+import { Platform, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -53,34 +53,38 @@ export default function MainScreen() {
           style={{
             zIndex: 10,
             height: HEADER_HEIGHT,
+            paddingTop: 20,
           }}
         >
-          <View
-            className="w-full flex-row items-center"
-            style={{ opacity: 0.35 }}
-          >
-            <SimpleLineIcons name="logout" size={18} color="black" />
-            <Button variant="link" onPress={auth.signOut} label="Sign out" />
+          <View className="items-end">
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={auth.signOut}
+              style={{ opacity: 0.5, marginBottom: 24, marginRight: 20 }}
+            >
+              <SimpleLineIcons name="logout" size={18} color="black" />
+            </TouchableOpacity>
           </View>
-          <MotiView
-            from={{ opacity: 0, bottom: -10 }}
-            animate={{ opacity: 1, bottom: 0 }}
-          >
-            <Text
-              weight="light"
-              className="w-full text-left text-3xl"
-              style={{ width: CONTAINER_WIDTH, opacity: 0.5 }}
+          <View className="flex-column w-full items-center justify-between gap-2">
+            <MotiView
+              from={{ opacity: 0, bottom: -10 }}
+              animate={{ opacity: 1, bottom: 0 }}
+              delay={0}
             >
-              Dobrodošli natrag,
-            </Text>
-            <Text
-              className="w-full text-left text-3xl"
-              style={{ width: CONTAINER_WIDTH }}
-              weight="semiBold"
+              <Text className="text-md text-center opacity-50" weight="medium">
+                Dobrodošli natrag,
+              </Text>
+            </MotiView>
+            <MotiView
+              from={{ opacity: 0, bottom: -10 }}
+              animate={{ opacity: 1, bottom: 0 }}
+              delay={100}
             >
-              {`${auth?.account?.firstName} ${auth?.account?.lastName}`}
-            </Text>
-          </MotiView>
+              <Text className="text-center text-5xl" weight="medium">
+                {`${auth?.account?.firstName} ${auth?.account?.lastName}`}
+              </Text>
+            </MotiView>
+          </View>
         </View>
 
         <View
@@ -114,7 +118,7 @@ export default function MainScreen() {
                 gestureActive={audioExerciseGestureActive}
                 exercise={APP_DUMMY_EXERCISE}
                 customData={{
-                  color: colors.primary[500],
+                  color: '#FBB1FF',
                   title: 'Audio vježbe',
                   description: 'Vježbajte svoj izgovor',
                   footerText: `Ukupan broj vježbi: ${audioExercises.length}`,

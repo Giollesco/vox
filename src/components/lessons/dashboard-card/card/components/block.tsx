@@ -49,11 +49,11 @@ import {
   _thumbnailStyles,
 } from './Animated/Styles';
 import CloseButton from './close-button';
-import Content from './content';
 import { LineGraph } from './line-graph';
+import DashboardLessonContent from '@/app/lessons/dashboard-content';
 
 // Constants
-export const THUMBNAIL_SCALE_FACTOR = 1.2;
+export const THUMBNAIL_SCALE_FACTOR = 1.35;
 export const DESCRIPTION_HEIGHT = 40;
 const WINDOW = Dimensions.get('window');
 const SPRING_CONFIG: WithSpringConfig = {
@@ -296,71 +296,48 @@ const Block = ({
                     >
                       {/* Top row */}
                       <View
-                        className="w-full flex-row justify-between align-middle"
-                        style={{ alignItems: 'center' }}
+                        className="w-full justify-between align-middle"
+                        // style={{ alignItems: 'center' }}
                       >
                         <MotiView
                           from={{ opacity: 0, bottom: -10 }}
                           animate={{ opacity: 1, bottom: 0 }}
+                          delay={150}
+                        >
+                          <Text
+                            numberOfLines={2}
+                            weight="semiBold"
+                            style={{
+                              fontSize: 14,
+                              opacity: 0.5,
+                              marginBottom: 8,
+                            }}
+                          >
+                            {`Razina ${account?.startingPoint}: ${
+                              STARTING_POINTS.find(
+                                (point) =>
+                                  point.level === account?.startingPoint
+                              )?.text
+                            }`}
+                          </Text>
+                        </MotiView>
+                        <MotiView
+                          from={{ opacity: 0, bottom: -10 }}
+                          animate={{ opacity: 1, bottom: 0 }}
                           delay={100}
+                          style={{ marginBottom: 8 }}
                         >
                           <Text
                             weight="semiBold"
                             style={{
                               fontSize: 36,
-                              height: 40,
-                              lineHeight: 40,
-                              minWidth: '50%',
+                              lineHeight: 36,
                             }}
                           >
-                            Lekcije
+                            Učimo engleski{'\n'}zajedno
+                            {/* // TODO: Add langauge based on onboarding info */}
                           </Text>
                         </MotiView>
-                        <MotiView
-                          from={{ opacity: 0, bottom: -10 }}
-                          animate={{ opacity: 1, bottom: 0 }}
-                          delay={150}
-                          style={{
-                            borderLeftColor: colors.charcoal['600'],
-                            borderLeftWidth: 1,
-                            paddingLeft: 16,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              opacity: 0.35,
-                            }}
-                          >
-                            Razina
-                          </Text>
-                          <Text
-                            numberOfLines={2}
-                            weight="semiBold"
-                            style={{
-                              fontSize: 16,
-                              maxWidth: '80%',
-                            }}
-                          >
-                            {
-                              STARTING_POINTS.find(
-                                (point) =>
-                                  point.level === account?.startingPoint
-                              )?.text
-                            }
-                          </Text>
-                        </MotiView>
-                      </View>
-
-                      {/* Line graph */}
-                      <View
-                        style={{
-                          height: height / 2 - 48,
-                          paddingVertical: 24,
-                          paddingBottom: 16,
-                        }}
-                      >
-                        <LineGraph progress={lesson.progress} />
                       </View>
 
                       {/* Bottom row */}
@@ -395,44 +372,26 @@ const Block = ({
                           </Text>
                         </MotiView>
                       </View>
+
+                      {/* Line graph */}
+                      <View
+                        style={{
+                          height: height / 2 - 48,
+                          paddingVertical: 24,
+                          paddingBottom: 16,
+                        }}
+                      >
+                        <LineGraph progress={lesson.progress} />
+                      </View>
                     </Animated.View>
                   </Animated.View>
-
-                  {/* Description */}
-                  {Platform.OS === 'ios' && (
-                    <BlurView
-                      style={[
-                        styles.descriptionWrapper,
-                        {
-                          height: DESCRIPTION_HEIGHT || 40,
-                          backgroundColor: '#00000040',
-                        },
-                      ]}
-                    >
-                      <MotiView
-                        from={{ opacity: 0, bottom: -10 }}
-                        animate={{ opacity: 1, bottom: 0 }}
-                        delay={300}
-                      >
-                        <Text
-                          numberOfLines={1}
-                          weight="medium"
-                          style={[
-                            styles.description,
-                            {
-                              color: '#000',
-                            },
-                          ]}
-                        >
-                          {lesson.description}
-                        </Text>
-                      </MotiView>
-                    </BlurView>
-                  )}
                 </Animated.View>
               </Pressable>
             </AnimatedPanGestureHandler>
-            <Content isShowingDetails={isShowingContent} height={height} />
+            <DashboardLessonContent
+              isShowingDetails={isShowingContent}
+              height={height}
+            />
           </AnimatedScrollView>
 
           {/* Close button */}
@@ -480,7 +439,7 @@ const styles = StyleSheet.create({
   blockStyle: {
     flex: 1,
     zIndex: 5,
-    backgroundColor: colors.grey.dark,
+    backgroundColor: colors.primary['500'],
     paddingVertical: 32,
     paddingHorizontal: 24,
   },

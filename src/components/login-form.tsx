@@ -46,7 +46,7 @@ export const LoginForm = ({ onSubmit = () => {}, loading }: LoginFormProps) => {
       <View
         style={{
           paddingHorizontal: 10,
-          marginBottom: bottom + 40,
+          marginBottom: Math.max(bottom, 32) + 40,
           flexDirection: 'column',
           alignItems: 'center',
           gap: 10,

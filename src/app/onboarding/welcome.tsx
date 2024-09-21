@@ -23,7 +23,7 @@ type Props = {
   isAnimationRunning: SharedValue<boolean>;
 };
 
-export const Welcome = ({ y, index, isAnimationRunning }: Props) => {
+const Welcome = ({ y, index, isAnimationRunning }: Props) => {
   // Hooks
   const { steps, setSteps } = useOnboarding();
   const [assets] = useAssets([require('assets/icons/language-sign-black.png')]);
@@ -140,6 +140,8 @@ export const Welcome = ({ y, index, isAnimationRunning }: Props) => {
     </View>
   );
 };
+
+export default React.memo(Welcome);
 
 const useOnboardingAnimatedView = () => {
   return useAnimationState({

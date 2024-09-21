@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { router, Stack } from 'expo-router';
 import React from 'react';
-import { TouchableOpacity, useWindowDimensions } from 'react-native';
+import { Platform, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Directions, Gesture } from 'react-native-gesture-handler';
 import Animated, {
   FadeIn,
@@ -36,6 +36,8 @@ export default function AudioList() {
   const offsetY = useSharedValue(0);
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
+  const scrollDirection = useSharedValue(1); // 1 = right, -1 = left
+  const lastScrollOffset = useSharedValue(0);
 
   function clamp(val: number, min: number, max: number) {
     return Math.min(Math.max(val, min), max);
@@ -138,10 +140,12 @@ export default function AudioList() {
           overScrollMode="never"
           alwaysBounceHorizontal={false}
           alwaysBounceVertical={false}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           bounces={false}
           scrollEventThrottle={16}
-          decelerationRate={0.1}
-          onScrollBeginDrag={() => {
+          // decelerationRate={0.1}
+          onScrollBeginDrag={(e) => {
             gestureActive.value = withTiming(1);
           }}
           onScrollEndDrag={() => {
@@ -152,6 +156,13 @@ export default function AudioList() {
           }}
           onMomentumScrollEnd={() => {
             gestureActive.value = withTiming(0);
+          }}
+          onScroll={(e) => {
+            // Calculate scroll direction
+            const currentScrollOffset = e.nativeEvent.contentOffset.x;
+            scrollDirection.value =
+              currentScrollOffset > lastScrollOffset.value ? 1 : -1;
+            lastScrollOffset.value = withTiming(currentScrollOffset);
           }}
           scrollToOverflowEnabled={false}
           contentContainerStyle={[
@@ -193,6 +204,7 @@ export default function AudioList() {
                       cardWidth={CARD_WIDTH}
                       cardHeight={CARD_HEIGHT}
                       gestureActive={gestureActive}
+                      scrollDirection={scrollDirection}
                     />
                   </Animated.View>
                 ))}
@@ -201,17 +213,19 @@ export default function AudioList() {
           }
 
           {/* Animated blur view */}
-          <AnimatedBlurView
-            style={{
-              width: CONTAINER_WIDTH,
-              height: CONTAINER_HEIGHT + CARD_HEIGHT,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 1,
-            }}
-            animatedProps={animatedBlurProps}
-          />
+          {Platform.OS === 'macos' && (
+            <AnimatedBlurView
+              style={{
+                width: CONTAINER_WIDTH,
+                height: CONTAINER_HEIGHT + CARD_HEIGHT,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 1,
+              }}
+              animatedProps={animatedBlurProps}
+            />
+          )}
         </Animated.ScrollView>
         {/* </GestureDetector> */}
 

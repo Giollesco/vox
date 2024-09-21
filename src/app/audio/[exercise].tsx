@@ -320,6 +320,11 @@ export default function AudioList() {
                 exercise.words[wordIndex].text === whisper.slugText
               }
               onPress={onRecord}
+              disabled={
+                whisper.isLoading ||
+                !whisper.isModelLoaded ||
+                whisper.isTranscribing
+              }
             />
           </MotiView>
           <MotiView

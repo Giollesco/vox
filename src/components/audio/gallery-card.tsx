@@ -22,6 +22,7 @@ interface ExerciseCardProps {
   cardHeight: number;
   index: number;
   gestureActive: SharedValue<number>;
+  scrollDirection?: SharedValue<number>;
   customData?: {
     title: string;
     description: string;
@@ -36,6 +37,7 @@ export default function ExerciseCard({
   cardHeight,
   cardWidth,
   gestureActive,
+  scrollDirection,
   customData,
 }: ExerciseCardProps) {
   // Constants
@@ -62,8 +64,8 @@ export default function ExerciseCard({
       router.replace('/audio');
     } else {
       router.push({
-        // @ts-expect-error
         pathname: '/audio/[exercise]',
+        // @ts-ignore
         params: {
           exerciseName: exercise.title,
           color,
@@ -92,8 +94,14 @@ export default function ExerciseCard({
     return {
       transform: [
         { perspective: 850 },
-        // { rotateZ: gestureActive.value * 2 + 'deg' },
-        { rotateY: gestureActive.value * 10 + 'deg' },
+        {
+          rotateZ:
+            gestureActive.value * 2 * (scrollDirection?.value || 1) + 'deg',
+        },
+        {
+          rotateY:
+            gestureActive.value * 15 * (scrollDirection?.value || 1) + 'deg',
+        },
       ],
     };
   });
@@ -113,8 +121,8 @@ export default function ExerciseCard({
     <Link
       disabled={isDummy || gestureActive.value !== 0}
       href={{
-        // @ts-expect-error
         pathname: '/audio/[exercise]',
+        // @ts-ignore
         params: {
           exerciseName: exercise.title,
           color,

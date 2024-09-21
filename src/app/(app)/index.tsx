@@ -1,7 +1,7 @@
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { MotiView } from 'moti';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,7 +19,7 @@ import {
 } from '@/ui';
 import { APP_DUMMY_EXERCISE } from '@/utils/data';
 
-export default function Feed() {
+export default function MainScreen() {
   // Hooks
   const auth = useAuth();
   const { width, height } = useWindowDimensions();
@@ -27,12 +27,13 @@ export default function Feed() {
   const audioExerciseGestureActive = useSharedValue(0);
 
   // Constants
-  const HEADER_HEIGHT = 180;
-  const FOOTER_HEIGHT = (height - top - bottom - 60) / 3;
   const SPACE = 32;
+  const BOTTOM = Platform.OS === 'ios' ? bottom : SPACE / 2;
+  const HEADER_HEIGHT = 180;
+  const FOOTER_HEIGHT = (height - top - BOTTOM - 60) / 3;
   const CONTAINER_WIDTH = width - SPACE;
   const MAIN_CARD_HEIGHT =
-    height - HEADER_HEIGHT - FOOTER_HEIGHT - top - bottom * 1.5 - SPACE;
+    height - HEADER_HEIGHT - FOOTER_HEIGHT - top - BOTTOM * 1.5 - SPACE;
 
   // Fetching data
   const { data: audioExercises } = useAudioExercises();

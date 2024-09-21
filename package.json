@@ -12,10 +12,13 @@
     "preinstall": "npx only-allow pnpm",
     "start:production": "cross-env APP_ENV=production pnpm run start",
     "prebuild:production": "cross-env APP_ENV=production pnpm run prebuild",
+    "prebuild:development": "cross-env APP_ENV=development pnpm run prebuild",
     "android:production": "cross-env APP_ENV=production pnpm run android",
     "ios:production": "cross-env APP_ENV=production pnpm run ios",
     "build:development:ios": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile development --platform ios",
     "build:development:android": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile development --platform android ",
+    "build:preview:android": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile preview --platform android ",
+    "build:development:android:local": "cross-env APP_ENV=development EXPO_NO_DOTENV=1 eas build --profile development --platform android --local",
     "build:production:ios": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform ios",
     "build:production:android": "cross-env APP_ENV=production EXPO_NO_DOTENV=1 eas build --profile production --platform android ",
     "postinstall": "husky install",
@@ -27,7 +30,7 @@
     "test:ci": "pnpm run test --coverage",
     "test:watch": "pnpm run test --watch",
     "install-maestro": "curl -Ls 'https://get.maestro.mobile.dev' | bash",
-    "e2e-test": "maestro test .maestro/ -e APP_ID=com.vox.development"
+    "e2e-test": "maestro test .maestro/ -e APP_ID=com.vox"
   },
   "dependencies": {
     "@expo-google-fonts/urbanist": "^0.2.3",
@@ -62,6 +65,7 @@
     "expo-splash-screen": "0.27.5",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
+    "expo-updates": "~0.25.25",
     "ffmpeg-kit-react-native": "^6.0.2",
     "i18next": "^22.5.1",
     "lodash.memoize": "^4.1.2",

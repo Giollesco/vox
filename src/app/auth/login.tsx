@@ -5,15 +5,26 @@ import { KeyboardAvoidingView } from 'react-native';
 import { account } from '@/api';
 import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
-import { useAuth } from '@/core';
+import { useAuth, useIsFirstTime } from '@/core';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
 import { FocusAwareStatusBar, ScrollView, View } from '@/ui';
 
 export default function Login() {
   // Hooks
+  const [isFirstTime, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
   const signIn = useAuth.use.signIn();
-  useSoftKeyboardEffect();
+  // useSoftKeyboardEffect();
+
+  // Effects
+  React.useEffect(() => {
+    // If it's the first time user should be redirected to the onboarding.
+    // If user came to login screen from onboarding, we should set isFirstTime to false.
+    // because we don't want to redirect user to onboarding again.
+    if (isFirstTime) {
+      setIsFirstTime(false);
+    }
+  }, [isFirstTime, setIsFirstTime]);
 
   // Variables
   const [loading, setLoading] = useState<boolean>(false);

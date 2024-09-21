@@ -18,6 +18,7 @@ type Props = {
   isWordCorrect: boolean;
   progress: SharedValue<number>;
   isRecording: boolean;
+  disabled: boolean;
   onPress: () => void;
 };
 
@@ -27,6 +28,7 @@ export const RecordButton = ({
   isWordCorrect,
   isRecording,
   progress,
+  disabled,
   onPress,
 }: Props) => {
   // Hooks
@@ -34,6 +36,7 @@ export const RecordButton = ({
 
   // Gesture
   const gesture = Gesture.Tap()
+    .enabled(!disabled)
     .maxDuration(10000)
     .onTouchesDown(() => {
       isActive.value = 1;
@@ -61,7 +64,7 @@ export const RecordButton = ({
 
   const animatedButtonStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: '#000000',
+      backgroundColor: disabled ? '#333333' : '#000000',
       // backgroundColor: interpolateColor(
       //   progress.value,
       //   [0, 1],

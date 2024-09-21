@@ -30,17 +30,15 @@ const _useAuth = create<AuthState>((set, get) => ({
     // Set token
     setToken(token);
     set({ status: 'signIn' as AuthState['status'], token });
-    // Set user
-    const user = await account.get();
-    set({ user });
     // Set account
     let currentAccount = await database.getDocument(
       Database.English, // databaseId
       Collection.Accounts, // collectionId
-      user.$id, // documentId
+      token, // documentId
       [] // queries (optional)
     );
     set({ account: currentAccount as Account });
+    set({ user: currentAccount as any });
   },
   signOut: async () => {
     removeToken();

@@ -21,7 +21,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   updates: {
     fallbackToCacheTimeout: 0,
+    url: 'https://u.expo.dev/698e9cb2-ddd4-4747-9dcb-8be5ca9c01d2',
   },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
+
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
@@ -80,6 +85,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       {
         android: {
           kotlinVersion: '1.7.22', // this is for softinput package
+          minSdkVersion: 24,
         },
       },
     ],

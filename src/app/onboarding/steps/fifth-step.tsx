@@ -163,7 +163,7 @@ const FifthStep = ({ y, index, isAnimationRunning }: Props) => {
         <View
           className="h-[80] w-full justify-center"
           style={{
-            height: 240,
+            height: 180,
             alignItems: 'center',
             justifyContent: 'flex-end',
             position: 'absolute',

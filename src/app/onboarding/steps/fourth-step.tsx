@@ -16,6 +16,7 @@ import SwipeButton from '@/components/onboarding/swipe-button';
 import { isNextStepEnabled, useOnboarding } from '@/stores';
 import { Level } from '@/types';
 import { colors, Text, View } from '@/ui';
+import { MINUTES_PER_DAY } from '@/utils/data';
 
 type Props = {
   y: SharedValue<number>;
@@ -92,39 +93,30 @@ const FourthStep = ({ y, index, isAnimationRunning }: Props) => {
           <Progress steps={5} currentStep={4} />
         </MotiView>
       </View>
+
       <View
         className="flex-1"
         style={{ marginTop: 40, paddingHorizontal: 10, gap: 3 }}
       >
-        <MotiView state={onboardingAnimationState} delay={150}>
-          <SelectOption
-            text="5 minuta"
-            selected={minutesPerDay === Level.L1}
-            onSelect={() => {
-              updateFourthStep(minutesPerDay === Level.L1 ? null : Level.L1);
-            }}
-          />
-        </MotiView>
-
-        <MotiView state={onboardingAnimationState} delay={200}>
-          <SelectOption
-            text="10 minuta"
-            selected={minutesPerDay === Level.L2}
-            onSelect={() => {
-              updateFourthStep(minutesPerDay === Level.L2 ? null : Level.L2);
-            }}
-          />
-        </MotiView>
-
-        <MotiView state={onboardingAnimationState} delay={250}>
-          <SelectOption
-            text="15+ minuta"
-            selected={minutesPerDay === Level.L3}
-            onSelect={() => {
-              updateFourthStep(minutesPerDay === Level.L3 ? null : Level.L3);
-            }}
-          />
-        </MotiView>
+        {MINUTES_PER_DAY.map((minute, index) => {
+          return (
+            <MotiView
+              state={onboardingAnimationState}
+              delay={150 + index * 50}
+              key={index}
+            >
+              <SelectOption
+                text={minute.text}
+                selected={minutesPerDay === minute.level}
+                onSelect={() => {
+                  updateFourthStep(
+                    minutesPerDay === minute.level ? null : minute.level
+                  );
+                }}
+              />
+            </MotiView>
+          );
+        })}
       </View>
 
       <View style={{ marginBottom: 100, alignItems: 'center' }}>

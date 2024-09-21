@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { createSelectors } from '@/core';
+import { createSelectors } from '@/core/utils';
 import type {
   Language,
   Level,

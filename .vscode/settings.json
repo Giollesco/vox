@@ -30,6 +30,7 @@
     "packages",
     "husky",
     "type-check",
-    "healthcheck"
+    "healthcheck",
+    "platform"
   ]
 }

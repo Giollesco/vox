@@ -235,7 +235,7 @@ const Block = ({
         {Platform.OS !== 'android' ? (
           <BlurView tint="default" intensity={100} style={{ flex: 1 }} />
         ) : (
-          <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.9 }} />
+          <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.5 }} />
         )}
       </Animated.View>
 
@@ -399,32 +399,36 @@ const Block = ({
                   </Animated.View>
 
                   {/* Description */}
-                  <BlurView
-                    intensity={25}
-                    style={[
-                      styles.descriptionWrapper,
-                      { height: DESCRIPTION_HEIGHT || 40 },
-                    ]}
-                  >
-                    <MotiView
-                      from={{ opacity: 0, bottom: -10 }}
-                      animate={{ opacity: 1, bottom: 0 }}
-                      delay={300}
+                  {Platform.OS === 'ios' && (
+                    <BlurView
+                      style={[
+                        styles.descriptionWrapper,
+                        {
+                          height: DESCRIPTION_HEIGHT || 40,
+                          backgroundColor: '#00000040',
+                        },
+                      ]}
                     >
-                      <Text
-                        numberOfLines={1}
-                        weight="medium"
-                        style={[
-                          styles.description,
-                          {
-                            color: '#000',
-                          },
-                        ]}
+                      <MotiView
+                        from={{ opacity: 0, bottom: -10 }}
+                        animate={{ opacity: 1, bottom: 0 }}
+                        delay={300}
                       >
-                        {lesson.description}
-                      </Text>
-                    </MotiView>
-                  </BlurView>
+                        <Text
+                          numberOfLines={1}
+                          weight="medium"
+                          style={[
+                            styles.description,
+                            {
+                              color: '#000',
+                            },
+                          ]}
+                        >
+                          {lesson.description}
+                        </Text>
+                      </MotiView>
+                    </BlurView>
+                  )}
                 </Animated.View>
               </Pressable>
             </AnimatedPanGestureHandler>
@@ -488,12 +492,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     // maxWidth: WINDOW.width * 0.85,
     zIndex: 10,
-    backgroundColor: '#00000040',
+    // backgroundColor: '#00000040',
     overflow: 'hidden',
   },
   description: {
     fontSize: WINDOW.width * 0.04,
-    fontFamily: 'Poppins_600SemiBold',
     opacity: 0.75,
     letterSpacing: -0.5,
     textAlign: 'center',

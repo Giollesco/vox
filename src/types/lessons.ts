@@ -1,4 +1,9 @@
-export type GameType = 'SelectMissingWord' | 'DescribeImage';
+export enum GameType {
+  SelectMissingWord = 'SelectMissingWord',
+  DescribeImage = 'DescribeImage',
+}
+
+export type GameState = 'idle' | 'playing' | 'correct' | 'incorrect';
 
 export type GameOption = {
   value: string;
@@ -26,6 +31,7 @@ export type Game = BaseGame &
   Partial<DescribeImageGame>;
 
 export type Lesson = {
+  id: string; // TODO: Until we have a real backend, we can use this to identify lessons
   title: string;
   description: string;
   games: Array<Game>;

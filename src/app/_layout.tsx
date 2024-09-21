@@ -78,19 +78,10 @@ function RootLayoutNav() {
   }
   return (
     <Providers>
-      <Stack>
-        <Stack.Screen
-          name="(app)"
-          options={{ headerShown: false, animation: 'fade' }}
-        />
-        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="audio"
-          options={{
-            headerShown: false,
-            animation: 'fade',
-          }}
-        />
+      <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
+        <Stack.Screen name="(app)" />
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="audio" />
       </Stack>
     </Providers>
   );

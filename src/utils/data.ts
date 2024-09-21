@@ -1,5 +1,5 @@
-import type { AudioExercise } from '@/types';
-import { Level } from '@/types';
+import type { AudioExercise, Lesson } from '@/types';
+import { GameType, Level } from '@/types';
 
 export const INTERESTS = [
   'Putovanja',
@@ -110,3 +110,36 @@ export const APP_DUMMY_EXERCISE: AudioExercise = {
     },
   ],
 };
+
+export const MOCK_LESSONS: Array<Lesson> = [
+  {
+    id: '1',
+    title: 'Brojevi',
+    description: 'U ovoj lekciji ćemo naučiti brojeve od 1 do 10.',
+    games: [
+      {
+        title: 'Odaberite riječ koja nedostaje',
+        description: 'Odaberite riječ koja nedostaje u rečenici.',
+        type: GameType.SelectMissingWord,
+        sentence: 'One, Two, Three, Four, ___,',
+        options: [
+          { value: 'Five', isCorrect: true },
+          { value: 'Six', isCorrect: false },
+          { value: 'Seven', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite pripadajuću riječ za sliku.',
+        description: 'Odaberite broj koji predstavlja riješenje.',
+        type: GameType.DescribeImage,
+        imageUrl:
+          'https://media.baamboozle.com/uploads/images/225057/1637130308_50234.jpeg',
+        options: [
+          { value: 'Three', isCorrect: false },
+          { value: 'Four', isCorrect: true },
+          { value: 'Five', isCorrect: false },
+        ],
+      },
+    ],
+  },
+];

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
@@ -9,6 +10,7 @@ import type Animated from 'react-native-reanimated';
 import { colors, Text, View } from '@/ui';
 import { MOCK_LESSONS } from '@/utils/data';
 import { Link } from 'expo-router';
+import Markdown from '@ronradtke/react-native-markdown-display';
 
 interface IProps {
   height: number;
@@ -24,7 +26,15 @@ const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
     console.log(lesson);
   }
 
-  console.log('RENDERED');
+  const copy = `# h1 Heading 8-)
+
+**This is some bold text!**
+
+This is normal text
+---
+
+# Test
+`;
 
   return (
     <View style={[styles.container, { minHeight: windowHeight - height }]}>
@@ -59,6 +69,12 @@ const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
           </TouchableOpacity>
         </Link>
       ))}
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={{ height: '100%' }}
+      >
+        <Markdown>{copy}</Markdown>
+      </ScrollView>
     </View>
   );
 };

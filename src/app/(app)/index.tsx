@@ -9,14 +9,7 @@ import { useAudioExercises } from '@/api/audio';
 import ExerciseCard from '@/components/audio/gallery-card';
 import LessonDashboardCard from '@/components/lessons/dashboard-card';
 import { useAuth } from '@/core';
-import {
-  Button,
-  colors,
-  FocusAwareStatusBar,
-  SafeAreaView,
-  Text,
-  View,
-} from '@/ui';
+import { colors, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
 import { APP_DUMMY_EXERCISE } from '@/utils/data';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -33,11 +26,10 @@ export default function MainScreen() {
   // Constants
   const SPACE = 32;
   const BOTTOM = Platform.OS === 'ios' ? bottom : SPACE / 2;
-  const HEADER_HEIGHT = 180;
   const FOOTER_HEIGHT = (height - top - BOTTOM - 60) / 3;
   const CONTAINER_WIDTH = width - SPACE;
-  const MAIN_CARD_HEIGHT =
-    height - HEADER_HEIGHT - FOOTER_HEIGHT - top - BOTTOM * 1.5 - SPACE;
+  const MAIN_CARD_HEIGHT = 280;
+  const HEADER_HEIGHT = height - FOOTER_HEIGHT - MAIN_CARD_HEIGHT - SPACE * 4;
 
   // Fetching data
   const { data: audioExercises } = useAudioExercises();

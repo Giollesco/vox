@@ -1,5 +1,5 @@
 import { MotiView } from 'moti';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 
 import Block from './card/components/block';
@@ -7,9 +7,14 @@ import Block from './card/components/block';
 type IProps = {
   height: number;
   width: number;
+  defaultOpen?: boolean;
 };
 
-const LessonDashboardCard = ({ height, width }: IProps) => {
+const LessonDashboardCard = ({
+  height,
+  width,
+  defaultOpen = false,
+}: IProps) => {
   // Variables
   const isShowingDetails = useSharedValue(false);
 
@@ -33,6 +38,7 @@ const LessonDashboardCard = ({ height, width }: IProps) => {
           showingStateChanged={onShowingStateChanged}
           height={height}
           width={width}
+          defaultOpen={defaultOpen}
         />
       </Animated.View>
     </MotiView>

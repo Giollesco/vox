@@ -1,7 +1,7 @@
 // Animated
 import { BlurView } from 'expo-blur';
 import { MotiView } from 'moti';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dimensions,
   Platform,
@@ -73,6 +73,7 @@ interface IProps {
   height: number;
   width: number;
   isShowingDetails: Animated.SharedValue<boolean>;
+  defaultOpen: boolean;
   showingStateChanged: () => void;
 }
 
@@ -80,6 +81,7 @@ const Block = ({
   height,
   width,
   isShowingDetails,
+  defaultOpen,
   showingStateChanged,
 }: IProps) => {
   // Hooks
@@ -106,7 +108,15 @@ const Block = ({
   const Android_ThumbnailBorderRadiusBottom = useSharedValue(32); //overflow: 'hidden' not working on android
   const closeBtnOpacity = useSharedValue(0);
 
-  // Methods
+  // Effects
+  useEffect(() => {
+    if (defaultOpen) {
+      setTimeout(() => {
+        showAppDetails();
+      }, 500);
+    }
+  }, [defaultOpen]);
+
   function showAppDetails() {
     if (isShowingContent.value || showingDetails.value) return;
     showingStateChanged();

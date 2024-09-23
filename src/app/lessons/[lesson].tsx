@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { GameHandler } from '@/components/lessons';
 import { useLesson } from '@/stores';
 import { GameState } from '@/types';
 import { colors, Text, View } from '@/ui';
 import { MOCK_LESSONS } from '@/utils/data';
+import * as Haptics from 'expo-haptics';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
   StyleSheet,
@@ -12,13 +12,14 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { showMessage } from 'react-native-flash-message';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import GameHandler from '@/components/lessons/game-handler';
+import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 
 interface Props {}
 
@@ -39,6 +40,15 @@ const Lesson = ({}: Props) => {
 
   // States
   const gameState = useSharedValue<GameState>(GameState.Idle);
+  const [jsGameState, setJsGameState] = React.useState<GameState>(
+    GameState.Idle
+  );
+
+  // Functions
+  function syncGameState(newGameState: GameState) {
+    setJsGameState(newGameState);
+    gameState.value = withTiming(newGameState, { duration });
+  }
 
   // Use useEffect to run the lesson setup only after the component mounts
   React.useEffect(() => {
@@ -72,42 +82,57 @@ const Lesson = ({}: Props) => {
 
   // Functions
   function nextGame() {
-    if (lessonStore.currentGameIndex < lessonStore.numberOfGames - 1) {
-      if (lessonStore.checkAnswer()) {
-        gameState.value = withTiming(GameState.Correct, { duration });
-        showMessage({
-          message: 'Točan odgovor!',
-          description: `${lessonStore.currentAnswer} je točan odgovor.`,
-          type: 'success',
-          duration: infoDuration,
-          icon: 'success',
-          position: 'bottom',
-        });
-        setTimeout(() => {
-          gameState.value = withTiming(GameState.Idle, { duration });
-          lessonStore.nextGame();
-        }, infoDuration);
-      } else {
-        gameState.value = withTiming(GameState.Incorrect, { duration });
-        showMessage({
-          message: 'Netočan odgovor!',
-          description: `${lessonStore.currentAnswer} nije točan odgovor.`,
-          type: 'danger',
-          duration: infoDuration,
-          icon: 'danger',
-          position: 'bottom',
-        });
-        setTimeout(() => {
-          gameState.value = withTiming(GameState.Playing, { duration });
-        }, infoDuration);
-      }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    // If answer is correct and it's not the last game
+    if (
+      lessonStore.checkAnswer() &&
+      lessonStore.currentGameIndex < lessonStore.numberOfGames - 1
+    ) {
+      // Show correct state
+      syncGameState(GameState.Correct);
+      // Wait for infoDuration and then show idle state
+      setTimeout(() => {
+        syncGameState(GameState.Idle);
+      }, infoDuration - duration * 1.75);
+      setTimeout(() => {
+        // Go to next game
+        lessonStore.nextGame();
+      }, infoDuration);
+    } else if (!lessonStore.checkAnswer()) {
+      // If answer is incorrect
+      // Show incorrect state
+      syncGameState(GameState.Incorrect);
+      // Wait for infoDuration and then show playing state
+      setTimeout(() => {
+        syncGameState(GameState.Playing);
+      }, infoDuration);
     } else {
-      gameState.value = withTiming(GameState.Idle, { duration }, () => {
-        runOnJS(router.push)('/');
-        runOnJS(lessonStore.resetState)();
-      });
+      // If it's the last game
+      if (lessonStore.checkAnswer()) {
+        syncGameState(GameState.Correct);
+      } else {
+        syncGameState(GameState.Incorrect);
+      }
+      setTimeout(() => {
+        syncGameState(GameState.Idle);
+        lessonStore.resetState();
+        router.push({
+          pathname: '/',
+          params: {
+            defaultLessonOpen: 'true',
+          },
+        });
+      }, duration * 2);
     }
   }
+
+  const animatedGradientStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(gameState.value !== GameState.Idle ? 1 : 0, {
+        duration,
+      }),
+    };
+  });
 
   return (
     <View style={[styles.container, { width, height }]}>
@@ -120,15 +145,55 @@ const Lesson = ({}: Props) => {
       >
         <GameHandler
           type={lessonStore.currentGame?.type}
-          gameState={gameState}
+          gameState={jsGameState}
+          syncGameState={syncGameState}
         />
+
+        <Animated.View
+          style={[styles.gradientWrapper, { width }, animatedGradientStyle]}
+        >
+          <Canvas style={{ flex: 1 }}>
+            <Rect
+              x={0}
+              y={Math.abs(translateY) - top}
+              width={width}
+              height={300}
+            >
+              <LinearGradient
+                start={vec(0, 0)}
+                end={vec(0, 300)}
+                colors={[
+                  colors.grey.main,
+                  colors.grey.main + 'f1',
+                  colors.grey.main + '00',
+                ]}
+              />
+            </Rect>
+          </Canvas>
+        </Animated.View>
       </Animated.View>
 
       {/* Underlay elements */}
       <View style={[styles.ctaWrapper, { height: spaceAtBottom }]}>
         <View style={{ padding: 20, paddingTop: 0 }}>
-          <TouchableOpacity onPress={nextGame}>
-            <Text style={{ color: 'white' }}>Check answer</Text>
+          <TouchableOpacity
+            onPress={nextGame}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text style={{ color: 'white' }}>
+              {jsGameState === GameState.Playing
+                ? 'Provjerite odgovor'
+                : jsGameState === GameState.Correct
+                ? 'Sljedeće pitanje slijedi...'
+                : jsGameState === GameState.Incorrect
+                ? 'Pokušajte ponovno'
+                : ''}
+            </Text>
+            <FontAwesome6 name="arrow-right-long" size={18} color="white" />
           </TouchableOpacity>
         </View>
       </View>
@@ -160,6 +225,14 @@ const styles = StyleSheet.create({
     // paddingTop: 20,
     paddingHorizontal: 12,
   },
+  gradientWrapper: {
+    width: '100%',
+    height: 300,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 10,
+  },
 });
 
-export default Lesson;
+export default React.memo(Lesson);

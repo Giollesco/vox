@@ -18,6 +18,7 @@ import {
   View,
 } from '@/ui';
 import { APP_DUMMY_EXERCISE } from '@/utils/data';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function MainScreen() {
   // Hooks
@@ -25,6 +26,9 @@ export default function MainScreen() {
   const { width, height } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
   const audioExerciseGestureActive = useSharedValue(0);
+  const { defaultLessonOpen } = useLocalSearchParams<{
+    defaultLessonOpen: 'true' | 'false';
+  }>();
 
   // Constants
   const SPACE = 32;
@@ -102,6 +106,7 @@ export default function MainScreen() {
           <LessonDashboardCard
             height={MAIN_CARD_HEIGHT}
             width={CONTAINER_WIDTH}
+            defaultOpen={defaultLessonOpen === 'true'}
           />
         </View>
 

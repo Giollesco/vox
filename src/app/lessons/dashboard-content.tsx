@@ -24,6 +24,8 @@ const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
     console.log(lesson);
   }
 
+  console.log('RENDERED');
+
   return (
     <View style={[styles.container, { minHeight: windowHeight - height }]}>
       {MOCK_LESSONS.map((lesson, index) => (
@@ -85,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardLessonContent;
+export default React.memo(DashboardLessonContent);

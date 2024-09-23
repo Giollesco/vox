@@ -121,7 +121,7 @@ export const MOCK_LESSONS: Array<Lesson> = [
         title: 'Odaberite riječ koja nedostaje',
         description: 'Odaberite riječ koja nedostaje u rečenici.',
         type: GameType.SelectMissingWord,
-        sentence: 'One, Two, Three, Four, ___,',
+        sentence: 'One, Two, Three, Four, ____,',
         options: [
           { value: 'Five', isCorrect: true },
           { value: 'Six', isCorrect: false },
@@ -129,7 +129,7 @@ export const MOCK_LESSONS: Array<Lesson> = [
         ],
       },
       {
-        title: 'Odaberite pripadajuću riječ za sliku.',
+        title: 'Odaberite pripadajuću riječ.',
         description: 'Odaberite broj koji predstavlja riješenje.',
         type: GameType.DescribeImage,
         imageUrl:
@@ -138,6 +138,17 @@ export const MOCK_LESSONS: Array<Lesson> = [
           { value: 'Three', isCorrect: false },
           { value: 'Four', isCorrect: true },
           { value: 'Five', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite riječ koja nedostaje',
+        description: 'Odaberite riječ koja nedostaje u rečenici.',
+        type: GameType.SelectMissingWord,
+        sentence: 'One, Two, _____, Four, Five,',
+        options: [
+          { value: 'Eleven', isCorrect: false },
+          { value: 'Six', isCorrect: false },
+          { value: 'Three', isCorrect: true },
         ],
       },
     ],

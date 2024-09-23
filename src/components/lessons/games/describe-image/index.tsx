@@ -2,11 +2,12 @@ import * as React from 'react';
 
 import { Progress } from '@/components/common/progress';
 import { useLesson } from '@/stores';
-import { BaseGame, GameState, SelectMissingWordGame } from '@/types';
+import { BaseGame, DescribeImageGame, GameState } from '@/types';
 import { colors, Text, View } from '@/ui';
 import { MotiView } from 'moti';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { SelectOptionColor, stepParser } from '../utils';
+import { Image } from 'expo-image';
 import SelectOption from '../select-option';
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
   syncGameState: (newGameState: GameState) => void;
 };
 
-export const SelectMissingWord = ({ gameState, syncGameState }: Props) => {
+export const DescribeImage = ({ gameState, syncGameState }: Props) => {
   // Hooks
   const { width } = useWindowDimensions();
   const { numberOfGames, currentGameIndex, currentGame, setCurrentAnswer } =
@@ -22,7 +23,7 @@ export const SelectMissingWord = ({ gameState, syncGameState }: Props) => {
 
   // Data
   const data = React.useMemo(
-    () => currentGame as BaseGame & SelectMissingWordGame,
+    () => currentGame as BaseGame & DescribeImageGame,
     [currentGame]
   );
 
@@ -82,15 +83,9 @@ export const SelectMissingWord = ({ gameState, syncGameState }: Props) => {
         from={{ opacity: 0, translateY: 20 }}
         animate={{ opacity: 1, translateY: 0 }}
         delay={150}
-        style={[
-          styles.bubbleWrapper,
-          { width: width - 40, marginHorizontal: 20 },
-        ]}
+        style={[styles.imageWrapper, { width: width - 40 }]}
       >
-        <Text weight="medium" className="text-center text-lg text-white w-full">
-          {data.sentence}
-        </Text>
-        <View style={styles.bubbleWrapperArrow} />
+        <Image source={data.imageUrl} style={styles.image} />
       </MotiView>
 
       <View
@@ -150,23 +145,15 @@ export const SelectMissingWord = ({ gameState, syncGameState }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  bubbleWrapper: {
-    flexDirection: 'row',
-    backgroundColor: colors.black,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    padding: 20,
+  imageWrapper: {
     marginTop: 20,
     borderRadius: 24,
+    height: 160,
+    marginHorizontal: 20,
   },
-  bubbleWrapperArrow: {
-    position: 'absolute',
-    bottom: -8,
-    right: 40,
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    backgroundColor: colors.black,
-    transform: [{ rotate: '45deg' }],
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 24,
   },
 });

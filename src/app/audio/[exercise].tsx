@@ -30,6 +30,7 @@ import type { AudioExercise } from '@/types';
 import { Button, colors, FocusAwareStatusBar, Text, View } from '@/ui';
 import { SPRING_CONFIG } from '@/utils/config';
 import { getContrastColor } from '@/utils/functions';
+import * as Haptics from 'expo-haptics';
 
 interface AudioListProps {
   exerciseName: string;
@@ -91,6 +92,19 @@ export default function AudioList() {
       setJsExerciseFinished(true);
       exerciseFinished.value = withSpring(1, SPRING_CONFIG);
     }, 100);
+
+    setTimeout(
+      () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
+      TEXT_ENTER_DURATION + 100
+    );
+    setTimeout(
+      () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+      TEXT_ENTER_DURATION + 150
+    );
+    setTimeout(
+      () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft),
+      TEXT_ENTER_DURATION + 200
+    );
 
     // Hide finish animation with callbacks
     setTimeout(() => {

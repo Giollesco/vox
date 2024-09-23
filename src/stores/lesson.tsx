@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { createSelectors } from '@/core/utils';
 import {
   BaseGame,
+  DescribeImageGame,
   Game,
   GameType,
   Lesson,
@@ -48,6 +49,7 @@ const _useLesson = create<LessonStore>((set, get) => ({
     if (currentGameIndex < numberOfGames - 1) {
       set({ currentGameIndex: currentGameIndex + 1 });
       set({ currentGame: lesson?.games[currentGameIndex + 1] });
+      set({ currentAnswer: null });
     }
   },
   resetState: () => {
@@ -62,7 +64,10 @@ const _useLesson = create<LessonStore>((set, get) => ({
   checkAnswer: () => {
     const { currentGame, currentAnswer } = get();
     if (!currentGame) return false;
-    if (currentGame.type === GameType.SelectMissingWord) {
+    if (
+      currentGame.type === GameType.SelectMissingWord ||
+      currentGame.type === GameType.DescribeImage
+    ) {
       let game = currentGame as BaseGame & SelectMissingWordGame;
       const correctAnswer = game.options.find((o) => o.isCorrect)?.value;
       return correctAnswer === currentAnswer;

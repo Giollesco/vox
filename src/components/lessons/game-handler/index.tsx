@@ -1,22 +1,28 @@
 import * as React from 'react';
 
 import { GameState, GameType } from '@/types';
-import { Text } from '@/ui';
+import { DescribeImage } from '../games/describe-image';
 import { SelectMissingWord } from '../games/select-missing-word';
-import { SharedValue } from 'react-native-reanimated';
 
 type Props = {
   type: GameType | undefined;
-  gameState: SharedValue<GameState>;
+  gameState: GameState;
+  syncGameState: (newGameState: GameState) => void;
 };
 
-export const GameHandler = ({ type, gameState }: Props) => {
+const GameHandler = ({ type, gameState, syncGameState }: Props) => {
   if (!type) return null;
 
   const handler: { [key in GameType]: React.JSX.Element } = {
-    SelectMissingWord: <SelectMissingWord gameState={gameState} />,
-    DescribeImage: <Text>DescribeImage</Text>,
+    SelectMissingWord: (
+      <SelectMissingWord gameState={gameState} syncGameState={syncGameState} />
+    ),
+    DescribeImage: (
+      <DescribeImage gameState={gameState} syncGameState={syncGameState} />
+    ),
   };
 
   return handler[type];
 };
+
+export default React.memo(GameHandler);

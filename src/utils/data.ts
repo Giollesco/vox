@@ -47,9 +47,9 @@ export const STARTING_POINTS = [
 ];
 
 export const MINUTES_PER_DAY = [
-  { text: 'Potpuni sam početnik', level: Level.L1 },
-  { text: 'Mogu voditi jednostavne razgovore', level: Level.L2 },
-  { text: 'Govorim sa samopouzdanjem', level: Level.L3 },
+  { text: '5 minuta', level: Level.L1 },
+  { text: '10 minuta', level: Level.L2 },
+  { text: '15+ minuta', level: Level.L3 },
 ];
 
 export const DUMMY_EXERCISE: AudioExercise = {
@@ -115,7 +115,40 @@ export const MOCK_LESSONS: Array<Lesson> = [
   {
     id: '1',
     title: 'Brojevi',
-    description: 'U ovoj lekciji ćemo naučiti brojeve od 1 do 10.',
+    description: `
+U ovoj lekciji ćete naučiti kako pravilno koristiti brojeve na engleskom jeziku. Brojevi su ključni dio svakodnevne komunikacije, bilo da se radi o brojanju, izražavanju količine ili govorenju o vremenu i datumima. Naučit ćete osnovne brojeve (one, two, three...), kao i brojeve veće od deset. Također ćemo proći kroz pravila za korištenje rednih brojeva (first, second, third...) te kako ih pravilno izgovoriti i koristiti u različitim situacijama. Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnom razgovoru na engleskom jeziku.
+
+## Pravila za korištenje brojeva:
+
+1. **Osnovni brojevi** (cardinal numbers) koriste se za izražavanje količine:
+  Primjer: "I have two apples." (Imam dva jabuke.)
+   Osnovni brojevi uključuju one, two, three, four...
+
+2. **Redni brojevi** (ordinal numbers) koriste se za izražavanje redoslijeda:
+   Primjer: "She finished first in the race." (Završila je prva u utrci.)
+   Redni brojevi završavaju na "-st", "-nd", "-rd", ili "-th" ovisno o broju:
+     1st (first), 2nd (second), 3rd (third), 4th (fourth)...
+
+3. **Brojevi veći od deset** slijede određeni obrazac:
+   11 (eleven), 12 (twelve), 13 (thirteen), 14 (fourteen)...
+   Zatim desetice: 20 (twenty), 30 (thirty), 40 (forty), 100 (one hundred), 1000 (one thousand)...
+
+4. **Brojevi u datumu**:
+   Redni brojevi se koriste za izražavanje datuma:
+     Primjer: "My birthday is on the 15th of March." (Moj rođendan je 15. ožujka.)
+
+5. **Pisanje velikih brojeva**:
+   U engleskom jeziku, za brojeve veće od 1000, često se koristi zarez (comma) za odvajanje tisuća:
+     1,000 (one thousand), 1,000,000 (one million).
+   
+6. **Decimalni brojevi**:
+   Za decimalne brojeve koristi se točka (dot):
+     Primjer: "3.14" (three point one four).
+
+
+Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i matematiku u svakodnevnoj komunikaciji. Nakon ove lekcije, imat ćete dobru osnovu za korištenje brojeva u raznim situacijama.
+
+`,
     games: [
       {
         title: 'Odaberite riječ koja nedostaje',

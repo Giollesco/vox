@@ -199,7 +199,7 @@ export default function ExerciseCard({
                   left: -10,
                 }}
               >
-                {exercise.words.map((word, index) => (
+                {[...exercise.words, ...exercise.words].map((word, index) => (
                   <Text
                     key={`word-${word.text}-${index}`}
                     weight="black"

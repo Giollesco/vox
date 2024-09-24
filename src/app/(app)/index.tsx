@@ -184,13 +184,13 @@ export default function MainScreen() {
               style={{
                 height:
                   FOOTER_HEIGHT - (CONTAINER_WIDTH / 4 - SPACE / 3) - SPACE / 2,
-                backgroundColor: colors.grey.dark,
+                backgroundColor: colors.grey.light,
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Text>Analytics</Text>
+              <Text>3</Text>
             </MotiView>
           </View>
         </View>

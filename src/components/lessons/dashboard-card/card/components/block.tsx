@@ -363,7 +363,7 @@ const Block = ({
                             Broj riješenih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>
-                            16 lekcija
+                            4 lekcija
                           </Text>
                         </MotiView>
                         <MotiView
@@ -375,7 +375,7 @@ const Block = ({
                             Broj preostalih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>
-                            4 lekcija
+                            10 lekcija
                           </Text>
                         </MotiView>
                       </View>
@@ -388,7 +388,7 @@ const Block = ({
                           paddingBottom: 16,
                         }}
                       >
-                        <LineGraph progress={0.5} />
+                        <LineGraph progress={0.4} />
                       </View>
                     </Animated.View>
                   </Animated.View>

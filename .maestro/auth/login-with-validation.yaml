@@ -5,10 +5,6 @@ env:
   PASSWORD: 'password'
 ---
 - launchApp
-# - runFlow:
-#     when:
-#       visible: 'Prijavite se'
-#     file: ../utils/onboarding.yaml
 - assertVisible: 'Prijavite se'
 - assertVisible:
     id: 'login-button'

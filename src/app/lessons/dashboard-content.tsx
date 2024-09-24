@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import type Animated from 'react-native-reanimated';
-
-import { colors, Text, View } from '@/ui';
+import LessonAccordion from '@/components/lessons/accordion';
+import { colors, View } from '@/ui';
 import { MOCK_LESSONS } from '@/utils/data';
-import { Link } from 'expo-router';
-import Markdown from '@ronradtke/react-native-markdown-display';
 
 interface IProps {
   height: number;
@@ -21,60 +14,11 @@ const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
   // Hooks
   const windowHeight = useWindowDimensions().height;
 
-  // Functions
-  function handleNavigateToLesson(lesson: string) {
-    console.log(lesson);
-  }
-
-  const copy = `# h1 Heading 8-)
-
-**This is some bold text!**
-
-This is normal text
----
-
-# Test
-`;
-
   return (
     <View style={[styles.container, { minHeight: windowHeight - height }]}>
-      {MOCK_LESSONS.map((lesson, index) => (
-        <Link
-          key={index}
-          href={{
-            pathname: '/lessons/[lesson]',
-            params: { lesson: lesson.id },
-          }}
-          asChild
-        >
-          <TouchableOpacity
-            style={{ marginBottom: 20 }}
-            activeOpacity={0.4}
-            onPress={() => handleNavigateToLesson(lesson.id)}
-          >
-            <View
-              className="flex-row items-center"
-              style={styles.lessonWrapper}
-            >
-              <View style={styles.lessonNumber}>
-                <Text>{index + 1}</Text>
-              </View>
-              <View>
-                <Text weight="bold" className="text-3xl">
-                  {lesson.title}
-                </Text>
-                <Text>{lesson.description}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Link>
+      {[...MOCK_LESSONS, ...MOCK_LESSONS].map((lesson, index) => (
+        <LessonAccordion lesson={lesson} index={index} key={index} />
       ))}
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={{ height: '100%' }}
-      >
-        <Markdown>{copy}</Markdown>
-      </ScrollView>
     </View>
   );
 };

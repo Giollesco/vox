@@ -98,7 +98,7 @@ export const GameFinished = ({}: Props) => {
                 weight="semiBold"
                 style={{ fontSize: 16, textAlign: 'center' }}
               >
-                {lesson?.games.length} pitanja
+                {lesson?.games.length} riječi
               </Text>
             </MotiView>
           </MotiView>

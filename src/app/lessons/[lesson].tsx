@@ -66,13 +66,15 @@ const Lesson = ({}: Props) => {
       transform: [
         {
           scale:
-            gameState.value !== GameState.Idle
+            gameState.value !== GameState.Idle &&
+            gameState.value !== GameState.Finished
               ? withTiming(scaleFactor, { duration })
               : withTiming(1, { duration }),
         },
         {
           translateY:
-            gameState.value !== GameState.Idle
+            gameState.value !== GameState.Idle &&
+            gameState.value !== GameState.Finished
               ? withTiming(translateY, { duration })
               : withTiming(0, { duration }),
         },
@@ -114,23 +116,22 @@ const Lesson = ({}: Props) => {
         syncGameState(GameState.Incorrect);
       }
       setTimeout(() => {
-        syncGameState(GameState.Idle);
-        lessonStore.resetState();
-        router.push({
-          pathname: '/',
-          params: {
-            defaultLessonOpen: 'true',
-          },
-        });
+        syncGameState(GameState.Finished);
       }, duration * 2);
     }
   }
 
   const animatedGradientStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(gameState.value !== GameState.Idle ? 1 : 0, {
-        duration,
-      }),
+      opacity: withTiming(
+        gameState.value !== GameState.Idle &&
+          gameState.value !== GameState.Finished
+          ? 1
+          : 0,
+        {
+          duration,
+        }
+      ),
     };
   });
 
@@ -149,28 +150,31 @@ const Lesson = ({}: Props) => {
           syncGameState={syncGameState}
         />
 
-        <Animated.View
-          style={[styles.gradientWrapper, { width }, animatedGradientStyle]}
-        >
-          <Canvas style={{ flex: 1 }}>
-            <Rect
-              x={0}
-              y={Math.abs(translateY) - top}
-              width={width}
-              height={300}
+        {jsGameState !== GameState.Idle &&
+          jsGameState !== GameState.Finished && (
+            <Animated.View
+              style={[styles.gradientWrapper, { width }, animatedGradientStyle]}
             >
-              <LinearGradient
-                start={vec(0, 0)}
-                end={vec(0, 300)}
-                colors={[
-                  colors.grey.main,
-                  colors.grey.main + 'f1',
-                  colors.grey.main + '00',
-                ]}
-              />
-            </Rect>
-          </Canvas>
-        </Animated.View>
+              <Canvas style={{ flex: 1 }}>
+                <Rect
+                  x={0}
+                  y={Math.abs(translateY) - top}
+                  width={width}
+                  height={300}
+                >
+                  <LinearGradient
+                    start={vec(0, 0)}
+                    end={vec(0, 300)}
+                    colors={[
+                      colors.grey.main,
+                      colors.grey.main + 'f1',
+                      colors.grey.main + '00',
+                    ]}
+                  />
+                </Rect>
+              </Canvas>
+            </Animated.View>
+          )}
       </Animated.View>
 
       {/* Underlay elements */}
@@ -193,7 +197,9 @@ const Lesson = ({}: Props) => {
                 ? 'Pokušajte ponovno'
                 : ''}
             </Text>
-            <FontAwesome6 name="arrow-right-long" size={18} color="white" />
+            {jsGameState !== GameState.Idle && (
+              <FontAwesome6 name="arrow-right-long" size={18} color="white" />
+            )}
           </TouchableOpacity>
         </View>
       </View>

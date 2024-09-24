@@ -114,40 +114,24 @@ export const APP_DUMMY_EXERCISE: AudioExercise = {
 export const MOCK_LESSONS: Array<Lesson> = [
   {
     id: '1',
-    title: 'Brojevi',
-    description: `
-U ovoj lekciji ćete naučiti kako pravilno koristiti brojeve na engleskom jeziku. Brojevi su ključni dio svakodnevne komunikacije, bilo da se radi o brojanju, izražavanju količine ili govorenju o vremenu i datumima. Naučit ćete osnovne brojeve (one, two, three...), kao i brojeve veće od deset. Također ćemo proći kroz pravila za korištenje rednih brojeva (first, second, third...) te kako ih pravilno izgovoriti i koristiti u različitim situacijama. Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnom razgovoru na engleskom jeziku.
+    title: 'Abeceda',
+    description: `U ovoj lekciji ćete naučiti englesku abecedu. Abeceda se sastoji od 26 slova koja se koriste za formiranje riječi u engleskom jeziku. Važno je pravilno izgovarati svako slovo i znati kako se slova kombiniraju u riječi.
 
-## Pravila za korištenje brojeva:
+## Engleska abeceda:
+**A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z**
 
-1. **Osnovni brojevi** (cardinal numbers) koriste se za izražavanje količine:
-  Primjer: "I have two apples." (Imam dva jabuke.)
-   Osnovni brojevi uključuju one, two, three, four...
+### Pravila i savjeti:
+**Vokali**: A, E, I, O, U
+   Ova slova imaju specifičan izgovor i važna su za formiranje riječi.
+**Spelovanje** (spelling): Kada nekome želite reći kako se nešto piše, potrebno je izgovoriti svako slovo abecede pojedinačno.
+   Primjer: "My name is John, spelled J-O-H-N."
 
-2. **Redni brojevi** (ordinal numbers) koriste se za izražavanje redoslijeda:
-   Primjer: "She finished first in the race." (Završila je prva u utrci.)
-   Redni brojevi završavaju na "-st", "-nd", "-rd", ili "-th" ovisno o broju:
-     1st (first), 2nd (second), 3rd (third), 4th (fourth)...
-
-3. **Brojevi veći od deset** slijede određeni obrazac:
-   11 (eleven), 12 (twelve), 13 (thirteen), 14 (fourteen)...
-   Zatim desetice: 20 (twenty), 30 (thirty), 40 (forty), 100 (one hundred), 1000 (one thousand)...
-
-4. **Brojevi u datumu**:
-   Redni brojevi se koriste za izražavanje datuma:
-     Primjer: "My birthday is on the 15th of March." (Moj rođendan je 15. ožujka.)
-
-5. **Pisanje velikih brojeva**:
-   U engleskom jeziku, za brojeve veće od 1000, često se koristi zarez (comma) za odvajanje tisuća:
-     1,000 (one thousand), 1,000,000 (one million).
-   
-6. **Decimalni brojevi**:
-   Za decimalne brojeve koristi se točka (dot):
-     Primjer: "3.14" (three point one four).
-
-
-Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i matematiku u svakodnevnoj komunikaciji. Nakon ove lekcije, imat ćete dobru osnovu za korištenje brojeva u raznim situacijama.
-
+### Vježba:
+1. Vježbajte izgovarati svako slovo abecede.
+2. Pokušajte spelovati svoje ime i nekoliko riječi koristeći slova abecede.
+3. Naučite osnovne fraze za predstavljanje i spelovanje vašeg imena:
+   "How do you spell your name?" (Kako se piše tvoje ime?)
+   "My name is spelled..." (Moje ime se piše...)
 `,
     games: [
       {
@@ -225,14 +209,15 @@ Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i m
 `,
     games: [
       {
-        title: 'Odaberite riječ koja nedostaje',
-        description: 'Odaberite riječ koja nedostaje u rečenici.',
-        type: GameType.SelectMissingWord,
-        sentence: 'One, Two, Three, Four, ____,',
+        title: 'Odaberite riječ koju čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite riječ koju čujete.',
+        type: GameType.SelectWordFromSound,
+        word: 'Letter',
         options: [
-          { value: 'Five', isCorrect: true },
-          { value: 'Six', isCorrect: false },
-          { value: 'Seven', isCorrect: false },
+          { value: 'Letter', isCorrect: true },
+          { value: 'Sentence', isCorrect: false },
+          { value: 'Word', isCorrect: false },
         ],
       },
       {

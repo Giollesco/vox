@@ -1,10 +1,7 @@
 import { Lesson } from '@/types';
 import { colors, Text, View } from '@/ui';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import Markdown, {
-  hasParents,
-  MarkdownProps,
-} from '@ronradtke/react-native-markdown-display';
+import Markdown, { hasParents } from '@ronradtke/react-native-markdown-display';
 import { Link } from 'expo-router';
 import React, { FC } from 'react';
 import {

@@ -66,7 +66,8 @@ const _useLesson = create<LessonStore>((set, get) => ({
     if (!currentGame) return false;
     if (
       currentGame.type === GameType.SelectMissingWord ||
-      currentGame.type === GameType.DescribeImage
+      currentGame.type === GameType.DescribeImage ||
+      currentGame.type === GameType.SelectWordFromSound
     ) {
       let game = currentGame as BaseGame & SelectMissingWordGame;
       const correctAnswer = game.options.find((o) => o.isCorrect)?.value;

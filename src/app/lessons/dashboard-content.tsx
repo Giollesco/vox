@@ -1,9 +1,11 @@
-import React from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import type Animated from 'react-native-reanimated';
 import LessonAccordion from '@/components/lessons/accordion';
+import getLessons from '@/components/lessons/utils';
+import { useAuth } from '@/core';
 import { colors, View } from '@/ui';
 import { MOCK_LESSONS } from '@/utils/data';
+import React, { useMemo } from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import type Animated from 'react-native-reanimated';
 
 interface IProps {
   height: number;
@@ -13,10 +15,15 @@ interface IProps {
 const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
   // Hooks
   const windowHeight = useWindowDimensions().height;
+  const { account } = useAuth();
+  const data = useMemo(
+    () => getLessons(MOCK_LESSONS, account?.startingPoint),
+    [MOCK_LESSONS, account?.startingPoint]
+  );
 
   return (
     <View style={[styles.container, { minHeight: windowHeight - height }]}>
-      {[...MOCK_LESSONS, ...MOCK_LESSONS].map((lesson, index) => (
+      {data.map((lesson, index) => (
         <LessonAccordion lesson={lesson} index={index} key={index} />
       ))}
     </View>

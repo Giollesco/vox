@@ -135,22 +135,155 @@ export const MOCK_LESSONS: Array<Lesson> = [
 `,
     games: [
       {
-        title: 'Odaberite riječ koja nedostaje',
-        description: 'Odaberite riječ koja nedostaje u rečenici.',
-        type: GameType.SelectMissingWord,
-        sentence: 'One, Two, Three, Four, ____,',
+        title: 'Odaberite slovo koje čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite slovo koje čujete.',
+        type: GameType.SelectWordFromSound,
+        word: 'a',
         options: [
+          { value: 'A', isCorrect: true },
+          { value: 'B', isCorrect: false },
+          { value: 'C', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite pripadajuće slovo.',
+        description: 'Odaberite slovo koje odgovara prikazanoj slici.',
+        type: GameType.DescribeImage,
+        imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/8/8d/Cyrillic_letter_A.svg',
+        options: [
+          { value: 'B', isCorrect: false },
+          { value: 'A', isCorrect: true },
+          { value: 'C', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite slovo koje nedostaje',
+        description: 'Odaberite slovo koje nedostaje u slijedu.',
+        type: GameType.SelectMissingWord,
+        sentence: 'A, B, C, D, E, _, G, H',
+        options: [
+          { value: 'F', isCorrect: true },
+          { value: 'J', isCorrect: false },
+          { value: 'K', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite slovo koje čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite slovo koje čujete.',
+        type: GameType.SelectWordFromSound,
+        word: 'z',
+        options: [
+          { value: 'X', isCorrect: false },
+          { value: 'Y', isCorrect: false },
+          { value: 'Z', isCorrect: true },
+        ],
+      },
+      {
+        title: 'Odaberite riječ koja nedostaje',
+        description: 'Odaberite slovo koje nedostaje u abecedi.',
+        type: GameType.SelectMissingWord,
+        sentence: 'W, X, _, Z',
+        options: [
+          { value: 'Y', isCorrect: true },
+          { value: 'V', isCorrect: false },
+          { value: 'U', isCorrect: false },
+        ],
+      },
+    ],
+  },
+  {
+    id: '2',
+    title: 'Brojevi',
+    description: `
+U ovoj lekciji ćete naučiti kako pravilno koristiti brojeve na engleskom jeziku. Brojevi su važan dio svakodnevne komunikacije i koriste se u mnogim situacijama poput brojenja, izražavanja količine, cijena, datuma i vremena.
+
+## Osnovni brojevi (Cardinal Numbers):
+Osnovni brojevi koriste se za izražavanje količine. Upoznat ćemo se s brojevima od 1 do 20, te višim brojevima.
+
+1 - One  
+2 - Two  
+3 - Three  
+4 - Four  
+5 - Five  
+6 - Six  
+7 - Seven  
+8 - Eight  
+9 - Nine  
+10 - Ten  
+11 - Eleven  
+12 - Twelve  
+13 - Thirteen  
+14 - Fourteen  
+15 - Fifteen  
+16 - Sixteen  
+17 - Seventeen  
+18 - Eighteen  
+19 - Nineteen  
+20 - Twenty
+
+Brojevi veći od 20 slijede jednostavan obrazac:  
+21 - Twenty-one  
+30 - Thirty  
+40 - Forty  
+50 - Fifty  
+100 - One hundred  
+1,000 - One thousand
+
+## Redni brojevi (Ordinal Numbers):
+Redni brojevi koriste se za izražavanje redoslijeda. Uobičajeni redni brojevi su:
+
+1st - First  
+2nd - Second  
+3rd - Third  
+4th - Fourth  
+5th - Fifth  
+6th - Sixth  
+7th - Seventh  
+8th - Eighth  
+9th - Ninth  
+10th - Tenth  
+20th - Twentieth  
+100th - One hundredth
+
+### Pravila:
+**Brojevi veći od deset**: Iznad deset, brojevi se formiraju dodavanjem osnovnih brojeva iza desetica. Primjer: 21 (twenty-one), 45 (forty-five).
+**Pisanje datuma**: Redni brojevi se često koriste za izražavanje datuma. Primjer: "March 3rd" (Treći ožujka).
+**Pisanje velikih brojeva**: U engleskom jeziku, tisuće i milijuni se često odvajaju zarezom. Primjer: 1,000 (one thousand), 1,000,000 (one million).
+
+## Primjeri upotrebe:
+1. **Koliko imate jabuka?** – "I have five apples."
+2. **Koji je datum danas?** – "Today is the 15th of July."
+3. **Koji je vaš redni broj u utrci?** – "I finished second in the race."
+
+## Vježbe:
+1. Prevedite sljedeće brojeve na engleski: 4, 11, 25, 100, 1,000.
+2. Napišite redni broj za: 5, 13, 21.
+3. Kako biste rekli svoj datum rođenja na engleskom jeziku?
+
+Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnim situacijama, od kupovine, pa sve do razgovora o vremenu i datumu.
+
+`,
+    games: [
+      {
+        title: 'Odaberite broj koji čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite broj koji čujete.',
+        type: GameType.SelectWordFromSound,
+        word: 'Five',
+        options: [
+          { value: 'Three', isCorrect: false },
           { value: 'Five', isCorrect: true },
-          { value: 'Six', isCorrect: false },
           { value: 'Seven', isCorrect: false },
         ],
       },
       {
-        title: 'Odaberite pripadajuću riječ.',
-        description: 'Odaberite broj koji predstavlja riješenje.',
+        title: 'Odaberite pripadajući broj',
+        description: 'Odaberite broj koji odgovara slici.',
         type: GameType.DescribeImage,
-        imageUrl:
-          'https://media.baamboozle.com/uploads/images/225057/1637130308_50234.jpeg',
+        imageUrl: 'https://www.pngarts.com/files/3/4-Number-PNG-Image.png',
         options: [
           { value: 'Three', isCorrect: false },
           { value: 'Four', isCorrect: true },
@@ -158,54 +291,76 @@ export const MOCK_LESSONS: Array<Lesson> = [
         ],
       },
       {
-        title: 'Odaberite riječ koja nedostaje',
-        description: 'Odaberite riječ koja nedostaje u rečenici.',
+        title: 'Odaberite broj koji nedostaje',
+        description: 'Odaberite broj koji nedostaje u slijedu.',
         type: GameType.SelectMissingWord,
-        sentence: 'One, Two, _____, Four, Five,',
+        sentence: 'One, Two, _____, Four, Five',
         options: [
-          { value: 'Eleven', isCorrect: false },
           { value: 'Six', isCorrect: false },
           { value: 'Three', isCorrect: true },
+          { value: 'Seven', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite broj koji čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite broj koji čujete.',
+        type: GameType.SelectWordFromSound,
+        word: 'Nine',
+        options: [
+          { value: 'Nine', isCorrect: true },
+          { value: 'Five', isCorrect: false },
+          { value: 'Ten', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite broj koji nedostaje',
+        description: 'Odaberite broj koji nedostaje u slijedu.',
+        type: GameType.SelectMissingWord,
+        sentence: 'Six, Seven, _____, Nine',
+        options: [
+          { value: 'Eight', isCorrect: true },
+          { value: 'Five', isCorrect: false },
+          { value: 'Ten', isCorrect: false },
         ],
       },
     ],
   },
   {
-    id: '2',
-    title: 'Druga lekcija',
+    id: '3',
+    title: 'Pozdravi i upoznavanje',
     description: `
-U ovoj lekciji ćete naučiti kako pravilno koristiti brojeve na engleskom jeziku. Brojevi su ključni dio svakodnevne komunikacije, bilo da se radi o brojanju, izražavanju količine ili govorenju o vremenu i datumima. Naučit ćete osnovne brojeve (one, two, three...), kao i brojeve veće od deset. Također ćemo proći kroz pravila za korištenje rednih brojeva (first, second, third...) te kako ih pravilno izgovoriti i koristiti u različitim situacijama. Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnom razgovoru na engleskom jeziku.
+U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na engleskom jeziku. Ove fraze su ključne za započinjanje razgovora i svakodnevnu komunikaciju.
 
-## Pravila za korištenje brojeva:
+## Osnovni pozdravi (Greetings)
+**Hello** – Bok / Zdravo
+**Hi** – Bok (neformalno)
+**Good morning** – Dobro jutro
+**Good afternoon** – Dobar dan
+**Good evening** – Dobra večer
+**Goodbye** – Doviđenja
+**See you later** – Vidimo se kasnije
 
-1. **Osnovni brojevi** (cardinal numbers) koriste se za izražavanje količine:
-  Primjer: "I have two apples." (Imam dva jabuke.)
-   Osnovni brojevi uključuju one, two, three, four...
+### Primjeri:
+**Hello, how are you?** (Bok, kako si?)
+**Good morning!** (Dobro jutro!)
+**Goodbye!** (Doviđenja!)
 
-2. **Redni brojevi** (ordinal numbers) koriste se za izražavanje redoslijeda:
-   Primjer: "She finished first in the race." (Završila je prva u utrci.)
-   Redni brojevi završavaju na "-st", "-nd", "-rd", ili "-th" ovisno o broju:
-     1st (first), 2nd (second), 3rd (third), 4th (fourth)...
+## Upoznavanje (Introductions)
+**What's your name?** – Kako se zoveš?
+**My name is...** – Zovem se...
+**Nice to meet you** – Drago mi je
+**Where are you from?** – Odakle si?
+**I'm from...** – Ja sam iz...
 
-3. **Brojevi veći od deset** slijede određeni obrazac:
-   11 (eleven), 12 (twelve), 13 (thirteen), 14 (fourteen)...
-   Zatim desetice: 20 (twenty), 30 (thirty), 40 (forty), 100 (one hundred), 1000 (one thousand)...
+### Primjeri:
+**What's your name?** – "My name is John." (Zovem se John.)
+**Nice to meet you!** – "Nice to meet you too!" (I meni je drago.)
 
-4. **Brojevi u datumu**:
-   Redni brojevi se koriste za izražavanje datuma:
-     Primjer: "My birthday is on the 15th of March." (Moj rođendan je 15. ožujka.)
-
-5. **Pisanje velikih brojeva**:
-   U engleskom jeziku, za brojeve veće od 1000, često se koristi zarez (comma) za odvajanje tisuća:
-     1,000 (one thousand), 1,000,000 (one million).
-   
-6. **Decimalni brojevi**:
-   Za decimalne brojeve koristi se točka (dot):
-     Primjer: "3.14" (three point one four).
-
-
-Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i matematiku u svakodnevnoj komunikaciji. Nakon ove lekcije, imat ćete dobru osnovu za korištenje brojeva u raznim situacijama.
-
+## Vježbe:
+1. Vježbajte pozdraviti nekoga ujutro: "Good morning!"
+2. Pitajte osobu kako se zove i odgovorite: "What's your name?" – "My name is Ana."
+3. Naučite koristiti fraze za oproštaj: "Goodbye!" ili "See you later!"
 `,
     games: [
       {
@@ -213,108 +368,59 @@ Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i m
         description:
           'Pritisnite gumb za reprodukciju zvuka i odaberite riječ koju čujete.',
         type: GameType.SelectWordFromSound,
-        word: 'Letter',
+        word: 'Hello',
         options: [
-          { value: 'Letter', isCorrect: true },
-          { value: 'Sentence', isCorrect: false },
-          { value: 'Word', isCorrect: false },
+          { value: 'Hello', isCorrect: true },
+          { value: 'Goodbye', isCorrect: false },
+          { value: 'Good morning', isCorrect: false },
         ],
       },
       {
-        title: 'Odaberite pripadajuću riječ.',
-        description: 'Odaberite broj koji predstavlja riješenje.',
+        title: 'Odaberite ispravan pozdrav',
+        description:
+          'Odaberite pozdrav koji odgovara slici (jutro, popodne, večer).',
         type: GameType.DescribeImage,
         imageUrl:
-          'https://media.baamboozle.com/uploads/images/225057/1637130308_50234.jpeg',
+          'https://burst.shopifycdn.com/photos/beach-sun-reflections.jpg?width=1000&format=pjpg&exif=0&iptc=0',
         options: [
-          { value: 'Three', isCorrect: false },
-          { value: 'Four', isCorrect: true },
-          { value: 'Five', isCorrect: false },
+          { value: 'Good morning', isCorrect: true },
+          { value: 'Good afternoon', isCorrect: false },
+          { value: 'Good evening', isCorrect: false },
         ],
       },
       {
         title: 'Odaberite riječ koja nedostaje',
         description: 'Odaberite riječ koja nedostaje u rečenici.',
         type: GameType.SelectMissingWord,
-        sentence: 'One, Two, _____, Four, Five,',
+        sentence: 'My name is _____, nice to meet you!',
         options: [
-          { value: 'Eleven', isCorrect: false },
-          { value: 'Six', isCorrect: false },
-          { value: 'Three', isCorrect: true },
+          { value: 'Hello', isCorrect: false },
+          { value: 'John', isCorrect: true },
+          { value: 'Goodbye', isCorrect: false },
         ],
       },
-    ],
-  },
-  {
-    id: '3',
-    title: 'Treća lekcija',
-    description: `
-U ovoj lekciji ćete naučiti kako pravilno koristiti brojeve na engleskom jeziku. Brojevi su ključni dio svakodnevne komunikacije, bilo da se radi o brojanju, izražavanju količine ili govorenju o vremenu i datumima. Naučit ćete osnovne brojeve (one, two, three...), kao i brojeve veće od deset. Također ćemo proći kroz pravila za korištenje rednih brojeva (first, second, third...) te kako ih pravilno izgovoriti i koristiti u različitim situacijama. Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnom razgovoru na engleskom jeziku.
-
-## Pravila za korištenje brojeva:
-
-1. **Osnovni brojevi** (cardinal numbers) koriste se za izražavanje količine:
-  Primjer: "I have two apples." (Imam dva jabuke.)
-   Osnovni brojevi uključuju one, two, three, four...
-
-2. **Redni brojevi** (ordinal numbers) koriste se za izražavanje redoslijeda:
-   Primjer: "She finished first in the race." (Završila je prva u utrci.)
-   Redni brojevi završavaju na "-st", "-nd", "-rd", ili "-th" ovisno o broju:
-     1st (first), 2nd (second), 3rd (third), 4th (fourth)...
-
-3. **Brojevi veći od deset** slijede određeni obrazac:
-   11 (eleven), 12 (twelve), 13 (thirteen), 14 (fourteen)...
-   Zatim desetice: 20 (twenty), 30 (thirty), 40 (forty), 100 (one hundred), 1000 (one thousand)...
-
-4. **Brojevi u datumu**:
-   Redni brojevi se koriste za izražavanje datuma:
-     Primjer: "My birthday is on the 15th of March." (Moj rođendan je 15. ožujka.)
-
-5. **Pisanje velikih brojeva**:
-   U engleskom jeziku, za brojeve veće od 1000, često se koristi zarez (comma) za odvajanje tisuća:
-     1,000 (one thousand), 1,000,000 (one million).
-   
-6. **Decimalni brojevi**:
-   Za decimalne brojeve koristi se točka (dot):
-     Primjer: "3.14" (three point one four).
-
-
-Učenje brojeva je temelj za mnoge druge teme, uključujući vrijeme, cijene i matematiku u svakodnevnoj komunikaciji. Nakon ove lekcije, imat ćete dobru osnovu za korištenje brojeva u raznim situacijama.
-
-`,
-    games: [
       {
-        title: 'Odaberite riječ koja nedostaje',
-        description: 'Odaberite riječ koja nedostaje u rečenici.',
+        title: 'Odaberite rečenicu koju čujete',
+        description:
+          'Koji je ispravan odgovor na pitanje: "What\'s your name?"',
+        type: GameType.SelectWordFromSound,
+        word: 'My name is Ana.',
+        options: [
+          { value: "I'm from Croatia.", isCorrect: false },
+          { value: 'My name is Ana.', isCorrect: true },
+          { value: 'Goodbye!', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite ispravan pozdrav',
+        description:
+          'Odaberite pozdrav koji odgovara situaciji: Srećete nekoga po prvi put.',
         type: GameType.SelectMissingWord,
-        sentence: 'One, Two, Three, Four, ____,',
+        sentence: 'You meet someone for the first time.',
         options: [
-          { value: 'Five', isCorrect: true },
-          { value: 'Six', isCorrect: false },
-          { value: 'Seven', isCorrect: false },
-        ],
-      },
-      {
-        title: 'Odaberite pripadajuću riječ.',
-        description: 'Odaberite broj koji predstavlja riješenje.',
-        type: GameType.DescribeImage,
-        imageUrl:
-          'https://media.baamboozle.com/uploads/images/225057/1637130308_50234.jpeg',
-        options: [
-          { value: 'Three', isCorrect: false },
-          { value: 'Four', isCorrect: true },
-          { value: 'Five', isCorrect: false },
-        ],
-      },
-      {
-        title: 'Odaberite riječ koja nedostaje',
-        description: 'Odaberite riječ koja nedostaje u rečenici.',
-        type: GameType.SelectMissingWord,
-        sentence: 'One, Two, _____, Four, Five,',
-        options: [
-          { value: 'Eleven', isCorrect: false },
-          { value: 'Six', isCorrect: false },
-          { value: 'Three', isCorrect: true },
+          { value: 'Goodbye', isCorrect: false },
+          { value: 'Nice to meet you', isCorrect: true },
+          { value: 'See you later', isCorrect: false },
         ],
       },
     ],

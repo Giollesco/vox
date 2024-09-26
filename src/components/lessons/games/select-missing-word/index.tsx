@@ -139,6 +139,7 @@ export const SelectMissingWord = ({ gameState, syncGameState }: Props) => {
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
           delay={300}
+          style={{ width: '80%' }}
         >
           <Text weight="light" className="text-center">
             {data.description}

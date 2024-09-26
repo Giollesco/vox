@@ -263,6 +263,9 @@ const Block = ({
             })}
             scrollEventThrottle={16}
             scrollToOverflowEnabled={false}
+            bounces={false}
+            alwaysBounceHorizontal={false}
+            alwaysBounceVertical={false}
           >
             <AnimatedPanGestureHandler
               onGestureEvent={gestureEventHandler}

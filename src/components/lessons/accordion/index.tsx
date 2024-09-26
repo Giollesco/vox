@@ -3,13 +3,21 @@ import { colors, Text, View } from '@/ui';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Markdown, { hasParents } from '@ronradtke/react-native-markdown-display';
 import { Link } from 'expo-router';
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import {
   Platform,
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
+import Animated, {
+  SharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { rules } from './rules';
 
 type Props = {
   lesson: Lesson;
@@ -20,59 +28,125 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
   // Hooks
   const { width } = useWindowDimensions();
 
+  // Variables
+  const open = useSharedValue(false);
   let lessonFinished = index === 0; // TODO: Implement this
+
+  // Functions
+  const onPress = () => {
+    open.value = !open.value;
+  };
+
   return (
     <View style={[styles.container, { width }]}>
       <View style={styles.header}>
-        <View className="flex-row items-center">
-          <View
-            style={[
-              styles.lessonNumber,
-              {
-                backgroundColor: lessonFinished
-                  ? colors.success[500]
-                  : colors.grey.main,
-              },
-            ]}
-          >
-            <Text weight="bold">{index + 1}</Text>
+        <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+          <View className="flex-row items-center">
+            <View
+              style={[
+                styles.lessonNumber,
+                {
+                  backgroundColor: lessonFinished
+                    ? colors.success[500]
+                    : colors.grey.main,
+                },
+              ]}
+            >
+              <Text weight="bold">{index + 1}</Text>
+            </View>
+            <Text weight="bold" className="text-2xl" style={{ height: 32 }}>
+              {lesson.title}
+            </Text>
           </View>
-          <Text weight="bold" className="text-3xl" style={{ height: 32 }}>
-            {lesson.title}
-          </Text>
-        </View>
-        {lessonFinished ? (
-          <FontAwesome6 name="check" color={colors.success[500]} size={22} />
-        ) : (
-          <Link
-            key={index}
-            href={{
-              pathname: '/lessons/[lesson]',
-              params: { lesson: lesson.id },
-            }}
-            asChild
-          >
-            <TouchableOpacity activeOpacity={0.8}>
-              <FontAwesome6
-                name="arrow-right-long"
-                color={colors.black}
-                size={22}
-              />
-            </TouchableOpacity>
-          </Link>
-        )}
+        </TouchableOpacity>
+        <Link
+          key={index}
+          href={{
+            pathname: '/lessons/[lesson]',
+            params: { lesson: lesson.id },
+          }}
+          asChild
+        >
+          <TouchableOpacity activeOpacity={0.8}>
+            <FontAwesome6
+              name={lessonFinished ? 'check' : 'arrow-right-long'}
+              color={lessonFinished ? colors.success[500] : colors.black}
+              size={22}
+            />
+          </TouchableOpacity>
+        </Link>
       </View>
-      <Markdown rules={rules}>{lesson.description}</Markdown>
+      <Parent open={open} index={index}>
+        <Markdown rules={rules}>{lesson.description}</Markdown>
+        <View style={{ height: 20 }} />
+      </Parent>
     </View>
   );
 };
 
 export default React.memo(LessonAccordion);
 
+type ParentProps = PropsWithChildren<{
+  open: SharedValue<boolean>;
+  index: number;
+}>;
+
+function Parent({ open, index, children }: ParentProps) {
+  return (
+    <View style={styles.parent}>
+      <AccordionItem isExpanded={open} viewKey={`accordion_${index}`}>
+        {children}
+      </AccordionItem>
+    </View>
+  );
+}
+
+type AccordionItemProps = {
+  isExpanded: SharedValue<boolean>;
+  children: React.ReactNode;
+  viewKey: string;
+  style?: any;
+  duration?: number;
+};
+
+function AccordionItem({
+  isExpanded,
+  children,
+  viewKey,
+  style,
+  duration = 500,
+}: AccordionItemProps) {
+  const height = useSharedValue(0);
+
+  const derivedHeight = useDerivedValue(() =>
+    withTiming(height.value * Number(isExpanded.value), {
+      duration,
+    })
+  );
+  const bodyStyle = useAnimatedStyle(() => ({
+    height: derivedHeight.value,
+  }));
+
+  return (
+    <Animated.View
+      key={`accordionItem_${viewKey}`}
+      style={[styles.animatedView, bodyStyle, style]}
+    >
+      <View
+        onLayout={(e) => {
+          height.value = e.nativeEvent.layout.height;
+        }}
+        style={styles.wrapper}
+      >
+        {children}
+      </View>
+    </Animated.View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    padding: 20,
     borderBottomWidth: 1,
     borderColor: colors.grey.main,
     overflow: 'hidden',
@@ -81,7 +155,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    height: 80,
+    paddingHorizontal: 20,
+    overflow: 'hidden',
   },
   lessonNumber: {
     width: 40,
@@ -91,181 +167,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 20,
   },
-});
-
-// Here for more info: https://github.com/iamacup/react-native-markdown-display/blob/master/src/lib/renderRules.js
-const rules = {
-  paragraph: (node: any, children: any, parent: any, styles: any) => (
-    <Text
-      key={node.key}
-      className="text-md"
-      style={[styles.paragraph, { lineHeight: 26 }]}
-    >
-      {children}
-    </Text>
-  ),
-  bullet_list: (node: any, children: any, parent: any, styles: any) => (
-    <Text
-      key={node.key}
-      className="text-md"
-      style={[styles.bullet_list, { lineHeight: 26 }]}
-    >
-      {children}
-    </Text>
-  ),
-  ordered_list: (node: any, children: any, parent: any, styles: any) => (
-    <View key={node.key} style={styles._VIEW_SAFE_ordered_list}>
-      {children}
-    </View>
-  ),
-  heading1: (node: any, children: any, parent: any, styles: any) => (
-    <Text
-      key={node.key}
-      className="text-3xl"
-      style={[styles.heading, styles.heading1, { marginVertical: 16 }]}
-    >
-      {children}
-    </Text>
-  ),
-  heading2: (node: any, children: any, parent: any, styles: any) => (
-    <Text
-      key={node.key}
-      className="text-xl"
-      style={[styles.heading, styles.heading2, { marginVertical: 16 }]}
-    >
-      {children}
-    </Text>
-  ),
-  heading3: (node: any, children: any, parent: any, styles: any) => (
-    <Text
-      key={node.key}
-      className="text-lg"
-      style={[styles.heading, styles.heading3, { marginVertical: 16 }]}
-    >
-      {children}
-    </Text>
-  ),
-  // Emphasis
-  strong: (node: any, children: any, parent: any, styles: any) => (
-    <Text key={node.key} style={styles.strong} weight="bold">
-      {children}
-    </Text>
-  ),
-  em: (node: any, children: any, parent: any, styles: any) => (
-    <Text key={node.key} style={styles.em}>
-      {children}
-    </Text>
-  ),
-  s: (node: any, children: any, parent: any, styles: any) => (
-    <Text key={node.key} style={styles.s} weight="regularItalic">
-      {children}
-    </Text>
-  ),
-  // this is a unique and quite annoying render rule because it has
-  // child items that can be styled (the list icon and the list content)
-  // outside of the AST tree so there are some work arounds in the
-  // AST renderer specifically to get the styling right here
-  list_item: (
-    node: any,
-    children: any,
-    parent: any,
-    styles: any,
-    inheritedStyles = {}
-  ) => {
-    // we need to grab any text specific stuff here that is applied on the list_item style
-    // and apply it onto bullet_list_icon. the AST renderer has some workaround code to make
-    // the content classes apply correctly to the child AST tree items as well
-    // as code that forces the creation of the inheritedStyles object for list_items
-    const refStyle = {
-      ...inheritedStyles,
-      ...StyleSheet.flatten(styles.list_item),
-    };
-
-    const arr = Object.keys(refStyle);
-
-    const modifiedInheritedStylesObj = {};
-    let textStyleProps = [
-      'textShadowOffset',
-      'color',
-      'fontSize',
-      'fontStyle',
-      'fontWeight',
-      'lineHeight',
-      'textAlign',
-      'textDecorationLine',
-      'textShadowColor',
-      'fontFamily',
-      'textShadowRadius',
-      'includeFontPadding',
-      'textAlignVertical',
-      'fontVariant',
-      'letterSpacing',
-      'textDecorationColor',
-      'textDecorationStyle',
-      'textTransform',
-      'writingDirection',
-    ];
-
-    for (let b = 0; b < arr.length; b++) {
-      if (textStyleProps?.includes(arr[b])) {
-        // @ts-ignore
-        modifiedInheritedStylesObj[arr[b]] = refStyle[arr[b]];
-      }
-    }
-
-    if (hasParents(parent, 'bullet_list')) {
-      return (
-        <View key={node.key} style={[styles._VIEW_SAFE_list_item]}>
-          <Text
-            style={[modifiedInheritedStylesObj, styles.bullet_list_icon]}
-            accessible={false}
-          >
-            {Platform.select({
-              android: '\u2022',
-              ios: '\u00B7',
-              default: '\u2022',
-            })}
-          </Text>
-          <View style={styles._VIEW_SAFE_bullet_list_content}>{children}</View>
-        </View>
-      );
-    }
-
-    if (hasParents(parent, 'ordered_list')) {
-      const orderedListIndex = parent.findIndex(
-        (el: any) => el.type === 'ordered_list'
-      );
-
-      const orderedList = parent[orderedListIndex];
-      let listItemNumber;
-
-      if (orderedList.attributes && orderedList.attributes.start) {
-        listItemNumber = orderedList.attributes.start + node.index;
-      } else {
-        listItemNumber = node.index + 1;
-      }
-
-      return (
-        <View key={node.key} style={[styles._VIEW_SAFE_list_item]}>
-          <Text style={[modifiedInheritedStylesObj, styles.ordered_list_icon]}>
-            {listItemNumber}
-            {node.markup}
-          </Text>
-          <Text
-            style={[styles._VIEW_SAFE_ordered_list_content, { lineHeight: 26 }]}
-            className="text-md"
-          >
-            {children}
-          </Text>
-        </View>
-      );
-    }
-
-    // we should not need this, but just in case
-    return (
-      <View key={node.key} style={styles._VIEW_SAFE_list_item}>
-        {children}
-      </View>
-    );
+  parent: {
+    width: '100%',
+    paddingHorizontal: 20,
   },
-};
+  wrapper: {
+    width: '100%',
+    position: 'absolute',
+    // display: 'flex',
+    // alignItems: 'center',
+  },
+  animatedView: {
+    width: '100%',
+    overflow: 'hidden',
+  },
+});

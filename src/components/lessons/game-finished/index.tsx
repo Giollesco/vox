@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { colors, Text, TouchableOpacity, View } from '@/ui';
-import { MotiView } from 'moti';
 import { useLesson } from '@/stores';
+import { colors, Pressable, Text, TouchableOpacity, View } from '@/ui';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
+import { MotiView } from 'moti';
 
 type Props = {};
 export const GameFinished = ({}: Props) => {
@@ -14,6 +15,11 @@ export const GameFinished = ({}: Props) => {
   // Constants
   const baseDelay = 600;
 
+  // Effects
+  React.useEffect(() => {
+    vibrateOnTextAnimation();
+  }, []);
+
   // Functions
   function handleOnFinish() {
     if (router.canGoBack()) {
@@ -21,6 +27,27 @@ export const GameFinished = ({}: Props) => {
     } else {
       router.push('/');
     }
+  }
+
+  function vibrateOnTextAnimation() {
+    setTimeout(() => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }, baseDelay);
+    setTimeout(() => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }, baseDelay + 100);
+    setTimeout(() => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }, baseDelay + 150);
+    setTimeout(() => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }, baseDelay + 175);
+    setTimeout(() => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }, baseDelay + 200);
+    setTimeout(() => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }, baseDelay + 1500);
   }
 
   return (

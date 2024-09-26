@@ -15,6 +15,7 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import { rules } from './rules';
@@ -31,6 +32,7 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
   // Variables
   const open = useSharedValue(false);
   let lessonFinished = index === 0; // TODO: Implement this
+  let lesosnDisabled = index > 1;
 
   // Functions
   const onPress = () => {
@@ -66,8 +68,13 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
             params: { lesson: lesson.id },
           }}
           asChild
+          disabled={lesosnDisabled}
         >
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            disabled={lesosnDisabled}
+            style={{ opacity: lesosnDisabled ? 0.25 : 1 }}
+          >
             <FontAwesome6
               name={lessonFinished ? 'check' : 'arrow-right-long'}
               color={lessonFinished ? colors.success[500] : colors.black}
@@ -114,7 +121,7 @@ function AccordionItem({
   children,
   viewKey,
   style,
-  duration = 500,
+  duration = 750,
 }: AccordionItemProps) {
   const height = useSharedValue(0);
 

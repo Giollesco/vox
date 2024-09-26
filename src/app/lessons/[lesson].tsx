@@ -104,6 +104,7 @@ const Lesson = ({}: Props) => {
       // If answer is incorrect
       // Show incorrect state
       syncGameState(GameState.Incorrect);
+      lessonStore.setNumberOfWrongAnswers(lessonStore.numberOfWrongAnswers + 1);
       // Wait for infoDuration and then show playing state
       setTimeout(() => {
         syncGameState(GameState.Playing);
@@ -114,6 +115,9 @@ const Lesson = ({}: Props) => {
         syncGameState(GameState.Correct);
       } else {
         syncGameState(GameState.Incorrect);
+        lessonStore.setNumberOfWrongAnswers(
+          lessonStore.numberOfWrongAnswers + 1
+        );
       }
       setTimeout(() => {
         syncGameState(GameState.Finished);

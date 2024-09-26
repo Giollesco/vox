@@ -3,7 +3,6 @@ import { create } from 'zustand';
 import { createSelectors } from '@/core/utils';
 import {
   BaseGame,
-  DescribeImageGame,
   Game,
   GameType,
   Lesson,
@@ -26,6 +25,8 @@ export type LessonStore = {
   currentAnswer: any;
   setCurrentAnswer: (answer: any) => void;
   checkAnswer: () => boolean;
+  numberOfWrongAnswers: number;
+  setNumberOfWrongAnswers: (number: number) => void;
 };
 
 const _useLesson = create<LessonStore>((set, get) => ({
@@ -58,6 +59,8 @@ const _useLesson = create<LessonStore>((set, get) => ({
     set({ currentGame: null });
     set({ currentGameIndex: 0 });
     set({ renderFlag: !get().renderFlag });
+    set({ currentAnswer: null });
+    set({ numberOfWrongAnswers: 0 });
   },
   currentAnswer: null,
   setCurrentAnswer: (answer) => set({ currentAnswer: answer }),
@@ -75,6 +78,8 @@ const _useLesson = create<LessonStore>((set, get) => ({
     }
     return false;
   },
+  numberOfWrongAnswers: 0,
+  setNumberOfWrongAnswers: (number) => set({ numberOfWrongAnswers: number }),
 }));
 
 export const useLesson = createSelectors(_useLesson);

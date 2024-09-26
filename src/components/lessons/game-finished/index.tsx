@@ -10,7 +10,7 @@ import { MotiView } from 'moti';
 type Props = {};
 export const GameFinished = ({}: Props) => {
   // Hooks
-  const { lesson } = useLesson();
+  const { lesson, numberOfWrongAnswers } = useLesson();
 
   // Constants
   const baseDelay = 600;
@@ -119,13 +119,13 @@ export const GameFinished = ({}: Props) => {
               style={{ width: 200 }}
             >
               <Text style={{ fontSize: 13, opacity: 0.5, textAlign: 'center' }}>
-                Broj novih riječi
+                Broj pogrešnih odgovora
               </Text>
               <Text
                 weight="semiBold"
                 style={{ fontSize: 16, textAlign: 'center' }}
               >
-                {lesson?.games.length} riječi
+                {numberOfWrongAnswers} odgovora
               </Text>
             </MotiView>
           </MotiView>

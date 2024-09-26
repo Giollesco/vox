@@ -268,6 +268,34 @@ Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnim situa
 `,
     games: [
       {
+        title: 'Odaberite ispravnu sliku',
+        description: 'Odaberite sliku koja odgovara riječi "Goodbye".',
+        type: GameType.SelectFromImage,
+        word: 'Goodbye',
+        options: [
+          {
+            value:
+              'https://img.freepik.com/free-photo/pretty-blond-wavy-haired-teenage-girl-waving-goodbye-friend-looking-sad-isolated-blue-background-bye-bye-expression_574295-4569.jpg',
+            isCorrect: true,
+          },
+          {
+            value:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUTga6tBtTCQW50XfIw8016ZI1Hex6KUSA2A&s',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://agromoris.com/wp-content/uploads/2021/10/Orange.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://i.ebayimg.com/images/g/PvUAAOSwSm5lJ7Sy/s-l1200.jpg',
+            isCorrect: false,
+          },
+        ],
+      },
+      {
         title: 'Odaberite broj koji čujete',
         description:
           'Pritisnite gumb za reprodukciju zvuka i odaberite broj koji čujete.',
@@ -409,6 +437,16 @@ U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na eng
           { value: "I'm from Croatia.", isCorrect: false },
           { value: 'My name is Ana.', isCorrect: true },
           { value: 'Goodbye!', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Kako se piše?',
+        description: 'Napišite ispravno riječ "Pozdrav" na engleskom jeziku.',
+        type: GameType.Spelling,
+        options: [
+          { value: 'Helo', isCorrect: false },
+          { value: 'Hello', isCorrect: true },
+          { value: 'Hallo', isCorrect: false },
         ],
       },
       {

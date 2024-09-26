@@ -52,6 +52,7 @@ const Lesson = ({}: Props) => {
 
   // Use useEffect to run the lesson setup only after the component mounts
   React.useEffect(() => {
+    lessonStore.resetState();
     if (lesson) {
       const lessonFromList = MOCK_LESSONS.find((l) => l.id === lesson);
       if (lessonFromList) {

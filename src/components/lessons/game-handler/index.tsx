@@ -5,6 +5,8 @@ import { DescribeImage } from '../games/describe-image';
 import { SelectMissingWord } from '../games/select-missing-word';
 import { GameFinished } from '../game-finished';
 import { SelectWordFromSound } from '../games/select-word-from-sound';
+import { Spelling } from '../games/spelling';
+import { SelectFromImage } from '../games/select-from-image';
 
 type Props = {
   type: GameType | undefined;
@@ -28,6 +30,10 @@ const GameHandler = ({ type, gameState, syncGameState }: Props) => {
         gameState={gameState}
         syncGameState={syncGameState}
       />
+    ),
+    Spelling: <Spelling gameState={gameState} syncGameState={syncGameState} />,
+    SelectFromImage: (
+      <SelectFromImage gameState={gameState} syncGameState={syncGameState} />
     ),
   };
 

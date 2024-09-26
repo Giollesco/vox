@@ -2,6 +2,8 @@ export enum GameType {
   SelectMissingWord = 'SelectMissingWord',
   DescribeImage = 'DescribeImage',
   SelectWordFromSound = 'SelectWordFromSound',
+  Spelling = 'Spelling',
+  SelectFromImage = 'SelectFromImage',
 }
 export enum GameState {
   Idle = 0,
@@ -37,10 +39,21 @@ export type SelectWordFromSound = {
   options: Array<GameOption>;
 };
 
+export type SpellingGame = {
+  options: Array<GameOption>;
+};
+
+export type SelectFromImageGame = {
+  word: string;
+  options: Array<GameOption>;
+};
+
 export type Game = BaseGame &
   Partial<SelectMissingWordGame> &
   Partial<DescribeImageGame> &
-  Partial<SelectWordFromSound>;
+  Partial<SelectWordFromSound> &
+  Partial<SpellingGame> &
+  Partial<SelectFromImageGame>;
 
 export type Lesson = {
   id: string; // TODO: Until we have a real backend, we can use this to identify lessons

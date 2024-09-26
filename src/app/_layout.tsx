@@ -28,12 +28,13 @@ import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { APIProvider } from '@/api';
-import { hydrateAuth, loadSelectedTheme } from '@/core';
+import { hydrateAuth } from '@/core';
 import { useThemeConfig } from '@/core/use-theme-config';
 
 export { ErrorBoundary } from 'expo-router';
 
 // Import  global CSS file
+import { WhisperProvider } from '@/core/contexts/whisper';
 import '../../global.css';
 
 export const unstable_settings = {
@@ -41,7 +42,6 @@ export const unstable_settings = {
 };
 
 hydrateAuth();
-loadSelectedTheme();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -95,7 +95,7 @@ function Providers({ children }: { children: React.ReactNode }) {
       <ThemeProvider value={theme}>
         <APIProvider>
           <BottomSheetModalProvider>
-            {children}
+            <WhisperProvider>{children}</WhisperProvider>
             <FlashMessage position="top" />
           </BottomSheetModalProvider>
         </APIProvider>

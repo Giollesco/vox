@@ -4,10 +4,12 @@ import React, { useCallback, useEffect } from 'react';
 
 import { PageLoading } from '@/components/page-loading';
 import { useAuth } from '@/core';
+import { useWhisperContext } from '@/core/contexts/whisper';
 
 export default function TabLayout() {
   // Hooks
   const status = useAuth.use.status();
+  const whisper = useWhisperContext();
 
   // Fetching data
   const isMutatingAudioExercises = useIsMutating({
@@ -42,8 +44,6 @@ export default function TabLayout() {
           name="index"
           options={{ headerShown: false, animation: 'fade' }}
         />
-        <Stack.Screen name="settings" options={{ headerShown: false }} />
-        <Stack.Screen name="style" options={{ headerShown: false }} />
       </Stack>
     </PageLoading>
   );

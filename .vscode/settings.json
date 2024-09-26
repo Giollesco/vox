@@ -32,6 +32,7 @@
     "type-check",
     "healthcheck",
     "platform",
-    "lessons"
+    "lessons",
+    "audio"
   ]
 }

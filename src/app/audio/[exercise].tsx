@@ -24,13 +24,13 @@ import { useFinishExercise } from '@/api/audio';
 import AudioExerciseCard from '@/components/audio/exercise-card';
 import { RecordButton } from '@/components/audio/exercise-card/record-button';
 import { useAuth } from '@/core';
-import useWhisper from '@/core/hooks/use-whisper';
 import { useAudioExercises } from '@/stores';
 import type { AudioExercise } from '@/types';
 import { Button, colors, FocusAwareStatusBar, Text, View } from '@/ui';
 import { SPRING_CONFIG } from '@/utils/config';
 import { getContrastColor } from '@/utils/functions';
 import * as Haptics from 'expo-haptics';
+import { useWhisperContext } from '@/core/contexts/whisper';
 
 interface AudioListProps {
   exerciseName: string;
@@ -47,7 +47,7 @@ const TEXT_ENTER_DURATION = CONTAINER_ENTER_DURATION;
 export default function AudioList() {
   // Hooks
   const { account, updateAccount } = useAuth();
-  const whisper = useWhisper();
+  const whisper = useWhisperContext();
   const { mutate: finishExercise, isLoading: finishingExercise } =
     useFinishExercise();
   const { top, bottom } = useSafeAreaInsets();
@@ -295,6 +295,21 @@ export default function AudioList() {
                   {whisper.error}
                 </Text>
               </TouchableOpacity>
+            )}
+            {whisper.isLoading && (
+              <Text
+                weight="regular"
+                style={{
+                  textAlign: 'center',
+                  width: width,
+                  fontSize: 11,
+                  paddingHorizontal: 20,
+                  color: 'black',
+                  opacity: 0.5,
+                }}
+              >
+                Whisper se učitava...
+              </Text>
             )}
           </View>
         </View>

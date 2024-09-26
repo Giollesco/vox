@@ -6,15 +6,18 @@ import {
   IOSOutputFormat,
 } from 'expo-av/build/Audio';
 import { FFmpegKit } from 'ffmpeg-kit-react-native';
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import RNFS from 'react-native-fs';
-import type { WhisperContext } from 'whisper.rn';
-import { initWhisper } from 'whisper.rn';
+import { initWhisper, WhisperContext as WhisperLibContext } from 'whisper.rn';
 
-export default function useWhisper() {
+export const WhisperProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   // Refs
-  const whisperRef = useRef<WhisperContext>();
+  const whisperRef = useRef<WhisperLibContext>();
 
   // State for managing recording and transcription
   const [permissionResponse, requestPermission] = Audio.usePermissions();
@@ -26,7 +29,6 @@ export default function useWhisper() {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
 
-  // Function to load the Whisper model
   const loadModel = async () => {
     try {
       setIsLoading(true);
@@ -48,19 +50,32 @@ export default function useWhisper() {
       setIsModelLoaded(true);
       setError(undefined);
     } catch (error) {
+      console.error('[WHISPER]: Failed to initialize Whisper', error);
       setError(
         'Došlo je do greške prilikom učitavanja modela. Pokušajte ponovno.'
       );
-      console.error('[WHISPER]: Failed to initialize Whisper', error);
       setIsModelLoaded(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Automatically load the model on mount
+  const loadModelWithRetry = async (retries = 3, delay = 2000) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        await loadModel();
+        return; // Exit if successful
+      } catch (error) {
+        if (i === retries - 1) {
+          console.error('[WHISPER]: Final attempt to load model failed', error);
+        }
+        await new Promise((res) => setTimeout(res, delay)); // Wait before retrying
+      }
+    }
+  };
+
   useEffect(() => {
-    loadModel();
+    loadModelWithRetry(); // Call the retry function when the provider mounts
   }, []);
 
   // Function to handle transcription process
@@ -213,17 +228,56 @@ export default function useWhisper() {
       .replace(/^-+|-+$/g, ''); // Trim hyphens from start and end
   }
 
-  // Return everything needed from the hook
-  return {
-    startRecording,
-    stopRecording,
-    isRecording,
-    isLoading,
-    recognizedText,
-    slugText: slug(recognizedText),
-    isTranscribing,
-    error,
-    isModelLoaded,
-    loadModel, // Expose the model loading function
-  };
+  return (
+    <WhisperContext.Provider
+      value={{
+        startRecording,
+        stopRecording,
+        isRecording,
+        isLoading,
+        recognizedText,
+        slugText: slug(recognizedText),
+        isTranscribing,
+        error,
+        isModelLoaded,
+        loadModel,
+      }}
+    >
+      {children}
+    </WhisperContext.Provider>
+  );
+};
+
+interface WhisperContextType {
+  startRecording: (
+    onSuccess?: () => void,
+    onError?: () => void
+  ) => Promise<void>;
+  stopRecording: (
+    onSuccess?: (transcribedText: string) => void,
+    onError?: () => void,
+    skipTranscription?: boolean
+  ) => Promise<void>;
+  isRecording: boolean;
+  isLoading: boolean;
+  recognizedText: string;
+  slugText: string;
+  isTranscribing: boolean;
+  error: string | undefined;
+  isModelLoaded: boolean;
+  loadModel: () => Promise<void>;
 }
+
+// Create Whisper context
+const WhisperContext = createContext<WhisperContextType | null>(null);
+
+// Custom hook to use the Whisper context
+export const useWhisperContext = (): WhisperContextType => {
+  const context = useContext(WhisperContext);
+
+  if (!context) {
+    throw new Error('useWhisperContext must be used within a WhisperProvider');
+  }
+
+  return context;
+};

@@ -12,6 +12,7 @@ import FourthStep from './steps/fourth-step';
 import SecondStep from './steps/second-step';
 import ThirdStep from './steps/third-step';
 import Welcome from './welcome';
+import { colors } from '@/ui';
 
 const OnBoarding = () => {
   // Hooks
@@ -32,7 +33,7 @@ const OnBoarding = () => {
     <Animated.View
       style={[
         animatedStyles,
-        { height: height * 7, backgroundColor: '#A8A6AA' },
+        { height: height * 7, backgroundColor: colors.grey.main },
       ]}
     >
       <Welcome y={y} index={0} isAnimationRunning={isAnimationRunning} />

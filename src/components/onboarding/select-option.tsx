@@ -17,12 +17,14 @@ type Props = {
   text: string;
   selected: boolean;
   baseBackgroundColor?: string;
+  activeBackgroundColor?: string;
   onSelect: () => void;
 };
 export const SelectOption = ({
   text,
   selected,
   baseBackgroundColor = '#ffffff30',
+  activeBackgroundColor,
   onSelect,
 }: Props) => {
   // Hooks
@@ -43,7 +45,7 @@ export const SelectOption = ({
       backgroundColor: interpolateColor(
         progress.value,
         [0, 1],
-        [baseBackgroundColor, colors.primary[500]]
+        [baseBackgroundColor, activeBackgroundColor || colors.primary[500]]
       ),
       transform: [
         {
@@ -95,7 +97,7 @@ export const SelectOption = ({
         <Feather
           name="arrow-right"
           size={32}
-          color={colors.primary[500]}
+          color={activeBackgroundColor ? colors.black : colors.primary[500]}
           style={{ marginRight: 10 }}
         />
         <Animated.View

@@ -161,7 +161,9 @@ export default function AudioList() {
             // Calculate scroll direction
             const currentScrollOffset = e.nativeEvent.contentOffset.x;
             scrollDirection.value =
-              currentScrollOffset > lastScrollOffset.value ? 1 : -1;
+              currentScrollOffset > lastScrollOffset.value
+                ? withTiming(1)
+                : withTiming(-1);
             lastScrollOffset.value = withTiming(currentScrollOffset);
           }}
           scrollToOverflowEnabled={false}

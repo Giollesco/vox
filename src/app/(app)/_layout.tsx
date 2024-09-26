@@ -3,12 +3,13 @@ import { Redirect, SplashScreen, Stack } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
 import { PageLoading } from '@/components/page-loading';
-import { useAuth, useIsFirstTime } from '@/core';
+import { useAuth } from '@/core';
+import { useWhisperContext } from '@/core/contexts/whisper';
 
 export default function TabLayout() {
   // Hooks
   const status = useAuth.use.status();
-  const [isFirstTime] = useIsFirstTime();
+  const whisper = useWhisperContext();
 
   // Fetching data
   const isMutatingAudioExercises = useIsMutating({
@@ -30,9 +31,6 @@ export default function TabLayout() {
   }, [hideSplash, status]);
 
   // Redirects
-  // if (isFirstTime) {
-  //   return <Redirect href="/onboarding/" />;
-  // }
   if (status === 'signOut') {
     return <Redirect href="/auth/login" />;
   }
@@ -41,13 +39,11 @@ export default function TabLayout() {
 
   return (
     <PageLoading loading={loading}>
-      <Stack screenOptions={{ animation: 'fade' }}>
+      <Stack screenOptions={{ animation: 'fade', headerShown: false }}>
         <Stack.Screen
           name="index"
           options={{ headerShown: false, animation: 'fade' }}
         />
-        <Stack.Screen name="settings" options={{ headerShown: false }} />
-        <Stack.Screen name="style" options={{ headerShown: false }} />
       </Stack>
     </PageLoading>
   );

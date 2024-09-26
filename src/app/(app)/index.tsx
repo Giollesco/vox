@@ -1,7 +1,7 @@
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import { MotiView } from 'moti';
 import React from 'react';
-import { Platform, useWindowDimensions } from 'react-native';
+import { Platform, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -9,15 +9,9 @@ import { useAudioExercises } from '@/api/audio';
 import ExerciseCard from '@/components/audio/gallery-card';
 import LessonDashboardCard from '@/components/lessons/dashboard-card';
 import { useAuth } from '@/core';
-import {
-  Button,
-  colors,
-  FocusAwareStatusBar,
-  SafeAreaView,
-  Text,
-  View,
-} from '@/ui';
+import { colors, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
 import { APP_DUMMY_EXERCISE } from '@/utils/data';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function MainScreen() {
   // Hooks
@@ -25,15 +19,17 @@ export default function MainScreen() {
   const { width, height } = useWindowDimensions();
   const { top, bottom } = useSafeAreaInsets();
   const audioExerciseGestureActive = useSharedValue(0);
+  const { defaultLessonOpen } = useLocalSearchParams<{
+    defaultLessonOpen: 'true' | 'false';
+  }>();
 
   // Constants
   const SPACE = 32;
   const BOTTOM = Platform.OS === 'ios' ? bottom : SPACE / 2;
-  const HEADER_HEIGHT = 180;
   const FOOTER_HEIGHT = (height - top - BOTTOM - 60) / 3;
   const CONTAINER_WIDTH = width - SPACE;
-  const MAIN_CARD_HEIGHT =
-    height - HEADER_HEIGHT - FOOTER_HEIGHT - top - BOTTOM * 1.5 - SPACE;
+  const MAIN_CARD_HEIGHT = 280;
+  const HEADER_HEIGHT = height - FOOTER_HEIGHT - MAIN_CARD_HEIGHT - SPACE * 4;
 
   // Fetching data
   const { data: audioExercises } = useAudioExercises();
@@ -53,34 +49,43 @@ export default function MainScreen() {
           style={{
             zIndex: 10,
             height: HEADER_HEIGHT,
+            paddingTop: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <View
-            className="w-full flex-row items-center"
-            style={{ opacity: 0.35 }}
+            className="items-end"
+            style={{ position: 'absolute', top: 20, right: 0 }}
           >
-            <SimpleLineIcons name="logout" size={18} color="black" />
-            <Button variant="link" onPress={auth.signOut} label="Sign out" />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={auth.signOut}
+              style={{ opacity: 0.5, marginBottom: 24, marginRight: 20 }}
+            >
+              <SimpleLineIcons name="logout" size={18} color="black" />
+            </TouchableOpacity>
           </View>
-          <MotiView
-            from={{ opacity: 0, bottom: -10 }}
-            animate={{ opacity: 1, bottom: 0 }}
-          >
-            <Text
-              weight="light"
-              className="w-full text-left text-3xl"
-              style={{ width: CONTAINER_WIDTH, opacity: 0.5 }}
+          <View className="flex-column w-full items-center justify-between gap-2">
+            <MotiView
+              from={{ opacity: 0, bottom: -10 }}
+              animate={{ opacity: 1, bottom: 0 }}
+              delay={0}
             >
-              Dobrodošli natrag,
-            </Text>
-            <Text
-              className="w-full text-left text-3xl"
-              style={{ width: CONTAINER_WIDTH }}
-              weight="semiBold"
+              <Text className="text-md text-center opacity-50" weight="medium">
+                Dobrodošli natrag,
+              </Text>
+            </MotiView>
+            <MotiView
+              from={{ opacity: 0, bottom: -10 }}
+              animate={{ opacity: 1, bottom: 0 }}
+              delay={100}
             >
-              {`${auth?.account?.firstName} ${auth?.account?.lastName}`}
-            </Text>
-          </MotiView>
+              <Text className="text-center text-5xl" weight="medium">
+                {`${auth?.account?.firstName} ${auth?.account?.lastName}`}
+              </Text>
+            </MotiView>
+          </View>
         </View>
 
         <View
@@ -93,6 +98,7 @@ export default function MainScreen() {
           <LessonDashboardCard
             height={MAIN_CARD_HEIGHT}
             width={CONTAINER_WIDTH}
+            defaultOpen={defaultLessonOpen === 'true'}
           />
         </View>
 
@@ -114,7 +120,7 @@ export default function MainScreen() {
                 gestureActive={audioExerciseGestureActive}
                 exercise={APP_DUMMY_EXERCISE}
                 customData={{
-                  color: colors.primary[500],
+                  color: '#FBB1FF',
                   title: 'Audio vježbe',
                   description: 'Vježbajte svoj izgovor',
                   footerText: `Ukupan broj vježbi: ${audioExercises.length}`,
@@ -178,13 +184,13 @@ export default function MainScreen() {
               style={{
                 height:
                   FOOTER_HEIGHT - (CONTAINER_WIDTH / 4 - SPACE / 3) - SPACE / 2,
-                backgroundColor: colors.grey.dark,
+                backgroundColor: colors.grey.light,
                 width: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Text>Analytics</Text>
+              <Text>3</Text>
             </MotiView>
           </View>
         </View>

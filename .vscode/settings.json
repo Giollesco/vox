@@ -31,6 +31,8 @@
     "husky",
     "type-check",
     "healthcheck",
-    "platform"
+    "platform",
+    "lessons",
+    "audio"
   ]
 }

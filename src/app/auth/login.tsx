@@ -7,14 +7,14 @@ import type { LoginFormProps } from '@/components/login-form';
 import { LoginForm } from '@/components/login-form';
 import { useAuth, useIsFirstTime } from '@/core';
 import { useSoftKeyboardEffect } from '@/core/keyboard';
-import { FocusAwareStatusBar, ScrollView, View } from '@/ui';
+import { colors, FocusAwareStatusBar, ScrollView, View } from '@/ui';
 
 export default function Login() {
   // Hooks
   const [isFirstTime, setIsFirstTime] = useIsFirstTime();
   const router = useRouter();
   const signIn = useAuth.use.signIn();
-  // useSoftKeyboardEffect();
+  useSoftKeyboardEffect();
 
   // Effects
   React.useEffect(() => {
@@ -52,7 +52,7 @@ export default function Login() {
   return (
     <View
       className="flex h-full w-full items-end justify-end"
-      style={{ backgroundColor: '#A8A6AA' }}
+      style={{ backgroundColor: colors.grey.main }}
     >
       <ScrollView
         keyboardDismissMode="interactive"

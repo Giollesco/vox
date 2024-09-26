@@ -47,6 +47,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: Env.PACKAGE,
     permissions: ['RECORD_AUDIO'],
   },
+  androidNavigationBar: {
+    visible: 'immersive',
+  },
   web: {
     favicon: './assets/favicon.png',
     bundler: 'metro',

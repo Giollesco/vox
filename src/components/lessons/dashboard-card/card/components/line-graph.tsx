@@ -69,9 +69,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     flexDirection: 'row',
+    maxHeight: 60,
   },
   completedBar: {
-    backgroundColor: colors.primary[500],
+    backgroundColor: colors.black,
     height: '100%',
     width: '60%',
     borderRadius: 14,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   baseBar: {
-    backgroundColor: colors.grey.main,
+    backgroundColor: colors.primary[500],
     height: '100%',
     width: '100%',
     borderRadius: 14,
@@ -89,7 +90,8 @@ const styles = StyleSheet.create({
   stripLine: {
     width: 6,
     height: '140%',
-    backgroundColor: colors.grey.dark,
+    backgroundColor: colors.grey.main,
+    opacity: 0.5,
     transform: [{ rotateZ: '20deg' }],
   },
   stripContainer: {

@@ -7,6 +7,7 @@ import type { Account } from '@/types';
 import { createSelectors } from '../utils';
 import type { TokenType } from './utils';
 import { getToken, removeToken, setToken } from './utils';
+import { router } from 'expo-router';
 
 interface AuthState {
   user: Models.User<Models.Preferences> | null;
@@ -43,6 +44,7 @@ const _useAuth = create<AuthState>((set, get) => ({
   signOut: async () => {
     removeToken();
     set({ status: 'signOut', token: null, account: null, user: null });
+    router.replace('/auth/login');
     await account.deleteSessions();
   },
   hydrate: () => {

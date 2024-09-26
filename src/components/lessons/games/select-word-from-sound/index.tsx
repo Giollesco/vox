@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import SelectOption from '../select-option';
+import SelectOption from '../components/select-option';
 import { SelectOptionColor, stepParser } from '../utils';
 import { Audio } from 'expo-av';
 const soundObject = new Audio.Sound();

@@ -6,7 +6,7 @@ import { BaseGame, GameState, SpellingGame } from '@/types';
 import { colors, Text, View } from '@/ui';
 import { MotiView } from 'moti';
 import { StyleSheet } from 'react-native';
-import SelectOption from '../select-option';
+import SelectOption from '../components/select-option';
 import { SelectOptionColor, stepParser } from '../utils';
 
 type Props = {

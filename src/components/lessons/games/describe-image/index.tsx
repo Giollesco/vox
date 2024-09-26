@@ -8,7 +8,7 @@ import { MotiView } from 'moti';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { SelectOptionColor, stepParser } from '../utils';
 import { Image } from 'expo-image';
-import SelectOption from '../select-option';
+import SelectOption from '../components/select-option';
 
 type Props = {
   gameState: GameState;

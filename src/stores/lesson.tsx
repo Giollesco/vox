@@ -67,16 +67,9 @@ const _useLesson = create<LessonStore>((set, get) => ({
   checkAnswer: () => {
     const { currentGame, currentAnswer } = get();
     if (!currentGame) return false;
-    if (
-      currentGame.type === GameType.SelectMissingWord ||
-      currentGame.type === GameType.DescribeImage ||
-      currentGame.type === GameType.SelectWordFromSound
-    ) {
-      let game = currentGame as BaseGame & SelectMissingWordGame;
-      const correctAnswer = game.options.find((o) => o.isCorrect)?.value;
-      return correctAnswer === currentAnswer;
-    }
-    return false;
+    let game = currentGame as BaseGame & SelectMissingWordGame;
+    const correctAnswer = game.options.find((o) => o.isCorrect)?.value;
+    return correctAnswer === currentAnswer;
   },
   numberOfWrongAnswers: 0,
   setNumberOfWrongAnswers: (number) => set({ numberOfWrongAnswers: number }),

@@ -2,13 +2,12 @@ import * as React from 'react';
 
 import { Progress } from '@/components/common/progress';
 import { useLesson } from '@/stores';
-import { BaseGame, DescribeImageGame, GameState } from '@/types';
+import { BaseGame, GameState, SelectFromImageGame } from '@/types';
 import { colors, Text, View } from '@/ui';
 import { MotiView } from 'moti';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { SelectOptionColor, stepParser } from '../utils';
-import { Image } from 'expo-image';
-import SelectOption from '../select-option';
+import ImageSelectOption from '../components/image-select-option';
 
 type Props = {
   gameState: GameState;
@@ -23,7 +22,7 @@ export const SelectFromImage = ({ gameState, syncGameState }: Props) => {
 
   // Data
   const data = React.useMemo(
-    () => currentGame as BaseGame & DescribeImageGame,
+    () => currentGame as BaseGame & SelectFromImageGame,
     [currentGame]
   );
 
@@ -83,14 +82,35 @@ export const SelectFromImage = ({ gameState, syncGameState }: Props) => {
         from={{ opacity: 0, translateY: 20 }}
         animate={{ opacity: 1, translateY: 0 }}
         delay={150}
+        style={[
+          styles.bubbleWrapper,
+          { width: width - 40, marginHorizontal: 20 },
+        ]}
+      >
+        <Text weight="medium" className="text-center text-lg text-white w-full">
+          {data.word}
+        </Text>
+        <View style={styles.bubbleWrapperArrow} />
+      </MotiView>
+
+      {/* <MotiView
+        from={{ opacity: 0, translateY: 20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        delay={150}
         style={[styles.imageWrapper, { width: width - 40 }]}
       >
         <Image source={data.imageUrl} style={styles.image} />
-      </MotiView>
+      </MotiView> */}
 
       <View
         className="flex-1"
-        style={{ marginTop: 40, paddingHorizontal: 10, gap: 3 }}
+        style={{
+          marginTop: 40,
+          paddingHorizontal: 10,
+          flexWrap: 'wrap',
+          width: '100%',
+          flexDirection: 'row',
+        }}
       >
         {data.options.map((option, index) => {
           return (
@@ -99,9 +119,10 @@ export const SelectFromImage = ({ gameState, syncGameState }: Props) => {
               animate={{ opacity: 1, translateY: 0 }}
               delay={150 + index * 50}
               key={index}
+              style={styles.imageWrapper}
             >
-              <SelectOption
-                text={option.value}
+              <ImageSelectOption
+                source={option.value}
                 activeBackgroundColor={
                   selectedOption === option.value
                     ? SelectOptionColor[gameState]
@@ -116,7 +137,7 @@ export const SelectFromImage = ({ gameState, syncGameState }: Props) => {
         })}
       </View>
 
-      <View style={{ marginBottom: 40, alignItems: 'center' }}>
+      <View style={{ marginBottom: 40, alignItems: 'center', marginTop: 20 }}>
         <MotiView
           from={{ opacity: 0, translateY: 20 }}
           animate={{ opacity: 1, translateY: 0 }}
@@ -147,14 +168,27 @@ export const SelectFromImage = ({ gameState, syncGameState }: Props) => {
 
 const styles = StyleSheet.create({
   imageWrapper: {
+    width: '50%',
+    height: '50%',
+    padding: 3,
+  },
+  bubbleWrapper: {
+    flexDirection: 'row',
+    backgroundColor: colors.black,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    padding: 20,
     marginTop: 20,
     borderRadius: 24,
-    height: 160,
-    marginHorizontal: 20,
   },
-  image: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 24,
+  bubbleWrapperArrow: {
+    position: 'absolute',
+    bottom: -8,
+    right: 40,
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    backgroundColor: colors.black,
+    transform: [{ rotate: '45deg' }],
   },
 });

@@ -32,7 +32,8 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
   // Variables
   const open = useSharedValue(false);
   let lessonFinished = index === 0; // TODO: Implement this
-  let lesosnDisabled = index > 1;
+  // let lessonDisabled = index > 1;
+  let lessonDisabled = false;
 
   // Functions
   const onPress = () => {
@@ -68,12 +69,12 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
             params: { lesson: lesson.id },
           }}
           asChild
-          disabled={lesosnDisabled}
+          disabled={lessonDisabled}
         >
           <TouchableOpacity
             activeOpacity={0.8}
-            disabled={lesosnDisabled}
-            style={{ opacity: lesosnDisabled ? 0.25 : 1 }}
+            disabled={lessonDisabled}
+            style={{ opacity: lessonDisabled ? 0.25 : 1 }}
           >
             <FontAwesome6
               name={lessonFinished ? 'check' : 'arrow-right-long'}

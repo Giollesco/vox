@@ -269,29 +269,29 @@ Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnim situa
     games: [
       {
         title: 'Odaberite ispravnu sliku',
-        description: 'Odaberite sliku koja odgovara riječi "Goodbye".',
+        description: 'Odaberite sliku koja odgovara broju "Four".',
         type: GameType.SelectFromImage,
-        word: 'Goodbye',
+        word: 'Four',
         options: [
           {
             value:
-              'https://img.freepik.com/free-photo/pretty-blond-wavy-haired-teenage-girl-waving-goodbye-friend-looking-sad-isolated-blue-background-bye-bye-expression_574295-4569.jpg',
+              'https://s39613.pcdn.co/wp-content/uploads/2018/09/one-sentence-lesson-plan.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://media.assettype.com/freepressjournal/2022-01/41df3fdb-11a8-4b03-93ad-e8f4e683234f/info_doc_destiny.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://images.timesproperty.com/blog/1988/1703675974_Numerology_Number_2_-_Know_About_Numerology_House_Number_2.webp',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://housenumbers.co.uk/cdn/shop/products/stainless-steel-door-number-calibri-1097-p.jpg?v=1631023750&width=533',
             isCorrect: true,
-          },
-          {
-            value:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUTga6tBtTCQW50XfIw8016ZI1Hex6KUSA2A&s',
-            isCorrect: false,
-          },
-          {
-            value:
-              'https://agromoris.com/wp-content/uploads/2021/10/Orange.jpg',
-            isCorrect: false,
-          },
-          {
-            value:
-              'https://i.ebayimg.com/images/g/PvUAAOSwSm5lJ7Sy/s-l1200.jpg',
-            isCorrect: false,
           },
         ],
       },
@@ -311,11 +311,22 @@ Ova lekcija će vam pomoći da s lakoćom koristite brojeve u svakodnevnim situa
         title: 'Odaberite pripadajući broj',
         description: 'Odaberite broj koji odgovara slici.',
         type: GameType.DescribeImage,
-        imageUrl: 'https://www.pngarts.com/files/3/4-Number-PNG-Image.png',
+        imageUrl:
+          'https://assets.babycenter.com/ims/2015/12/iStock_664429_wide.jpg?width=1026',
         options: [
           { value: 'Three', isCorrect: false },
+          { value: 'Four', isCorrect: false },
+          { value: 'Five', isCorrect: true },
+        ],
+      },
+      {
+        title: 'Kako se piše broj 4?',
+        description: 'Napišite ispravno broj "Četiri" na engleskom jeziku.',
+        type: GameType.Spelling,
+        options: [
+          { value: 'For', isCorrect: false },
           { value: 'Four', isCorrect: true },
-          { value: 'Five', isCorrect: false },
+          { value: 'Fore', isCorrect: false },
         ],
       },
       {
@@ -417,6 +428,16 @@ U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na eng
         ],
       },
       {
+        title: 'Kako se piše?',
+        description: 'Napišite ispravno riječ "Pozdrav" na engleskom jeziku.',
+        type: GameType.Spelling,
+        options: [
+          { value: 'Helo', isCorrect: false },
+          { value: 'Hello', isCorrect: true },
+          { value: 'Hallo', isCorrect: false },
+        ],
+      },
+      {
         title: 'Odaberite riječ koja nedostaje',
         description: 'Odaberite riječ koja nedostaje u rečenici.',
         type: GameType.SelectMissingWord,
@@ -425,6 +446,34 @@ U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na eng
           { value: 'Hello', isCorrect: false },
           { value: 'John', isCorrect: true },
           { value: 'Goodbye', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite sliku koja odgovara situaciji',
+        description: 'Odaberite sliku koja odgovara frazi "Nice to meet you".',
+        type: GameType.SelectFromImage,
+        word: 'Nice to meet you',
+        options: [
+          {
+            value:
+              'https://henrydavidsen.com/wp-content/uploads/2020/12/handshake.png',
+            isCorrect: true,
+          },
+          {
+            value:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsH8D3TrmU0C1gq6__vKtojmNlNClNXtpFC26ufCEog17w5R16p2Mop1Lt9jqycQ3x_l8&usqp=CAU',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://img.freepik.com/premium-photo/hand-gesture-thumbs-down-isolated-white-background_582637-237.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://edge.mondly.com/blog/wp-content/uploads/2022/01/italian-hand-gesture.jpg',
+            isCorrect: false,
+          },
         ],
       },
       {
@@ -440,16 +489,6 @@ U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na eng
         ],
       },
       {
-        title: 'Kako se piše?',
-        description: 'Napišite ispravno riječ "Pozdrav" na engleskom jeziku.',
-        type: GameType.Spelling,
-        options: [
-          { value: 'Helo', isCorrect: false },
-          { value: 'Hello', isCorrect: true },
-          { value: 'Hallo', isCorrect: false },
-        ],
-      },
-      {
         title: 'Odaberite ispravan pozdrav',
         description:
           'Odaberite pozdrav koji odgovara situaciji: Srećete nekoga po prvi put.',
@@ -459,6 +498,142 @@ U ovoj lekciji naučit ćete osnovne fraze za pozdravljanje i upoznavanje na eng
           { value: 'Goodbye', isCorrect: false },
           { value: 'Nice to meet you', isCorrect: true },
           { value: 'See you later', isCorrect: false },
+        ],
+      },
+    ],
+  },
+  {
+    id: '4',
+    title: 'Vrijeme',
+    description: `
+U ovoj lekciji naučit ćete kako izraziti vrijeme, dan, datum, godišnja doba i doba dana na engleskom jeziku.
+
+## Vrijeme (Time)
+**What's the time?** – Koliko je sati?
+**It's 3 o'clock.** – Tri su sata.
+**It's half past seven.** – Pola je osam.
+**It's a quarter to five.** – Petnaest do pet.
+
+## Dani (Days)
+**Monday** – Ponedjeljak
+**Tuesday** – Utorak
+**Wednesday** – Srijeda
+**Thursday** – Četvrtak
+**Friday** – Petak
+**Saturday** – Subota
+**Sunday** – Nedjelja
+
+## Datumi (Dates)
+**What’s the date today?** – Koji je datum danas?
+**It's the first of May.** – Prvi je svibnja.
+
+## Godišnja doba (Seasons)
+**Spring** – Proljeće
+**Summer** – Ljeto
+**Autumn** (or **Fall**) – Jesen
+**Winter** – Zima
+
+## Doba dana (Times of day)
+**Morning** – Jutro
+**Afternoon** – Poslijepodne
+**Evening** – Večer
+**Night** – Noć
+`,
+    games: [
+      {
+        title: 'Odaberite vrijeme koje čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite ispravno vrijeme.',
+        type: GameType.SelectWordFromSound,
+        word: "It's half past seven.",
+        options: [
+          { value: '7:30', isCorrect: true },
+          { value: '5:15', isCorrect: false },
+          { value: '8:45', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite godišnje doba prema slici',
+        description: 'Odaberite godišnje doba koje odgovara slici.',
+        type: GameType.DescribeImage,
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2021/01/05/02/33/cherry-blossom-5889483_960_720.jpg',
+        options: [
+          { value: 'Spring', isCorrect: true },
+          { value: 'Winter', isCorrect: false },
+          { value: 'Autumn', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite riječ koja nedostaje',
+        description:
+          'Odaberite riječ koja nedostaje u rečenici za vrijeme 5:15.',
+        type: GameType.SelectMissingWord,
+        sentence: 'It’s a quarter _____ five.',
+        options: [
+          { value: 'past', isCorrect: true },
+          { value: 'to', isCorrect: false },
+          { value: 'before', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Kako se piše?',
+        description: 'Napišite ispravno riječ "vrijeme" na engleskom jeziku.',
+        type: GameType.Spelling,
+        options: [
+          { value: 'Time', isCorrect: true },
+          { value: 'Tiem', isCorrect: false },
+          { value: 'Thime', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite dan koji odgovara slici',
+        description: 'Odaberite dan koji odgovara slici kalendara.',
+        type: GameType.DescribeImage,
+        imageUrl:
+          'https://t3.ftcdn.net/jpg/04/98/84/92/360_F_498849248_SNUs5ZHzw08zxU7QinVzIg8TEIOyUs5U.jpg',
+        options: [
+          { value: 'Saturday', isCorrect: true },
+          { value: 'Monday', isCorrect: false },
+          { value: 'Friday', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite riječ koje nedostaje',
+        description: 'Odaberite doba dana koje nedostaje u rečenici.',
+        type: GameType.SelectMissingWord,
+        sentence: 'Good _____, have a nice day!',
+        options: [
+          { value: 'night', isCorrect: false },
+          { value: 'morning', isCorrect: true },
+          { value: 'evening', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite vrijeme koje odgovara',
+        description: 'Odaberite sliku koja odgovara frazi "Good night!".',
+        type: GameType.SelectFromImage,
+        word: 'Good night',
+        options: [
+          {
+            value:
+              'https://img.freepik.com/premium-photo/sunrise-morning-alarm-clock-morning-wake-up-device-generate-ai_98402-88926.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://my-wall-clock.com/cdn/shop/articles/Leonardo_Diffusion_XL_A_bedroom_with_an_alarm_clock_that_emit_0_1344x.jpg?v=1706073439',
+            isCorrect: true,
+          },
+          {
+            value:
+              'https://www.rmg.co.uk/sites/default/files/styles/slider_image/public/Shepher%20master%20clock_L4931-005_slider.JPG?itok=oU-OyWLB',
+            isCorrect: false,
+          },
+          {
+            value: 'https://c.tadst.com/gfx/1200x630/noon-clock.jpg?1',
+            isCorrect: false,
+          },
         ],
       },
     ],

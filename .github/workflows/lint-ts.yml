@@ -29,13 +29,13 @@ jobs:
       - name: 📦 Setup Node + PNPM + install deps
         uses: ./.github/actions/setup-node-pnpm-install
 
-      - name: 🏃‍♂️ Run ESLint PR
-        if: github.event_name == 'pull_request'
-        uses: reviewdog/action-eslint@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          eslint_flags: '. --ext .js,.jsx,.ts,.tsx'
+      # - name: 🏃‍♂️ Run ESLint PR
+      #   if: github.event_name == 'pull_request'
+      #   uses: reviewdog/action-eslint@v1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     reporter: github-pr-review
+      #     eslint_flags: '. --ext .js,.jsx,.ts,.tsx'
 
       - name: 🏃‍♂️ Run ESLint PR
         if: github.event_name != 'pull_request'

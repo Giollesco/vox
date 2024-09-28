@@ -82,6 +82,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(app)" />
         <Stack.Screen name="onboarding" />
         <Stack.Screen name="audio" />
+        <Stack.Screen name="analytics" />
       </Stack>
     </Providers>
   );

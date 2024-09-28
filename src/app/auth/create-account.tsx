@@ -99,6 +99,7 @@ export const CreateAccount = ({ y, index, isAnimationRunning }: Props) => {
         ...getValues(),
         completedAudioExercises: [],
         completedLessons: [],
+        dailyGoals: [],
       };
       const newUser = await createUserAccount(userData);
       if (!newUser) {

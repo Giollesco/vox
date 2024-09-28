@@ -33,6 +33,9 @@
     "healthcheck",
     "platform",
     "lessons",
-    "audio"
+    "audio",
+    "dashboard",
+    "time-spent-tracker",
+    "analytics"
   ]
 }

@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
+  FadeIn,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withTiming,
+  ZoomIn,
 } from 'react-native-reanimated';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { colors, View } from '@/ui';
 
@@ -61,6 +64,18 @@ export const LineGraph = ({ progress, backgroundColor }: Props) => {
           ))}
         </View>
       </Animated.View>
+      {progress === 1 && (
+        <Animated.View
+          style={[styles.completedIconWrapper]}
+          entering={ZoomIn.delay(4000).duration(1000)}
+        >
+          <MaterialIcons
+            name="verified"
+            size={24}
+            color={colors.success['500']}
+          />
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -92,8 +107,8 @@ const styles = StyleSheet.create({
   stripLine: {
     width: 6,
     height: '140%',
-    backgroundColor: colors.grey.main,
-    opacity: 0.5,
+    backgroundColor: colors.black,
+    opacity: 0.1,
     transform: [{ rotateZ: '20deg' }],
   },
   stripContainer: {
@@ -102,5 +117,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  completedIconWrapper: {
+    position: 'absolute',
+    zIndex: 3,
+    width: '100%',
+    alignItems: 'center',
   },
 });

@@ -15,6 +15,7 @@ import Animated, {
 import { useAuth } from '@/core';
 import type { AudioExercise } from '@/types';
 import { Text, View } from '@/ui';
+import { MotiView } from 'moti';
 
 interface ExerciseCardProps {
   exercise: AudioExercise;
@@ -199,9 +200,9 @@ export default function ExerciseCard({
                   left: -10,
                 }}
               >
-                {[...exercise.words, ...exercise.words].map((word, index) => (
+                {[...exercise.words, ...exercise.words].map((word, i) => (
                   <Text
-                    key={`word-${word.text}-${index}`}
+                    key={`word-${word.text}-${i}`}
                     weight="black"
                     style={{
                       fontSize: 64,

@@ -1,20 +1,21 @@
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import { MotiView } from 'moti';
-import React from 'react';
-import { Platform, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { Collection, Database, database, useLessons } from '@/api';
 import { useAudioExercises } from '@/api/audio';
+import { AnalyticsDashboardCard } from '@/components/analytics/dashboard-card';
 import ExerciseCard from '@/components/audio/gallery-card';
+import LogoutButton from '@/components/dashboard/logout-button';
+import TimeSpentTrackerButton from '@/components/dashboard/time-spent-tracker-button';
 import LessonDashboardCard from '@/components/lessons/dashboard-card';
+import { PageLoading } from '@/components/page-loading';
 import { useAuth } from '@/core';
 import { colors, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
 import { APP_DUMMY_EXERCISE, MOCK_LESSONS } from '@/utils/data';
-import { useLocalSearchParams } from 'expo-router';
-import { Collection, Database, database, useLessons } from '@/api';
 import { ID } from 'appwrite';
-import { PageLoading } from '@/components/page-loading';
+import { useLocalSearchParams } from 'expo-router';
+import { MotiView } from 'moti';
+import React from 'react';
+import { Platform, useWindowDimensions } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function MainScreen() {
   // Hooks
@@ -69,6 +70,7 @@ export default function MainScreen() {
   }
 
   let loading = isAudioLoading || isLessonsLoading;
+
   return (
     <PageLoading loading={loading}>
       <View
@@ -90,18 +92,6 @@ export default function MainScreen() {
               justifyContent: 'center',
             }}
           >
-            <View
-              className="items-end"
-              style={{ position: 'absolute', top: 20, right: 0 }}
-            >
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={auth.signOut}
-                style={{ opacity: 0.5, marginBottom: 24, marginRight: 20 }}
-              >
-                <SimpleLineIcons name="logout" size={18} color="black" />
-              </TouchableOpacity>
-            </View>
             <View className="flex-column w-full items-center justify-between gap-2">
               <MotiView
                 from={{ opacity: 0, bottom: -10 }}
@@ -176,6 +166,33 @@ export default function MainScreen() {
                 width: CONTAINER_WIDTH / 2 - SPACE / 4,
               }}
             >
+              {/* Last item */}
+              <MotiView
+                from={{ opacity: 0, bottom: -10 }}
+                animate={{ opacity: 1, bottom: 0 }}
+                delay={450}
+                className="w-full flex-row items-center justify-between rounded-4xl"
+                style={{
+                  height:
+                    FOOTER_HEIGHT -
+                    (CONTAINER_WIDTH / 4 - SPACE / 3) -
+                    SPACE / 2,
+                  backgroundColor: colors.grey.light,
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <AnalyticsDashboardCard
+                  height={
+                    FOOTER_HEIGHT -
+                    (CONTAINER_WIDTH / 4 - SPACE / 3) -
+                    SPACE / 2
+                  }
+                  width={CONTAINER_WIDTH / 2 - SPACE / 4}
+                />
+              </MotiView>
+
               <View
                 className="w-full flex-row items-center justify-between"
                 style={{
@@ -196,7 +213,7 @@ export default function MainScreen() {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text>1</Text>
+                  <TimeSpentTrackerButton />
                 </MotiView>
                 <MotiView
                   from={{ opacity: 0, bottom: -10 }}
@@ -211,28 +228,9 @@ export default function MainScreen() {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text>2</Text>
+                  <LogoutButton />
                 </MotiView>
               </View>
-              {/* Last item */}
-              <MotiView
-                from={{ opacity: 0, bottom: -10 }}
-                animate={{ opacity: 1, bottom: 0 }}
-                delay={450}
-                className="w-full flex-row items-center justify-between rounded-4xl"
-                style={{
-                  height:
-                    FOOTER_HEIGHT -
-                    (CONTAINER_WIDTH / 4 - SPACE / 3) -
-                    SPACE / 2,
-                  backgroundColor: colors.grey.light,
-                  width: '100%',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Text>3</Text>
-              </MotiView>
             </View>
           </View>
         </SafeAreaView>

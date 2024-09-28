@@ -6,4 +6,5 @@ export type Account = Omit<Onboarding, 'steps'> & {
   id: string;
   completedAudioExercises: string[];
   completedLessons: string[];
+  dailyGoals: string[];
 } & Models.Document;

@@ -298,7 +298,8 @@ export default function AudioList() {
                   weight="regular"
                   style={{
                     textAlign: 'center',
-                    width: width,
+                    width: width - 40,
+                    marginLeft: 20,
                     fontSize: 11,
                     paddingHorizontal: 20,
                     color: 'black',

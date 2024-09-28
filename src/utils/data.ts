@@ -47,9 +47,9 @@ export const STARTING_POINTS = [
 ];
 
 export const MINUTES_PER_DAY = [
-  { text: '5 minuta', level: Level.L1 },
-  { text: '10 minuta', level: Level.L2 },
-  { text: '15+ minuta', level: Level.L3 },
+  { text: '5 minuta', level: Level.L1, minutes: 5 },
+  { text: '10 minuta', level: Level.L2, minutes: 10 },
+  { text: '15+ minuta', level: Level.L3, minutes: 15 },
 ];
 
 export const DUMMY_EXERCISE: AudioExercise = {

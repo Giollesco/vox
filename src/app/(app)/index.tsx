@@ -2,6 +2,7 @@ import { Collection, Database, database, useLessons } from '@/api';
 import { useAudioExercises } from '@/api/audio';
 import ExerciseCard from '@/components/audio/gallery-card';
 import LogoutButton from '@/components/dashboard/logout-button';
+import TimeSpentTrackerButton from '@/components/dashboard/time-spent-tracker-button';
 import LessonDashboardCard from '@/components/lessons/dashboard-card';
 import { PageLoading } from '@/components/page-loading';
 import { useAuth } from '@/core';
@@ -204,7 +205,7 @@ export default function MainScreen() {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text>1</Text>
+                  <TimeSpentTrackerButton />
                 </MotiView>
                 <MotiView
                   from={{ opacity: 0, bottom: -10 }}

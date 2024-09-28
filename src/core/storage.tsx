@@ -2,15 +2,24 @@ import { MMKV } from 'react-native-mmkv';
 
 export const storage = new MMKV();
 
-export function getItem<T>(key: string): T {
+export function getItem<T>(key: string): T | null {
   const value = storage.getString(key);
-  return value ? JSON.parse(value) || null : null;
+  try {
+    return value ? JSON.parse(value) : null;
+  } catch (e) {
+    console.error('Error parsing JSON from storage:', e);
+    return null;
+  }
 }
 
-export async function setItem<T>(key: string, value: T) {
-  storage.set(key, JSON.stringify(value));
+export function setItem<T>(key: string, value: T) {
+  try {
+    storage.set(key, JSON.stringify(value));
+  } catch (e) {
+    console.error('Error stringifying value for storage:', e);
+  }
 }
 
-export async function removeItem(key: string) {
+export function removeItem(key: string) {
   storage.delete(key);
 }

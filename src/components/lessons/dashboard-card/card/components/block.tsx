@@ -385,7 +385,7 @@ const Block = ({
                           animate={{ opacity: 1, bottom: 0 }}
                           delay={150}
                         >
-                          <Text style={{ fontSize: 13, opacity: 0.35 }}>
+                          <Text className="text-sm">
                             Broj riješenih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>
@@ -397,7 +397,7 @@ const Block = ({
                           animate={{ opacity: 1, bottom: 0 }}
                           delay={200}
                         >
-                          <Text style={{ fontSize: 13, opacity: 0.35 }}>
+                          <Text className="text-sm">
                             Broj preostalih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>

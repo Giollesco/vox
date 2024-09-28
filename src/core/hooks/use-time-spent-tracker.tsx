@@ -6,7 +6,7 @@ import { getItem, removeItem, setItem } from '../storage';
 
 export const useTimeSpentTracker = () => {
   // Hooks
-  const { account } = useAuth();
+  const { account, updateAccount } = useAuth();
 
   // Check if minutesPerDay is null
   if (account && account.minutesPerDay === null) {
@@ -20,7 +20,7 @@ export const useTimeSpentTracker = () => {
 
   // Refs
   const intervalId = useRef<NodeJS.Timeout | null>(null); // Use a ref for the interval ID
-  const targetReached = useRef(false); // Use a ref for targetReached
+  const targetReached = useRef(getItem('targetReached')); // Use a ref for targetReached
 
   // State
   const [timeSpentToday, setTimeSpentToday] = useState(0);
@@ -81,20 +81,36 @@ export const useTimeSpentTracker = () => {
   };
 
   const startSessionTimer = () => {
+    if (getItem('targetReached')) {
+      return; // Don't start the timer if the target has been reached
+    }
+
     console.log('Starting session timer');
     if (!intervalId.current) {
       intervalId.current = setInterval(() => {
         setTimeSpentToday((prev) => {
           const newTimeSpent = prev + 1; // Increment by 1 second
           if (newTimeSpent >= targetTime && !targetReached.current) {
-            targetReached.current = true; // Update the ref
-            stopSessionTimer(); // Stop the timer
-            // Optionally, you can set some state or handle target reached here
+            onTargetReached();
           }
           setItem('timeSpentToday', newTimeSpent); // Update stored time
           return newTimeSpent;
         });
       }, 1000); // Update every second
+    }
+  };
+
+  const onTargetReached = () => {
+    console.log('Target reached');
+    targetReached.current = true; // Update the ref
+    setItem('targetReached', true);
+    stopSessionTimer();
+    if (account && account.dailyGoals.length > 0) {
+      let dailyGoals = [...account.dailyGoals];
+      let today = new Date().toLocaleDateString();
+      // Push the current date to the daily goals in DD.MM.YYYY format
+      dailyGoals.push(today);
+      updateAccount({ dailyGoals });
     }
   };
 
@@ -112,6 +128,7 @@ export const useTimeSpentTracker = () => {
     targetReached.current = false; // Reset the ref
     removeItem('lastDate');
     removeItem('timeSpentToday');
+    removeItem('targetReached');
   };
 
   return {
@@ -119,5 +136,6 @@ export const useTimeSpentTracker = () => {
     timeSpentTodayMinutes: Math.floor(timeSpentToday / 60), // Return in minutes
     targetReached: targetReached.current, // Return target reached state
     resetTimeSpent,
+    onTargetReached,
   };
 };

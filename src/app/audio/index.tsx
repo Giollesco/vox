@@ -244,7 +244,7 @@ export default function AudioList() {
             left: 0,
           }}
         >
-          <BlurView style={{ height: bottom + 60 }}>
+          <View style={{ height: bottom + 60 }}>
             <Animated.View
               entering={FadeIn.duration(750)}
               style={{
@@ -274,7 +274,7 @@ export default function AudioList() {
                 {audioExercises.total}
               </Text>
             </Animated.View>
-          </BlurView>
+          </View>
         </Animated.View>
       </View>
     </>

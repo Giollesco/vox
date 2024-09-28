@@ -2,30 +2,37 @@ import { useTimeSpentTracker } from '@/core/hooks/use-time-spent-tracker';
 import { colors, Text, View } from '@/ui';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React from 'react';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native';
 
 export default function TimeSpentTrackerButton() {
   // Hooks
-  const { targetReached, timeSpentTodayMinutes, resetTimeSpent } =
-    useTimeSpentTracker();
+  const { targetReached, timeSpentTodayMinutes } = useTimeSpentTracker();
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={{ opacity: 0.5 }}
-      onPress={resetTimeSpent}
-      key={`time-spent-tracker-${timeSpentTodayMinutes}`}
+      key={`time-spent-tracker-${timeSpentTodayMinutes}-${targetReached}`}
     >
       <View className="flex-1 items-center justify-center pt-2">
         <View className="flex-row items-center justify-center">
-          <MaterialCommunityIcons
-            name={targetReached ? 'timer-sand-full' : 'timer-sand'}
-            size={18}
-            color={targetReached ? colors.success[500] : colors.black}
-          />
+          {targetReached ? (
+            <MaterialIcons
+              name="verified"
+              size={18}
+              color={colors.success['500']}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="timer-sand"
+              size={18}
+              color="colors.black"
+              style={{ opacity: 0.5 }}
+            />
+          )}
         </View>
-        <Text className="text-center" style={{ fontSize: 10 }}>
-          {targetReached ? 'Cilj ispunjen!' : `${timeSpentTodayMinutes} min`}
+        <Text className="text-center text-sm" style={{ paddingTop: 2 }}>
+          {targetReached ? 'Cilj ispunjen' : `${timeSpentTodayMinutes} min`}
         </Text>
       </View>
     </TouchableOpacity>

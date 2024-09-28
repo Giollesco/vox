@@ -16,14 +16,15 @@ export default function LogoutButton() {
   }
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={handleLogout}
-      style={{ opacity: 0.5 }}
-    >
+    <TouchableOpacity activeOpacity={0.8} onPress={handleLogout}>
       <View className="flex-1 items-center justify-center pt-2">
-        <MaterialIcons name="logout" size={18} color="black" />
-        <Text className="text-center" style={{ fontSize: 10 }}>
+        <MaterialIcons
+          name="logout"
+          size={18}
+          color="black"
+          style={{ opacity: 0.5 }}
+        />
+        <Text className="text-center text-sm" style={{ paddingTop: 2 }}>
           Odjava
         </Text>
       </View>

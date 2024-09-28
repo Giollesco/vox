@@ -1,5 +1,6 @@
 import { Collection, Database, database, useLessons } from '@/api';
 import { useAudioExercises } from '@/api/audio';
+import { AnalyticsDashboardCard } from '@/components/analytics/dashboard-card';
 import ExerciseCard from '@/components/audio/gallery-card';
 import LogoutButton from '@/components/dashboard/logout-button';
 import TimeSpentTrackerButton from '@/components/dashboard/time-spent-tracker-button';
@@ -182,7 +183,14 @@ export default function MainScreen() {
                   justifyContent: 'center',
                 }}
               >
-                <Text>3</Text>
+                <AnalyticsDashboardCard
+                  height={
+                    FOOTER_HEIGHT -
+                    (CONTAINER_WIDTH / 4 - SPACE / 3) -
+                    SPACE / 2
+                  }
+                  width={CONTAINER_WIDTH / 2 - SPACE / 4}
+                />
               </MotiView>
 
               <View

@@ -1,16 +1,25 @@
 import * as React from 'react';
 
+import { useFinishLesson } from '@/api';
+import { useAuth } from '@/core';
 import { useLesson } from '@/stores';
-import { colors, Pressable, Text, TouchableOpacity, View } from '@/ui';
+import { ActivityIndicator, colors, Text, TouchableOpacity, View } from '@/ui';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import { MotiView } from 'moti';
+import { useWindowDimensions } from 'react-native';
 
 type Props = {};
 export const GameFinished = ({}: Props) => {
   // Hooks
+  const { width } = useWindowDimensions();
   const { lesson, numberOfWrongAnswers } = useLesson();
+  const { account, updateAccount } = useAuth();
+  const { mutate: finishLesson, isLoading: isFinishingLesson } =
+    useFinishLesson();
+  const [canShowBackButton, setCanShowBackButton] =
+    React.useState<boolean>(false);
 
   // Constants
   const baseDelay = 600;
@@ -18,6 +27,7 @@ export const GameFinished = ({}: Props) => {
   // Effects
   React.useEffect(() => {
     vibrateOnTextAnimation();
+    handleFinishLesson();
   }, []);
 
   // Functions
@@ -26,6 +36,34 @@ export const GameFinished = ({}: Props) => {
       router.back();
     } else {
       router.push('/');
+    }
+  }
+
+  function handleFinishLesson() {
+    let id = lesson?.$id || '';
+    let isLessonAlreadyFinished = account?.completedLessons.includes(id);
+
+    if (account && !isLessonAlreadyFinished) {
+      let completedLessons: string[] = [...account.completedLessons, id];
+
+      finishLesson(
+        { accountId: account.$id, completedLessons },
+        {
+          onSuccess(data, variables, context) {
+            updateAccount({ completedLessons });
+            setTimeout(() => {
+              setCanShowBackButton(true);
+            }, 1000);
+          },
+          onError(error, variables, context) {
+            console.log('Error on finishing lesson => ', error);
+          },
+        }
+      );
+    } else {
+      setTimeout(() => {
+        setCanShowBackButton(true);
+      }, baseDelay + 1000);
     }
   }
 
@@ -45,9 +83,6 @@ export const GameFinished = ({}: Props) => {
     setTimeout(() => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }, baseDelay + 200);
-    setTimeout(() => {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    }, baseDelay + 1500);
   }
 
   return (
@@ -130,34 +165,48 @@ export const GameFinished = ({}: Props) => {
             </MotiView>
           </MotiView>
         </View>
-        <MotiView
-          from={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          delay={baseDelay + 1500}
-        >
-          <TouchableOpacity
-            onPress={handleOnFinish}
-            style={{
-              padding: 24,
-              borderRadius: 18,
-            }}
+        {canShowBackButton && (
+          <MotiView
+            from={{ opacity: 0, translateY: 20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            delay={baseDelay + 1500}
           >
-            <View className="flex-row items-center gap-8">
-              <Text
-                className="text-center text-xl color-primary-500"
-                weight="medium"
-                style={{ marginTop: -4 }}
-              >
-                Natrag na lekcije
-              </Text>
-              <FontAwesome6
-                name="arrow-right-long"
-                color={colors.primary[500]}
-                size={18}
-              />
-            </View>
-          </TouchableOpacity>
-        </MotiView>
+            <TouchableOpacity
+              onPress={handleOnFinish}
+              style={{
+                padding: 24,
+                borderRadius: 18,
+              }}
+            >
+              <View className="flex-row items-center gap-8">
+                <Text
+                  className="text-center text-xl color-primary-500"
+                  weight="medium"
+                  style={{ marginTop: -4 }}
+                >
+                  Natrag na lekcije
+                </Text>
+                <FontAwesome6
+                  name="arrow-right-long"
+                  color={colors.primary[500]}
+                  size={18}
+                />
+              </View>
+            </TouchableOpacity>
+          </MotiView>
+        )}
+
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 40,
+            width,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          {isFinishingLesson && <ActivityIndicator />}
+        </View>
       </View>
     </View>
   );

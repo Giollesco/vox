@@ -1,3 +1,5 @@
+import { Models } from 'appwrite';
+
 export enum GameType {
   SelectMissingWord = 'SelectMissingWord',
   DescribeImage = 'DescribeImage',
@@ -55,8 +57,8 @@ export type Game = BaseGame &
   Partial<SpellingGame> &
   Partial<SelectFromImageGame>;
 
-export type Lesson = {
-  id: string; // TODO: Until we have a real backend, we can use this to identify lessons
+export type Lesson = Models.Document & {
+  index: number;
   title: string;
   description: string;
   games: Array<Game>;

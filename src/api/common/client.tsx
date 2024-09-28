@@ -19,4 +19,7 @@ export enum Collection {
   Accounts = '66049181a16c209fdde3',
   Words = '660081c3f1907aaca711',
   AudioExercises = '66dda00400352539201f',
+  Lessons = '66f6c7a90000596bfa8b',
+  Games = '66f6c7ca0021e30ebd8f',
+  GameOptions = '66f6cec00011dc07bc47',
 }

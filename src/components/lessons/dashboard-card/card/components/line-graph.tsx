@@ -11,8 +11,9 @@ import { colors, View } from '@/ui';
 
 type Props = {
   progress: number;
+  backgroundColor: string;
 };
-export const LineGraph = ({ progress }: Props) => {
+export const LineGraph = ({ progress, backgroundColor }: Props) => {
   // Constants
   const duration = 1000;
 
@@ -51,7 +52,9 @@ export const LineGraph = ({ progress }: Props) => {
   return (
     <View style={[styles.container]}>
       <Animated.View style={[styles.completedBar, completedAnimatedStyle]} />
-      <Animated.View style={[styles.baseBar, baseBarAnimatedStyles]}>
+      <Animated.View
+        style={[styles.baseBar, { backgroundColor }, baseBarAnimatedStyles]}
+      >
         <View style={[styles.stripContainer, { width }]}>
           {Array.from({ length: 28 }).map((_, index) => (
             <View style={styles.stripLine} key={index} />
@@ -80,7 +83,6 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   baseBar: {
-    backgroundColor: colors.primary[500],
     height: '100%',
     width: '100%',
     borderRadius: 14,

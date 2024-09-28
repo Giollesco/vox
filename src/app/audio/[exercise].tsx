@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { MotiView } from 'moti';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -63,6 +63,7 @@ export default function AudioList() {
     // @ts-ignore
     useLocalSearchParams<AudioListProps>();
   // State
+  const [showReloadButton, setShowReloadButton] = useState<boolean>(false);
   const [jsExerciseFinished, setJsExerciseFinished] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [wordIndex, setWordIndex] = useState<number>(0);
@@ -76,6 +77,16 @@ export default function AudioList() {
     const _exercise = exercise as any;
     return _exercise?.$id;
   }, [exercise]);
+
+  // Effects
+  useEffect(() => {
+    setTimeout(() => {
+      setShowReloadButton(true);
+    }, 3000);
+    return () => {
+      setShowReloadButton(false);
+    };
+  }, []);
 
   // Functions
   function startProgress() {
@@ -99,17 +110,19 @@ export default function AudioList() {
     );
     setTimeout(
       () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
-      TEXT_ENTER_DURATION + 150
+      TEXT_ENTER_DURATION + 200
     );
     setTimeout(
       () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft),
-      TEXT_ENTER_DURATION + 200
+      TEXT_ENTER_DURATION + 300
     );
 
     // Hide finish animation with callbacks
     setTimeout(() => {
       setJsExerciseFinished(false);
-      if (account) {
+      let isExerciseAlreadyCompleted =
+        account?.completedAudioExercises.includes(id);
+      if (account && !isExerciseAlreadyCompleted) {
         let completedAudioExercises: string[] = [
           ...account.completedAudioExercises,
           id,
@@ -128,7 +141,7 @@ export default function AudioList() {
               );
             },
             onError(error, variables, context) {
-              console.log('ERRROROROR => ', error);
+              console.log('Finish exercise error => ', error);
             },
           }
         );
@@ -297,19 +310,37 @@ export default function AudioList() {
               </TouchableOpacity>
             )}
             {whisper.isLoading && (
-              <Text
-                weight="regular"
-                style={{
-                  textAlign: 'center',
-                  width: width,
-                  fontSize: 11,
-                  paddingHorizontal: 20,
-                  color: 'black',
-                  opacity: 0.5,
-                }}
-              >
-                Whisper se učitava...
-              </Text>
+              <View className="flex-row gap-4 items-center justify-center">
+                <Text
+                  weight="regular"
+                  style={{
+                    textAlign: 'center',
+                    width: width,
+                    fontSize: 11,
+                    color: 'black',
+                    opacity: 0.5,
+                  }}
+                >
+                  Whisper se učitava...
+                </Text>
+                {showReloadButton && (
+                  <TouchableOpacity onPress={whisper.reloadModel}>
+                    <Text
+                      weight="regular"
+                      style={{
+                        textAlign: 'center',
+                        width: width,
+                        fontSize: 11,
+                        paddingHorizontal: 20,
+                        color: 'black',
+                        opacity: 0.5,
+                      }}
+                    >
+                      Whisper se učitava...
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
             )}
           </View>
         </View>
@@ -394,28 +425,34 @@ export default function AudioList() {
             >
               <Text
                 weight="bold"
-                className="text-5xl"
-                style={{ color: getContrastColor(color), lineHeight: 60 }}
+                style={{
+                  color: getContrastColor(color),
+                  lineHeight: 50,
+                  fontSize: 40,
+                }}
               >
                 ⭐
               </Text>
             </Animated.View>
             <Animated.View
               key={`congrats-${exerciseFinished.value === 1 ? 'show' : 'hide'}`}
-              entering={FadeIn.delay(TEXT_ENTER_DURATION + 50)}
+              entering={FadeIn.delay(TEXT_ENTER_DURATION + 100)}
               exiting={FadeOut}
             >
               <Text
                 weight="bold"
-                className="text-5xl"
-                style={{ color: getContrastColor(color), lineHeight: 60 }}
+                style={{
+                  color: getContrastColor(color),
+                  lineHeight: 50,
+                  fontSize: 40,
+                }}
               >
                 Čestitamo!
               </Text>
             </Animated.View>
             <Animated.View
               key={`message-${exerciseFinished.value === 1 ? 'show' : 'hide'}`}
-              entering={FadeIn.delay(TEXT_ENTER_DURATION + 100)}
+              entering={FadeIn.delay(TEXT_ENTER_DURATION + 200)}
               exiting={FadeOut}
             >
               <Text
@@ -427,7 +464,7 @@ export default function AudioList() {
                   textAlign: 'center',
                 }}
               >
-                Uspješno ste završili vježbu {exercise.title}
+                Uspješno ste završili vježbu {'\n'} {exercise.title}
               </Text>
             </Animated.View>
             {finishingExercise && <ActivityIndicator />}

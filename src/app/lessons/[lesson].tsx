@@ -1,11 +1,14 @@
 import * as React from 'react';
 
+import { useLessons } from '@/api';
+import GameHandler from '@/components/lessons/game-handler';
 import { useLesson } from '@/stores';
 import { GameState } from '@/types';
 import { colors, Text, View } from '@/ui';
-import { MOCK_LESSONS } from '@/utils/data';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 import * as Haptics from 'expo-haptics';
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -17,9 +20,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import GameHandler from '@/components/lessons/game-handler';
-import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 
 interface Props {}
 
@@ -53,8 +53,8 @@ const Lesson = ({}: Props) => {
   // Use useEffect to run the lesson setup only after the component mounts
   React.useEffect(() => {
     lessonStore.resetState();
-    if (lesson) {
-      const lessonFromList = MOCK_LESSONS.find((l) => l.id === lesson);
+    if (lesson && lessonStore.lessons) {
+      const lessonFromList = lessonStore.lessons.find((l) => l.$id === lesson);
       if (lessonFromList) {
         lessonStore.initialSetup(lessonFromList);
       }
@@ -128,15 +128,16 @@ const Lesson = ({}: Props) => {
 
   const animatedGradientStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(
+      height:
         gameState.value !== GameState.Idle &&
-          gameState.value !== GameState.Finished
-          ? 1
-          : 0,
-        {
-          duration,
-        }
-      ),
+        gameState.value !== GameState.Finished
+          ? 300
+          : 180,
+      opacity:
+        gameState.value !== GameState.Idle &&
+        gameState.value !== GameState.Finished
+          ? withTiming(1, { duration })
+          : withTiming(0, { duration }),
     };
   });
 
@@ -155,59 +156,58 @@ const Lesson = ({}: Props) => {
           syncGameState={syncGameState}
         />
 
-        {jsGameState !== GameState.Idle &&
-          jsGameState !== GameState.Finished && (
-            <Animated.View
-              style={[styles.gradientWrapper, { width }, animatedGradientStyle]}
+        <Animated.View
+          style={[styles.gradientWrapper, { width }, animatedGradientStyle]}
+        >
+          <Canvas style={{ flex: 1 }}>
+            <Rect
+              x={0}
+              y={Math.abs(translateY) - top}
+              width={width}
+              height={300}
             >
-              <Canvas style={{ flex: 1 }}>
-                <Rect
-                  x={0}
-                  y={Math.abs(translateY) - top}
-                  width={width}
-                  height={300}
-                >
-                  <LinearGradient
-                    start={vec(0, 0)}
-                    end={vec(0, 300)}
-                    colors={[
-                      colors.grey.main,
-                      colors.grey.main + 'f1',
-                      colors.grey.main + '00',
-                    ]}
-                  />
-                </Rect>
-              </Canvas>
-            </Animated.View>
-          )}
+              <LinearGradient
+                start={vec(0, 0)}
+                end={vec(0, 300)}
+                colors={[
+                  colors.grey.main,
+                  colors.grey.main + 'f1',
+                  colors.grey.main + '00',
+                ]}
+              />
+            </Rect>
+          </Canvas>
+        </Animated.View>
       </Animated.View>
 
       {/* Underlay elements */}
-      <View style={[styles.ctaWrapper, { height: spaceAtBottom }]}>
-        <View style={{ padding: 20, paddingTop: 0 }}>
-          <TouchableOpacity
-            onPress={nextGame}
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Text style={{ color: 'white' }}>
-              {jsGameState === GameState.Playing
-                ? 'Provjerite odgovor'
-                : jsGameState === GameState.Correct
-                ? 'Sljedeće pitanje slijedi...'
-                : jsGameState === GameState.Incorrect
-                ? 'Pokušajte ponovno'
-                : ''}
-            </Text>
-            {jsGameState !== GameState.Idle && (
-              <FontAwesome6 name="arrow-right-long" size={18} color="white" />
-            )}
-          </TouchableOpacity>
+      <TouchableOpacity
+        onPress={nextGame}
+        style={[styles.ctaWrapper, { height: spaceAtBottom }]}
+      >
+        <View
+          style={{
+            padding: 20,
+            paddingTop: 0,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ color: 'white' }}>
+            {jsGameState === GameState.Playing
+              ? 'Provjerite odgovor'
+              : jsGameState === GameState.Correct
+              ? 'Sljedeće pitanje slijedi...'
+              : jsGameState === GameState.Incorrect
+              ? 'Pokušajte ponovno'
+              : ''}
+          </Text>
+          {jsGameState !== GameState.Idle && (
+            <FontAwesome6 name="arrow-right-long" size={18} color="white" />
+          )}
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -228,12 +228,12 @@ const styles = StyleSheet.create({
   ctaWrapper: {
     zIndex: 1,
     position: 'absolute',
-    bottom: 0,
+    bottom: 32,
     left: 0,
     right: 0,
     width: '100%',
     justifyContent: 'flex-start',
-    // paddingTop: 20,
+    paddingTop: 32,
     paddingHorizontal: 12,
   },
   gradientWrapper: {

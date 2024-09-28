@@ -60,7 +60,7 @@ export const WhisperProvider = ({
     }
   };
 
-  const loadModelWithRetry = async (retries = 3, delay = 2000) => {
+  const loadModelWithRetry = async (retries = 5, delay = 2000) => {
     for (let i = 0; i < retries; i++) {
       try {
         await loadModel();
@@ -73,6 +73,11 @@ export const WhisperProvider = ({
       }
     }
   };
+
+  function reloadModel() {
+    setIsModelLoaded(false);
+    loadModelWithRetry();
+  }
 
   useEffect(() => {
     loadModelWithRetry(); // Call the retry function when the provider mounts
@@ -241,6 +246,7 @@ export const WhisperProvider = ({
         error,
         isModelLoaded,
         loadModel,
+        reloadModel,
       }}
     >
       {children}
@@ -266,6 +272,7 @@ interface WhisperContextType {
   error: string | undefined;
   isModelLoaded: boolean;
   loadModel: () => Promise<void>;
+  reloadModel: () => void;
 }
 
 // Create Whisper context

@@ -1,15 +1,11 @@
 import { create } from 'zustand';
 
 import { createSelectors } from '@/core/utils';
-import {
-  BaseGame,
-  Game,
-  GameType,
-  Lesson,
-  SelectMissingWordGame,
-} from '@/types';
+import { BaseGame, Game, Lesson, SelectMissingWordGame } from '@/types';
 
 export type LessonStore = {
+  lessons: Lesson[];
+  setLessons: (lessons: Lesson[]) => void;
   renderFlag: boolean;
   numberOfGames: number;
   setNumberOfGames: (numberOfGames: number) => void;
@@ -30,6 +26,8 @@ export type LessonStore = {
 };
 
 const _useLesson = create<LessonStore>((set, get) => ({
+  lessons: [],
+  setLessons: (lessons) => set({ lessons }),
   renderFlag: false,
   numberOfGames: 0,
   setNumberOfGames: (numberOfGames) => set({ numberOfGames }),
@@ -76,3 +74,5 @@ const _useLesson = create<LessonStore>((set, get) => ({
 }));
 
 export const useLesson = createSelectors(_useLesson);
+export const setLessons = (lessons: Lesson[]) =>
+  useLesson.getState().setLessons(lessons);

@@ -1,7 +1,7 @@
 // Animated
 import { BlurView } from 'expo-blur';
 import { MotiView } from 'moti';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Dimensions,
   Platform,
@@ -50,6 +50,7 @@ import {
 import CloseButton from './close-button';
 import { LineGraph } from './line-graph';
 import DashboardLessonContent from '@/app/lessons/dashboard-content';
+import { useLesson } from '@/stores';
 
 // Constants
 export const THUMBNAIL_SCALE_FACTOR = 1.35;
@@ -81,12 +82,13 @@ const Block = ({
   height,
   width,
   isShowingDetails,
-  defaultOpen,
+  defaultOpen = false,
   showingStateChanged,
 }: IProps) => {
   // Hooks
   const { top } = useSafeAreaInsets();
   const { account } = useAuth();
+  const { lessons } = useLesson();
 
   // Variables
   const isShowingContent = useDerivedValue(() => {
@@ -232,6 +234,21 @@ const Block = ({
     },
   });
 
+  // Data
+  const lessonsCompleted = useMemo(() => {
+    return account?.completedLessons.length || 0;
+  }, [account]);
+  const lessonsRemaining = useMemo(() => {
+    return lessons.length - lessonsCompleted;
+  }, [lessonsCompleted, lessons]);
+  const lessonsPercentage = useMemo(() => {
+    return lessonsCompleted / lessons.length;
+  }, [account?.completedLessons, lessonsCompleted, lessons]);
+  const backgroundColor = useMemo(() => {
+    if (lessonsRemaining === 0) return colors.success[500];
+    return colors.primary[500];
+  }, [lessonsRemaining]);
+
   return (
     <>
       {/* Blur view */}
@@ -240,7 +257,7 @@ const Block = ({
         style={[styles.blurViewWrapper, blurViewStyles]}
       >
         {Platform.OS !== 'android' ? (
-          <BlurView tint="default" intensity={100} style={{ flex: 1 }} />
+          <BlurView tint="default" intensity={50} style={{ flex: 1 }} />
         ) : (
           <View style={{ flex: 1, backgroundColor: '#000', opacity: 0.5 }} />
         )}
@@ -302,7 +319,13 @@ const Block = ({
                       resizeMode="cover"
                     /> */}
                     <Animated.View
-                      style={[styles.blockStyle, contentPaddingStyles]}
+                      style={[
+                        styles.blockStyle,
+                        contentPaddingStyles,
+                        {
+                          backgroundColor,
+                        },
+                      ]}
                     >
                       {/* Top row */}
                       <View
@@ -366,7 +389,7 @@ const Block = ({
                             Broj riješenih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>
-                            1 lekcija
+                            {`${lessonsCompleted} lekcija`}
                           </Text>
                         </MotiView>
                         <MotiView
@@ -378,7 +401,7 @@ const Block = ({
                             Broj preostalih lekcija
                           </Text>
                           <Text weight="semiBold" style={{ fontSize: 16 }}>
-                            3 lekcije
+                            {`${lessonsRemaining} lekcija`}
                           </Text>
                         </MotiView>
                       </View>
@@ -391,7 +414,11 @@ const Block = ({
                           paddingBottom: 16,
                         }}
                       >
-                        <LineGraph progress={0.25} />
+                        <LineGraph
+                          key={`lesson-percentage-${lessonsPercentage}-${backgroundColor}`}
+                          progress={lessonsPercentage}
+                          backgroundColor={backgroundColor}
+                        />
                       </View>
                     </Animated.View>
                   </Animated.View>
@@ -449,7 +476,6 @@ const styles = StyleSheet.create({
   blockStyle: {
     flex: 1,
     zIndex: 5,
-    backgroundColor: colors.primary['500'],
     paddingVertical: 32,
     paddingHorizontal: 24,
   },

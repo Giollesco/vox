@@ -125,6 +125,7 @@ const ImageSelectOption = ({
           ]}
         >
           <AnimatedIcon
+            key={`icon-${source}-${selected}`}
             animatedProps={iconAnimatedProps}
             name="radio-button-checked"
             size={24}

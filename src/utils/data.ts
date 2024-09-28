@@ -111,7 +111,7 @@ export const APP_DUMMY_EXERCISE: AudioExercise = {
   ],
 };
 
-export const MOCK_LESSONS: Array<Lesson> = [
+export const MOCK_LESSONS: Array<any> = [
   {
     id: '1',
     title: 'Abeceda',
@@ -634,6 +634,133 @@ U ovoj lekciji naučit ćete kako izraziti vrijeme, dan, datum, godišnja doba i
             value: 'https://c.tadst.com/gfx/1200x630/noon-clock.jpg?1',
             isCorrect: false,
           },
+        ],
+      },
+    ],
+  },
+  {
+    id: '5',
+    title: 'Boje',
+    description: `
+U ovoj lekciji naučit ćete nazive boja na engleskom jeziku i kako ih koristiti u svakodnevnim opisima i razgovorima.
+
+## Osnovne boje (Basic Colors)
+**Red** – Crvena  
+**Blue** – Plava  
+**Yellow** – Žuta  
+**Green** – Zelena  
+**Black** – Crna  
+**White** – Bijela  
+**Orange** – Narančasta  
+**Purple** – Ljubičasta  
+**Pink** – Roza  
+**Brown** – Smeđa  
+
+### Primjeri:
+1. **The sky is blue.** (Nebo je plavo.)
+2. **My car is red.** (Moj automobil je crven.)
+3. **She has a yellow dress.** (Ona ima žutu haljinu.)
+
+## Vježbe:
+1. Naučite kako prepoznati boje na slikama.
+2. Vježbajte kako pravilno izgovarati i pisati boje na engleskom.
+`,
+    games: [
+      {
+        title: 'Odaberite boju koju čujete',
+        description:
+          'Pritisnite gumb za reprodukciju zvuka i odaberite ispravnu boju.',
+        type: GameType.SelectWordFromSound,
+        word: 'Red',
+        options: [
+          { value: 'Red', isCorrect: true },
+          { value: 'Blue', isCorrect: false },
+          { value: 'Yellow', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite boju koja odgovara slici cvijeta',
+        description: "Odaberite sliku koja odgovara boji 'Pink'.",
+        type: GameType.SelectFromImage,
+        word: 'Pink',
+        options: [
+          {
+            value:
+              'https://c02.purpledshub.com/uploads/sites/40/2023/08/JI230816Cosmos220-6d9254f-edited-scaled.jpg?w=1029&webp=1',
+            isCorrect: true,
+          },
+          {
+            value:
+              'https://www.epicgardening.com/wp-content/uploads/2023/09/Platycodon-grandifloras.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://news.cgtn.com/news/3d3d414f7763444d35457a6333566d54/img/cf48a5a91b2741c7bb7710447b0d322b/cf48a5a91b2741c7bb7710447b0d322b.jpg',
+            isCorrect: false,
+          },
+          {
+            value:
+              'https://www.planetnatural.com/wp-content/uploads/2023/10/Blue-Hydrangea-Hydrangea-macrophylla-flowers.jpg',
+            isCorrect: false,
+          },
+        ],
+      },
+
+      {
+        title: 'Kako se piše?',
+        description: 'Napišite ispravno riječ "Crvena" na engleskom jeziku.',
+        type: GameType.Spelling,
+        options: [
+          { value: 'Red', isCorrect: true },
+          { value: 'Reed', isCorrect: false },
+          { value: 'Rad', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite boju koja nedostaje',
+        description: 'Odaberite boju koja nedostaje u rečenici.',
+        type: GameType.SelectMissingWord,
+        sentence: 'The grass is _____.',
+        options: [
+          { value: 'Blue', isCorrect: false },
+          { value: 'Green', isCorrect: true },
+          { value: 'Red', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite ispravan opis',
+        description: 'Koji je ispravan opis slike?',
+        type: GameType.DescribeImage,
+        imageUrl:
+          'https://images.ctfassets.net/i3tkg7dt3kro/6ps9pYLle0N5aCW9BMuqIw/4485ee1641e7319d2e76e05394289596/hero-yellow-flowers.jpg',
+        options: [
+          { value: 'The flower is yellow.', isCorrect: true },
+          { value: 'The flower is red.', isCorrect: false },
+          { value: 'The flower is blue.', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite boju koja odgovara situaciji',
+        description:
+          'Koja boja odgovara ovom opisu: "The sky is usually this color on a sunny day."',
+        type: GameType.SelectMissingWord,
+        sentence: 'The sky is usually _____ on a sunny day.',
+        options: [
+          { value: 'Blue', isCorrect: true },
+          { value: 'Yellow', isCorrect: false },
+          { value: 'Green', isCorrect: false },
+        ],
+      },
+      {
+        title: 'Odaberite riječ koju čujete',
+        description: 'Koja boja odgovara zvuku?',
+        type: GameType.SelectWordFromSound,
+        word: 'Green',
+        options: [
+          { value: 'Green', isCorrect: true },
+          { value: 'Red', isCorrect: false },
+          { value: 'Blue', isCorrect: false },
         ],
       },
     ],

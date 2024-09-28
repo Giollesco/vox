@@ -1,8 +1,8 @@
 import LessonAccordion from '@/components/lessons/accordion';
 import getLessons from '@/components/lessons/utils';
 import { useAuth } from '@/core';
+import { useLesson } from '@/stores';
 import { colors, View } from '@/ui';
-import { MOCK_LESSONS } from '@/utils/data';
 import React, { useMemo } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import type Animated from 'react-native-reanimated';
@@ -16,10 +16,15 @@ const DashboardLessonContent = ({ height, isShowingDetails }: IProps) => {
   // Hooks
   const windowHeight = useWindowDimensions().height;
   const { account } = useAuth();
-  const data = useMemo(
-    () => getLessons(MOCK_LESSONS, account?.startingPoint),
-    [MOCK_LESSONS, account?.startingPoint]
-  );
+
+  // Data
+  const { lessons } = useLesson();
+  const data = useMemo(() => {
+    if (lessons) {
+      return getLessons(lessons, account?.startingPoint);
+    }
+    return [];
+  }, [lessons, account?.startingPoint]);
 
   return (
     <View style={[styles.container, { minHeight: windowHeight - height }]}>

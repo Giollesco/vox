@@ -19,6 +19,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { rules } from './rules';
+import { useAuth } from '@/core';
 
 type Props = {
   lesson: Lesson;
@@ -28,12 +29,13 @@ type Props = {
 const LessonAccordion: FC<Props> = ({ lesson, index }) => {
   // Hooks
   const { width } = useWindowDimensions();
+  const { account } = useAuth();
 
   // Variables
   const open = useSharedValue(false);
-  let lessonFinished = index === 0; // TODO: Implement this
-  // let lessonDisabled = index > 1;
-  let lessonDisabled = false;
+  let lessonFinished = account?.completedLessons.includes(lesson.$id);
+  let nextLessonToFinish = account?.completedLessons.length || 0;
+  let lessonDisabled = index > nextLessonToFinish;
 
   // Functions
   const onPress = () => {
@@ -66,7 +68,7 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
           key={index}
           href={{
             pathname: '/lessons/[lesson]',
-            params: { lesson: lesson.id },
+            params: { lesson: lesson.$id },
           }}
           asChild
           disabled={lessonDisabled}
@@ -74,7 +76,11 @@ const LessonAccordion: FC<Props> = ({ lesson, index }) => {
           <TouchableOpacity
             activeOpacity={0.8}
             disabled={lessonDisabled}
-            style={{ opacity: lessonDisabled ? 0.25 : 1 }}
+            style={{
+              opacity: lessonDisabled ? 0.15 : 1,
+              padding: 20,
+              marginRight: -20,
+            }}
           >
             <FontAwesome6
               name={lessonFinished ? 'check' : 'arrow-right-long'}

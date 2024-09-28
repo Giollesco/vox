@@ -33,6 +33,7 @@
     "healthcheck",
     "platform",
     "lessons",
-    "audio"
+    "audio",
+    "dashboard"
   ]
 }

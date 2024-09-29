@@ -1,4 +1,4 @@
-import { Collection, Database, database, useLessons } from '@/api';
+import { useLessons } from '@/api';
 import { useAudioExercises } from '@/api/audio';
 import { AnalyticsDashboardCard } from '@/components/analytics/dashboard-card';
 import ExerciseCard from '@/components/audio/gallery-card';
@@ -8,8 +8,7 @@ import LessonDashboardCard from '@/components/lessons/dashboard-card';
 import { PageLoading } from '@/components/page-loading';
 import { useAuth } from '@/core';
 import { colors, FocusAwareStatusBar, SafeAreaView, Text, View } from '@/ui';
-import { APP_DUMMY_EXERCISE, MOCK_LESSONS } from '@/utils/data';
-import { ID } from 'appwrite';
+import { APP_DUMMY_EXERCISE } from '@/utils/data';
 import { useLocalSearchParams } from 'expo-router';
 import { MotiView } from 'moti';
 import React from 'react';
@@ -28,46 +27,18 @@ export default function MainScreen() {
   }>();
 
   // Constants
-  const SPACE = 32;
+  const SPACE = 18;
   const BOTTOM = Platform.OS === 'ios' ? bottom : SPACE / 2;
   const FOOTER_HEIGHT = (height - top - BOTTOM - 60) / 3;
   const CONTAINER_WIDTH = width - SPACE;
   const MAIN_CARD_HEIGHT = 280;
-  const HEADER_HEIGHT = height - FOOTER_HEIGHT - MAIN_CARD_HEIGHT - SPACE * 4;
+  const HEADER_HEIGHT =
+    height - FOOTER_HEIGHT - MAIN_CARD_HEIGHT - SPACE * 4 - BOTTOM;
 
   // Fetching data
   const { data: audioExercises, isLoading: isAudioLoading } =
     useAudioExercises();
   const { isLoading: isLessonsLoading } = useLessons();
-
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  // TODO: Remove after writing lessons to Appwrite
-  async function writeLessonsToAppwrite() {
-    try {
-      let lessons = [...MOCK_LESSONS.slice(1)]; // Skip the first lesson
-
-      for (let index = 0; index < lessons.length; index++) {
-        let lesson = lessons[index];
-        let { id, ...rest } = lesson;
-        let collectionId = ID.unique();
-        await database.createDocument(
-          Database.English,
-          Collection.Lessons,
-          collectionId,
-          {
-            ...rest,
-            index: index + 1, // Start index from 1
-          }
-        );
-        console.log(`Created document with index: `, index + 1);
-        await delay(1000); // Wait for 1 second
-      }
-    } catch (error) {
-      console.error('Error writing lessons to Appwrite: ', error);
-    }
-  }
 
   let loading = isAudioLoading || isLessonsLoading;
 

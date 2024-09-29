@@ -21,9 +21,12 @@ export const useTimeSpentTracker = () => {
     };
   }
 
+  // Constsants
+  const accountID = account?.$id || '';
+
   // Refs
   const intervalId = useRef<NodeJS.Timeout | null>(null); // Use a ref for the interval ID
-  const targetReached = useRef(getItem('targetReached')); // Use a ref for targetReached
+  const targetReached = useRef(getItem(`targetReached_${accountID}`)); // Use a ref for targetReached
 
   // State
   const [timeSpentToday, setTimeSpentToday] = useState(0);
@@ -68,14 +71,14 @@ export const useTimeSpentTracker = () => {
 
   const loadTimeSpent = () => {
     const today = new Date().toDateString();
-    const storedDate = getItem<string>('lastDate');
-    const storedTime = getItem<number>('timeSpentToday') || 0;
+    const storedDate = getItem<string>(`lastDate_${accountID}`);
+    const storedTime = getItem<number>(`timeSpentToday_${accountID}`) || 0;
 
     if (storedDate === today) {
       setTimeSpentToday(storedTime);
     } else {
-      setItem('lastDate', today);
-      setItem('timeSpentToday', 0);
+      setItem(`lastDate_${accountID}`, today);
+      setItem(`timeSpentToday_${accountID}`, 0);
       setTimeSpentToday(0);
     }
   };
@@ -89,7 +92,7 @@ export const useTimeSpentTracker = () => {
   };
 
   const startSessionTimer = () => {
-    if (getItem('targetReached')) {
+    if (getItem(`targetReached_${accountID}`)) {
       return; // Don't start the timer if the target has been reached
     }
 
@@ -101,7 +104,7 @@ export const useTimeSpentTracker = () => {
           if (newTimeSpent >= targetTime && !targetReached.current) {
             onTargetReached();
           }
-          setItem('timeSpentToday', newTimeSpent); // Update stored time
+          setItem(`timeSpentToday_${accountID}`, newTimeSpent); // Update stored time
           return newTimeSpent;
         });
       }, 1000); // Update every second
@@ -111,7 +114,7 @@ export const useTimeSpentTracker = () => {
   const onTargetReached = () => {
     console.log('[TIME SPENT TRACKER]: Target reached');
     targetReached.current = true; // Update the ref
-    setItem('targetReached', true);
+    setItem(`targetReached_${accountID}`, true);
     stopSessionTimer();
     if (account && account.dailyGoals.length > 0) {
       let dailyGoals = [...account.dailyGoals];
@@ -119,7 +122,7 @@ export const useTimeSpentTracker = () => {
       // Push the current date to the daily goals in DD.MM.YYYY format
       dailyGoals.push(today);
       completeDailyGoal(
-        { accountId: account.$id, dailyGoals },
+        { accountId: accountID, dailyGoals },
         {
           onSuccess(data, variables, context) {
             updateAccount({ dailyGoals });
@@ -144,12 +147,12 @@ export const useTimeSpentTracker = () => {
   };
 
   const resetTimeSpent = () => {
-    setItem('timeSpentToday', 0);
+    setItem(`timeSpentToday_${accountID}`, 0);
     setTimeSpentToday(0);
     targetReached.current = false; // Reset the ref
-    removeItem('lastDate');
-    removeItem('timeSpentToday');
-    removeItem('targetReached');
+    removeItem(`lastDate_${accountID}`);
+    removeItem(`timeSpentToday_${accountID}`);
+    removeItem(`targetReached_${accountID}`);
   };
 
   return {

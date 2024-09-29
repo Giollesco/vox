@@ -30,29 +30,32 @@ export const WeeklyChart: React.FC<WeeklyChartProps> = ({
         alignItems: 'flex-end',
       }}
     >
-      {data.map(({ day, value }, index) => {
-        // Calculate the width for each bar in the chart
-        const barWidth = (width - internalPaddingHorizontal * 2 - gap * 6) / 7;
+      {data &&
+        data.length > 0 &&
+        data.map(({ day, value }, index) => {
+          // Calculate the width for each bar in the chart
+          const barWidth =
+            (width - internalPaddingHorizontal * 2 - gap * 6) / 7;
 
-        // Convert 'day' (in DD.MM.YYYY format) to a Date object to extract the day of the week
-        const [dayPart, monthPart, yearPart] = day.split('.').map(Number);
-        const currentDate = new Date(yearPart, monthPart - 1, dayPart);
-        const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+          // Convert 'day' (in DD.MM.YYYY format) to a Date object to extract the day of the week
+          const [dayPart, monthPart, yearPart] = day.split('.').map(Number);
+          const currentDate = new Date(yearPart, monthPart - 1, dayPart);
+          const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
 
-        // Get the letter corresponding to the day of the week
-        const weeklyDayLetter = dayLetterMap[dayOfWeek];
+          // Get the letter corresponding to the day of the week
+          const weeklyDayLetter = dayLetterMap[dayOfWeek];
 
-        return (
-          <Bar
-            key={index}
-            letter={weeklyDayLetter}
-            maxHeight={height}
-            minHeight={barWidth}
-            width={barWidth}
-            progress={value}
-          />
-        );
-      })}
+          return (
+            <Bar
+              key={index}
+              letter={weeklyDayLetter}
+              maxHeight={height}
+              minHeight={barWidth}
+              width={barWidth}
+              progress={value}
+            />
+          );
+        })}
     </View>
   );
 };

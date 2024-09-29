@@ -1,10 +1,9 @@
 import { View } from 'react-native';
-import { Bar } from './single-bar';
 import { WeekData } from '../utils';
-import { getCurrentDate } from '@/utils/functions';
+import { Bar } from './single-bar';
 
 // Map days of the week to corresponding letters
-const dayLetterMap = ['s', 'm', 't', 'w', 't', 'f', 's'];
+const dayLetterMap = ['n', 'p', 'u', 's', 'č', 'p', 's'];
 
 type WeeklyChartProps = {
   data: WeekData;

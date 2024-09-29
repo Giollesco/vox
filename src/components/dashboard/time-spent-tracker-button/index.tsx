@@ -7,14 +7,13 @@ import { ActivityIndicator, TouchableOpacity } from 'react-native';
 
 export default function TimeSpentTrackerButton() {
   // Hooks
-  const { targetReached, timeSpentTodayMinutes, loading, resetTimeSpent } =
+  const { targetReached, timeSpentTodayMinutes, loading } =
     useTimeSpentTracker();
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       key={`time-spent-tracker-${timeSpentTodayMinutes}-${targetReached}`}
-      onPress={resetTimeSpent}
     >
       <View className="flex-1 items-center justify-center">
         {loading ? (

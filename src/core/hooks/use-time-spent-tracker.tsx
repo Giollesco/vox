@@ -55,6 +55,11 @@ export const useTimeSpentTracker = () => {
       handleAppStateChange
     );
 
+    // Start the timer if the app is active when the component mounts
+    if (AppState.currentState === 'active') {
+      startSessionTimer();
+    }
+
     return () => {
       subscription.remove();
       stopSessionTimer(); // Ensure timer is cleared on unmount
@@ -88,7 +93,7 @@ export const useTimeSpentTracker = () => {
       return; // Don't start the timer if the target has been reached
     }
 
-    console.log('Starting session timer');
+    console.log('[TIME SPENT TRACKER]: Starting session timer');
     if (!intervalId.current) {
       intervalId.current = setInterval(() => {
         setTimeSpentToday((prev) => {
@@ -104,7 +109,7 @@ export const useTimeSpentTracker = () => {
   };
 
   const onTargetReached = () => {
-    console.log('Target reached');
+    console.log('[TIME SPENT TRACKER]: Target reached');
     targetReached.current = true; // Update the ref
     setItem('targetReached', true);
     stopSessionTimer();
@@ -120,7 +125,10 @@ export const useTimeSpentTracker = () => {
             updateAccount({ dailyGoals });
           },
           onError(error, variables, context) {
-            console.log('Finish exercise error => ', error);
+            console.log(
+              '[TIME SPENT TRACKER]: Finish exercise error => ',
+              error
+            );
           },
         }
       );
@@ -128,7 +136,7 @@ export const useTimeSpentTracker = () => {
   };
 
   const stopSessionTimer = () => {
-    console.log('Stopping session timer');
+    console.log('[TIME SPENT TRACKER]: Stopping session timer');
     if (intervalId.current) {
       clearInterval(intervalId.current);
       intervalId.current = null; // Clear the ref

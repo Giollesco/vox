@@ -1,3 +1,4 @@
+import { useCompleteDailyGoal } from '@/api/time-tracking/use-complete-daily-goal';
 import { Level } from '@/types';
 import { useEffect, useRef, useState } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
@@ -7,6 +8,8 @@ import { getItem, removeItem, setItem } from '../storage';
 export const useTimeSpentTracker = () => {
   // Hooks
   const { account, updateAccount } = useAuth();
+  const { mutate: completeDailyGoal, isLoading: loading } =
+    useCompleteDailyGoal();
 
   // Check if minutesPerDay is null
   if (account && account.minutesPerDay === null) {
@@ -110,7 +113,17 @@ export const useTimeSpentTracker = () => {
       let today = new Date().toLocaleDateString();
       // Push the current date to the daily goals in DD.MM.YYYY format
       dailyGoals.push(today);
-      updateAccount({ dailyGoals });
+      completeDailyGoal(
+        { accountId: account.$id, dailyGoals },
+        {
+          onSuccess(data, variables, context) {
+            updateAccount({ dailyGoals });
+          },
+          onError(error, variables, context) {
+            console.log('Finish exercise error => ', error);
+          },
+        }
+      );
     }
   };
 
@@ -135,6 +148,7 @@ export const useTimeSpentTracker = () => {
     timeSpentToday, // Return in seconds
     timeSpentTodayMinutes: Math.floor(timeSpentToday / 60), // Return in minutes
     targetReached: targetReached.current, // Return target reached state
+    loading,
     resetTimeSpent,
     onTargetReached,
   };

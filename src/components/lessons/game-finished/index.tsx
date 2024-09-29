@@ -98,7 +98,11 @@ export const GameFinished = ({}: Props) => {
             animate={{ opacity: 1, translateY: 0 }}
             delay={baseDelay}
           >
-            <Text className="text-3xl text-center opacity-50" weight="medium">
+            <Text
+              className="text-center"
+              weight="medium"
+              style={{ lineHeight: 50, fontSize: 40 }}
+            >
               ⭐
             </Text>
           </MotiView>
@@ -107,7 +111,14 @@ export const GameFinished = ({}: Props) => {
             animate={{ opacity: 1, translateY: 0 }}
             delay={baseDelay + 100}
           >
-            <Text className="text-center text-5xl" weight="medium">
+            <Text
+              className="text-center"
+              weight="medium"
+              style={{
+                lineHeight: 50,
+                fontSize: 40,
+              }}
+            >
               Čestitamo!
             </Text>
           </MotiView>

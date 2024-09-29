@@ -30,15 +30,30 @@ export const getWeeksData = (triggeredDates: string[]): ChartData | null => {
   // Parse triggered dates from DD.MM.YYYY format to Date objects
   const dates = triggeredDates.map(parseDate);
 
-  // Find the earliest date and get the first day of the week (Monday)
-  const firstDate = dates[0];
-  const startOfWeek = new Date(firstDate);
-  startOfWeek.setDate(firstDate.getDate() - firstDate.getDay() + 1); // Adjust to the previous Monday
+  // Ensure dates are valid and not empty
+  if (dates.length === 0) {
+    return null; // If there are no valid dates, return null
+  }
 
-  // Get current date and adjust to the end of the week (Sunday)
+  // Find the earliest date and get the first day of the week (Monday)
+  const firstDate = dates.reduce(
+    (earliest, current) => (current < earliest ? current : earliest),
+    dates[0]
+  );
+  const startOfWeek = new Date(firstDate);
+  startOfWeek.setDate(firstDate.getDate() - (firstDate.getDay() || 7) + 1); // Adjust to the previous Monday
+
+  // Get current date
   const currentDate = new Date();
-  const endOfWeek = new Date(currentDate);
-  endOfWeek.setDate(currentDate.getDate() + (6 - currentDate.getDay())); // Adjust to next Sunday
+  let endOfWeek = new Date(currentDate);
+
+  // If today is Sunday, set endOfWeek to today (i.e., do not go to next week)
+  if (currentDate.getDay() === 0) {
+    endOfWeek = currentDate;
+  } else {
+    // Otherwise, set endOfWeek to the upcoming Sunday
+    endOfWeek.setDate(currentDate.getDate() + (6 - currentDate.getDay())); // Adjust to next Sunday
+  }
 
   const weeks: ChartData = [];
   let currentWeekStart = new Date(startOfWeek);

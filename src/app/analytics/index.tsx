@@ -1,11 +1,12 @@
-import * as React from 'react';
 import { getWeeksData } from '@/components/analytics/utils';
 import { WeeklyChart } from '@/components/analytics/weekly-chart';
 import { useAuth } from '@/core';
 import { colors, Text, View } from '@/ui';
 import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { router } from 'expo-router';
 import { MotiView } from 'moti';
+import * as React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,7 +21,6 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Feather from '@expo/vector-icons/Feather';
 
 type Props = {};
 
@@ -41,14 +41,12 @@ export default function Analytics() {
   const animatedRef = useAnimatedRef<Animated.ScrollView>();
 
   // Variables
-  const [activeIndexJS, setActiveIndexJS] = React.useState(0);
+  const lastIndex = data ? data.length - 1 : 0; // Determine the last week's index (current week)
+  const [activeIndexJS, setActiveIndexJS] = React.useState(lastIndex);
   const scrollOffset = useScrollViewOffset(animatedRef);
   const activeIndex = useDerivedValue(() => {
     return Math.floor((scrollOffset.value + windowWidth / 2) / windowWidth);
   }, [scrollOffset]);
-
-  // Determine the last week's index (current week)
-  const lastIndex = data ? data.length - 1 : 0;
 
   // Reactions
   useAnimatedReaction(
@@ -62,16 +60,10 @@ export default function Analytics() {
     }
   );
 
-  // Scroll to the last (current) week on component mount
   React.useEffect(() => {
-    if (animatedRef.current && lastIndex >= 0) {
-      animatedRef.current.scrollTo({
-        x: lastIndex * windowWidth, // Scroll to the last item
-        animated: true,
-      });
-      setActiveIndexJS(lastIndex); // Set the active index to the last week
-    }
-  }, [animatedRef, lastIndex, windowWidth]);
+    setActiveIndexJS(lastIndex);
+    scrollOffset.value = lastIndex * windowWidth;
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -108,7 +100,7 @@ export default function Analytics() {
         <MotiView
           from={{ opacity: 0, bottom: -20 }}
           animate={{ opacity: 1, bottom: 0 }}
-          delay={400}
+          delay={350}
         >
           {data && (
             <WeeklyChart
@@ -121,7 +113,7 @@ export default function Analytics() {
         <MotiView
           from={{ opacity: 0, bottom: -20 }}
           animate={{ opacity: 1, bottom: 0 }}
-          delay={350}
+          delay={450}
           style={{
             height: 60,
             width: windowWidth,
@@ -134,6 +126,11 @@ export default function Analytics() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listContent}
             decelerationRate={'fast'}
+            // Set initial offset to last week
+            contentOffset={{
+              x: lastIndex * windowWidth,
+              y: 0,
+            }}
           >
             {data?.map((week: any, index: number) => {
               const [{ day }] = week;

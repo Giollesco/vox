@@ -42,10 +42,10 @@ const _useAuth = create<AuthState>((set, get) => ({
     set({ user: currentAccount as any });
   },
   signOut: async () => {
+    await account.deleteSessions();
     removeToken();
     set({ status: 'signOut', token: null, account: null, user: null });
     router.replace('/auth/login');
-    await account.deleteSessions();
   },
   hydrate: () => {
     try {

@@ -1,4 +1,4 @@
-import { Stack, useRouter } from 'expo-router';
+import { router, Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 
@@ -12,43 +12,39 @@ import { colors, FocusAwareStatusBar, ScrollView, View } from '@/ui';
 export default function Login() {
   // Hooks
   const [isFirstTime, setIsFirstTime] = useIsFirstTime();
-  const router = useRouter();
   const signIn = useAuth.use.signIn();
   useSoftKeyboardEffect();
-
-  // Effects
-  React.useEffect(() => {
-    // If it's the first time user should be redirected to the onboarding.
-    // If user came to login screen from onboarding, we should set isFirstTime to false.
-    // because we don't want to redirect user to onboarding again.
-    if (isFirstTime) {
-      setIsFirstTime(false);
-    }
-  }, [isFirstTime, setIsFirstTime]);
 
   // Variables
   const [loading, setLoading] = useState<boolean>(false);
 
   // Functions
-  const onSubmit: LoginFormProps['onSubmit'] = (data) => {
+  const onSubmit: LoginFormProps['onSubmit'] = async (data) => {
     setLoading(true);
-    const promise = account
-      .createEmailPasswordSession(data.email, data.password)
-      .then(
-        function (response) {
-          console.log(response); // Success
-          signIn(response.userId);
-          // Redirect to the app
-          router.replace('/(app)');
-        },
-        function (error) {
-          console.log(error); // Failure
-        }
-      )
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const response = await account.createEmailPasswordSession(
+        data.email,
+        data.password
+      );
+
+      console.log('Login successful:', response); // Debug success
+
+      // Use the userId to sign in
+      await signIn(response.userId);
+      router.replace('/(app)');
+    } catch (error: any) {
+      // Log the full error details
+      console.error('Login failed:', error?.data);
+
+      // If AppwriteException contains response headers, inspect them
+      if (error.response) {
+        console.error('Response headers:', error.response.headers);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <View
       className="flex h-full w-full items-end justify-end"

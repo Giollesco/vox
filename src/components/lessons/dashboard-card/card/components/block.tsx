@@ -51,6 +51,8 @@ import CloseButton from './close-button';
 import { LineGraph } from './line-graph';
 import DashboardLessonContent from '@/app/lessons/dashboard-content';
 import { useLesson } from '@/stores';
+import getLessons from '@/components/lessons/utils';
+import { account } from '@/api';
 
 // Constants
 export const THUMBNAIL_SCALE_FACTOR = 1.35;
@@ -239,11 +241,20 @@ const Block = ({
     return account?.completedLessons.length || 0;
   }, [account]);
   const lessonsRemaining = useMemo(() => {
-    return lessons.length - lessonsCompleted;
-  }, [lessonsCompleted, lessons]);
+    return (
+      getLessons(lessons, account?.startingPoint).length - lessonsCompleted
+    );
+  }, [lessonsCompleted, lessons, account?.startingPoint]);
   const lessonsPercentage = useMemo(() => {
-    return lessonsCompleted / lessons.length;
-  }, [account?.completedLessons, lessonsCompleted, lessons]);
+    return (
+      lessonsCompleted / getLessons(lessons, account?.startingPoint).length
+    );
+  }, [
+    account?.completedLessons,
+    lessonsCompleted,
+    lessons,
+    account?.startingPoint,
+  ]);
   const backgroundColor = useMemo(() => {
     if (lessonsRemaining === 0) return colors.success[500];
     return colors.primary[500];
